@@ -69,7 +69,7 @@ class Auth extends Connection {
         $query = "SELECT `id-users`, `unique-id`, `token`, `validate` FROM `users-auth` WHERE `unique-id` = '$uid'";
         $data = parent::getData($query);
         print_r($data);
-        if (isset($data[0]["id-users"])) return $data;
+        if (isset($data[0]["users-auth"])) return $data;
         return false;
     }
     // Updating token state and validate
