@@ -34,7 +34,7 @@ class Auth extends Connection {
         return $result;
     }
     // Validando el registro
-    public function validate($id, $uid, $token) {
+    public function validate($uid, $token) {
         $Responses = new Responses;
         // Obteniendo los datos de registro seleccionados con el metodo getsignUpData
         $data = $this->getSignUpData($uid);
