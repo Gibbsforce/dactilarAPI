@@ -53,7 +53,7 @@ class NewUser extends Connection {
         $this->address = $data["address"];
         $this->country = $data["country"];
         $this->state_city = $data["state-city"];
-        $this->city_district = $data["city-istrict"];
+        $this->city_district = $data["city-district"];
         $this->zipcode = $data["zipcode"];
         $this->username = $data["username"];
         $this->created = date("Y-m-d H:i");
@@ -69,19 +69,19 @@ class NewUser extends Connection {
         if (strlen($this->username) < 6) return $Responses->error_200("Username too small");
         if (strlen($this->username) > 32) return $Responses->error_200("Username too large");
         if (strlen($this->phone) < 9 || !is_numeric($this->phone)) return $Responses->error_200("Please, add a valid phone number");
-        if (strlen($this->zipcode) < 4 !is_numeric($this->zipcode)) return $Responses->error_200("Please, add a valid zipcode");
+        if (strlen($this->zipcode) < 4 || !is_numeric($this->zipcode)) return $Responses->error_200("Please, add a valid zipcode");
         if (strlen($this->password) < 8 || strlen($this->check_password) < 8) return $Responses->error_200("Password too small");
         if (strlen($this->password) > 32 || strlen($this->check_password) > 32) return $Responses->error_200("Password too large");
 
         if ($this->password != $this->check_password) return $Responses->error_200("The passwords don't match");
 
         $result_user_exist = $this->existingUser($this->dni, $this->email, $this->username);
-        if (isset($result_user_exist[0]["dni"])) return $Responses->error_200("DNI number already exists");
-        if (isset($result_user_exist[0]["email"])) return $Responses->error_200("The email already exists");
-        if (isset($result_user_exist[0]["username"])) return $Responses->error_200("The username already exists");
+        if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
+        if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
+        if ($result_user_exist[0]["username"] === $this->username) return $Responses->error_200("The username already exists");
 
         $result = $this->addUser();
-        if ($result) return $Responses->success_201("User created successfully");
+        if ($result) return $Responses->error_201("User created successfully");
         return $Responses->error_500();
     }
 
@@ -99,7 +99,6 @@ class NewUser extends Connection {
             `dni`,
             `phone`,
             `email`,
-            `password`,
             `address`,
             `country`,
             `state-city`,
@@ -114,7 +113,6 @@ class NewUser extends Connection {
             '".$this->dni."',
             '".$this->phone."',
             '".$this->email."',
-            '".$this->password."',
             '".$this->address."',
             '".$this->country."',
             '".$this->state_city."',
