@@ -71,7 +71,7 @@ class Auth extends Connection {
         print_r($query);
         $data = parent::getData($query);
         print_r($data);
-        if (isset($data[0]["users-auth"])) return $data;
+        if (isset($data[0]["id-users"])) return $data;
         return false;
     }
     // Updating token state and validate
