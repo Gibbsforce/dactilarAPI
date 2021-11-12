@@ -73,9 +73,7 @@ class Auth extends Connection {
     // Updating token state and validate
     private function updateValidation($uid) {
         $query = "UPDATE `users-auth` SET `state` = 1, `validate` = 1 WHERE `unique-id` = '$uid'";
-        print_r($query);
         $updated = parent::nonQuery($query);
-        print_r($updated);
         if ($updated > 0) return $updated;
         return false;
     }
