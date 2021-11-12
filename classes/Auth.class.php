@@ -38,7 +38,7 @@ class Auth extends Connection {
         $Responses = new Responses;
         // Obteniendo los datos de registro seleccionados con el metodo getsignUpData
         $data = $this->getSignUpData($uid);
-        print_r($data);
+        // print_r($data);
         // Validando si validate es verdadero
         if ($data[0]["validate"] == true) return $Responses->error_200("The user has already been validated");
         // Validando si el uid es correcto
