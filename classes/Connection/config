@@ -1,9 +1,9 @@
 {
     "connection":{
         "server": "localhost",
-        "user": "dactpe_elalbaropayment",
-        "password": "#Omtm.&x3dxZ",
-        "database": "dactpe_payment",
+        "user": "",
+        "password": "",
+        "database": "",
         "port": "3306"
     }
 }
