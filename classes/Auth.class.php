@@ -66,7 +66,7 @@ class Auth extends Connection {
     }
     // Metodo que obtiene el id y token del usuario registrado
     private function getSignUpData($uid) {
-        $query = "SELECT `id-users`, `unique-id`, `token`, `validate`FROM `users-auth` WHERE `unique-id` = '$uid'";
+        $query = "SELECT `id-users`, `unique-id`, `token`, `validate`FROM `users-auth` WHERE `unique-id` = $uid";
         print_r($query);
         $data = parent::getData($query);
         print_r($data);
