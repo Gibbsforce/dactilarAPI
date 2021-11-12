@@ -42,7 +42,8 @@ class Auth extends Connection {
         // Validando si validate es verdadero
         if ($data[0]["validate"] == true) return $Responses->error_200("The user has already been validated");
         // Validando si el uid es correcto
-        if ($data[0]["unique-id"] != $uid) return $Responses->error_200("Invalid unique id");
+        print_r($data[0]["unique-id"]);
+        if ($data[0]["unique-id"] !== $uid) return $Responses->error_200("Invalid unique id");
         // Validando si el token es correcto
         if ($data[0]["token"] !== $token) return $Responses->error_200("Invalid token");
         // Updaeting validation
