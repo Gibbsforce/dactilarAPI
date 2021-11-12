@@ -38,6 +38,7 @@ class Auth extends Connection {
         $Responses = new Responses;
         // Obteniendo los datos de registro seleccionados con el metodo getsignUpData
         $data = $this->getSignUpData($uid);
+        print_r($data);
         // Validando si validate es verdadero
         if ($data[0]["validate"] == true) return $Responses->error_200("The user has already been validated");
         // Validando si el uid es correcto
@@ -66,14 +67,18 @@ class Auth extends Connection {
     // Metodo que obtiene el id y token del usuario registrado
     private function getSignUpData($uid) {
         $query = "SELECT `id-users`, `unique-id`, `token`, `validate`FROM `users-auth` WHERE `unique-id` = '$uid'";
+        print_r($query);
         $data = parent::getData($query);
+        print_r($data);
         if (isset($data[0]["users-auth"])) return $data;
         return false;
     }
     // Updating token state and validate
     private function updateValidation($uid) {
         $query = "UPDATE `users-auth` SET `state` = 1, `validate` = 1 WHERE `unique-id` = '$uid'";
+        print_r($query);
         $updated = parent::nonQuery($query);
+        print_r($updated);
         if ($updated > 0) return $updated;
         return false;
     }
