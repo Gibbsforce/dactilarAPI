@@ -59,7 +59,7 @@ class Auth extends Connection {
     // Metodo que obtiene los datos del usuario de la base de datos
     private function getUserData($unique_id) {
         // Obteniendo campos de la tabla users-auth
-        $query = "SELECT `id-auth`, username, password, dni, `unique-id`, state, email FROM `users-auth` WHERE `unique-id` = '$unique_id'";
+        $query = "SELECT `id-auth`, username, password, dni, `unique-id`, state, email FROM `users-auth` WHERE `unique-id` = $unique_id";
         $data = parent::getData($query);
         if (isset($data[0]["id-auth"])) return $data;
         return 0;
