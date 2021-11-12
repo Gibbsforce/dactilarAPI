@@ -9,14 +9,8 @@ $Responses = new Responses;
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
     if (isset($_GET["uid"]) && isset($_GET["token"])) {
         $uid = $_GET["uid"];
-        print_r($uid);
-        echo "<br>";
         $token = $_GET["token"];
-        print_r($token);
-        echo "<br>";
         $arr_data = $Auth->validate($uid, $token);
-        print_r($arr_data);
-        echo "<br>";
         header("Content-type: application/json");
         if (isset($arr_data["result"]["error_id"])) {
             $response_code = $arr_data["result"]["error_id"];
