@@ -16,12 +16,13 @@ class NewUser extends Connection {
     private $state_city = "";
     private $city_district = "";
     private $zipcode = "";
-    private $created = "0000-00-00";
+    private $created = "";
     private $username = "";
     private $token = "";
     private $image = "";
     private $status = "";
     private $check_password = "";
+    private $unique_id = "";
 
     public function signUp($json) {
         $Responses = new Responses();
@@ -43,6 +44,20 @@ class NewUser extends Connection {
             !isset($data["username"])
         ) return $Responses->error_400();
 
+        if (empty($data["name"])) return $Responses->error_200("The name is empty");
+        if (empty($data["last_name"])) return $Responses->error_200("The last name is empty");
+        if (empty($data["dni"])) return $Responses->error_200("DNI number is empty");
+        if (empty($data["phone"])) return $Responses->error_200("The phone number is empty");
+        if (empty($data["email"])) return $Responses->error_200("The email is empty");
+        if (empty($data["password"])) return $Responses->error_200("The password is empty");
+        if (empty($data["check-password"])) return $Responses->error_200("The password is empty");
+        if (empty($data["address"])) return $Responses->error_200("The address is empty");
+        if (empty($data["country"])) return $Responses->error_200("The country is empty");
+        if (empty($data["state-city"])) return $Responses->error_200("The state/city is empty");
+        if (empty($data["city-district"])) return $Responses->error_200("The city/district is empty");
+        if (empty($data["zipcode"])) return $Responses->error_200("The zipcode is empty");
+        if (empty($data["username"])) return $Responses->error_200("The username is empty");
+
         $this->name = $data["name"];
         $this->last_name = $data["last_name"];
         $this->dni = $data["dni"];
@@ -59,18 +74,15 @@ class NewUser extends Connection {
         $this->created = date("Y-m-d H:i");
         $this->status = "user";
 
-        $val = true;
-        $this->token = bin2hex(openssl_random_pseudo_bytes(16, $val));
-
         if (isset($data["image"])) $this->image = $data["image"];
 
         if (strlen($this->dni) != 8 || !is_numeric($this->dni)) return $Responses->error_200("Please, add a valid DNI number");
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return $Responses->error_200("Please, add a valid email");
-        if (strlen($this->username) < 6) return $Responses->error_200("Username too small");
+        if (strlen($this->username) < 7) return $Responses->error_200("Username too small");
         if (strlen($this->username) > 32) return $Responses->error_200("Username too large");
         if (strlen($this->phone) < 9 || !is_numeric($this->phone)) return $Responses->error_200("Please, add a valid phone number");
         if (strlen($this->zipcode) < 4 || !is_numeric($this->zipcode)) return $Responses->error_200("Please, add a valid zipcode");
-        if (strlen($this->password) < 8 || strlen($this->check_password) < 8) return $Responses->error_200("Password too small");
+        if (strlen($this->password) < 8 || strlen($this->check_password) < 8) return $Responses->error_200("Password should be min 8 characteres");
         if (strlen($this->password) > 32 || strlen($this->check_password) > 32) return $Responses->error_200("Password too large");
 
         if ($this->password != $this->check_password) return $Responses->error_200("The passwords don't match");
@@ -80,9 +92,29 @@ class NewUser extends Connection {
         if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
         if ($result_user_exist[0]["username"] === $this->username) return $Responses->error_200("The username already exists");
 
-        $result = $this->addUser();
-        if ($result) return $Responses->error_201("User created successfully");
-        return $Responses->error_500();
+        $val = true;
+        $this->token = bin2hex(openssl_random_pseudo_bytes(16, $val));
+        
+        $this->unique_id = parent::encrypt($this->dni.$this->username);
+        $uid = $this->unique_id;
+
+        $result_add_user = $this->addUser();
+        if (!$result_add_user) return $Responses->error_500();
+        $result_add_user_auth = $this->addUserAuth($result_add_user, $uid);
+        if (!$result_add_user_auth) return $Responses->error_500();
+
+        $sent_email_validation = $this->sendEmailValidation($result_add_user, $uid, $this->token, $this->name, $this->email);
+        if (!$sent_email_validation) return $Responses->error_500();
+
+        $response = $Responses->response;
+        $response["result"] = array(
+            "id-users" => $result_add_user,
+            "token" => $this->token,
+            "state" => "User created succesfully",
+            "validation" => false,
+            "email" => "Sent, validate account"
+        );
+        return $response;
     }
 
     private function existingUser($dni, $email, $username) {
@@ -122,8 +154,65 @@ class NewUser extends Connection {
             '".$this->created."',
             '".$this->image."'
         )";
+        $result = parent::nonQueryId($query);
+        if ($result) return $result;
+        return false;
+    }
+
+    private function addUserAuth($id_users, $uid) {
+        $password = parent::encrypt($this->password);
+        $query = "INSERT INTO `users-auth` (
+            `id-users`,
+            `username`,
+            `password`,
+            `dni`,
+            `unique-id`,
+            `state`,
+            `date`,
+            `email`,
+            `token`,
+            `status`,
+            `validate`
+        )VALUES(
+            '".$id_users."',
+            '".$this->username."',
+            '".$password."',
+            '".$this->dni."',
+            '".$uid."',
+            0,
+            '".$this->created."',
+            '".$this->email."',
+            '".$this->token."',
+            '".$this->status."',
+            0
+        )";
         $result = parent::nonQuery($query);
         if (!$result) return false;
+        return true;
+    }
+
+    private function sendEmailValidation($id_users, $unique_id, $token, $name, $email) {
+        $url = "http://".$_SERVER["SERVER_NAME"]."/auth?id=".$id_users."&uid=".$unique_id."&token=".$token."";
+        $subject = "Account Validation - Dactilar";
+        $body = "
+            <html>
+                <head>
+                    <title>Email validation</title>
+                </head>
+                <body>
+                <h1>Hi ".$name."! Welcome to Dactilar</h1>
+                    <p>
+                        To validate your account, please click on the link below:
+                    </p>
+                <a href='".$url."'>".$url."</a>
+                </body>
+            </html>
+        ";
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+        // Additional headers
+        $headers[] = 'From: Dactilar <servicioalcliente@dactilar.com.pe>';
+        mail($email, $subject, $body, implode("\r\n", $headers));
         return true;
     }
 }

@@ -33,6 +33,28 @@ class Auth extends Connection {
         );
         return $result;
     }
+    // Validando el registro
+    public function validate($id, $uid, $token) {
+        $Responses = new Responses;
+        // Obteniendo los datos de registro seleccionados con el metodo getsignUpData
+        $data = $this->getSignUpData($uid);
+        // Validando si validate es verdadero
+        if ($data[0]["validate"] == true) return $Responses->error_200("The user has already been validated");
+        // Validando si el uid es correcto
+        if ($data[0]["unique-id"] !== $uid) return $Responses->error_200("Invalid unique id");
+        // Validando si el token es correcto
+        if ($data[0]["token"] !== $token) return $Responses->error_200("Invalid token");
+        // Updaeting validation
+        $update = $this->updateValidation($uid);
+        // Validando si se pudo actualizar
+        if (!$update) return $Responses->error_500("Error interno, no se ha podido actualizar");
+        // Obteniendo el resultado
+        $result = $Responses->response;
+        $result["result"] = array(
+            "validation" => true
+        );
+        return $result;
+    }
     // Metodo que obtiene los datos del usuario de la base de datos
     private function getUserData($unique_id) {
         // Obteniendo campos de la tabla users-auth
@@ -40,6 +62,20 @@ class Auth extends Connection {
         $data = parent::getData($query);
         if (isset($data[0]["id-auth"])) return $data;
         return 0;
+    }
+    // Metodo que obtiene el id y token del usuario registrado
+    private function getSignUpData($uid) {
+        $query = "SELECT `id-users`, `unique-id`, `token`, `validate`FROM `users-auth` WHERE `unique-id` = '$uid'";
+        $data = parent::getData($query);
+        if (isset($data[0]["users-auth"])) return $data;
+        return false;
+    }
+    // Updating token state and validate
+    private function updateValidation($uid) {
+        $query = "UPDATE `users-auth` SET `state` = 1, `validate` = 1 WHERE `unique-id` = '$uid'";
+        $updated = parent::nonQuery($query);
+        if ($updated > 0) return $updated;
+        return false;
     }
     // Insertando y creando token a la tabla de la base de datos de users-token
     private function addToken($unique_id) {
