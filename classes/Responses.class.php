@@ -60,4 +60,13 @@ class Responses {
         );
         return $this->response;
     }
+    // Error 201
+    public function error_201($str = "Created") {
+        $this->response["status"] = "error";
+        $this->response["result"] = array(
+            "error_id" => "201",
+            "error_message" => $str
+        );
+        return $this->response;
+    }
 }
