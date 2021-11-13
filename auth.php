@@ -6,7 +6,7 @@ require_once "classes/Responses.class.php";
 $Auth = new Auth;
 $Responses = new Responses;
 // Validando metodo post
-if ($_SERVER['REQUEST_METHOD'] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["uid"]) && isset($_GET["token"])) {
         $uid = $_GET["uid"];
         $token = $_GET["token"];
