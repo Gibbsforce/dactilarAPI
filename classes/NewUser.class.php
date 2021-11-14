@@ -212,7 +212,8 @@ class NewUser extends Connection {
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
         // Additional headers
         $headers[] = 'From: Dactilar <servicioalcliente@dactilar.com.pe>';
-        mail($email, $subject, $body, implode("\r\n", $headers));
+        $mail = mail($email, $subject, $body, implode("\r\n", $headers));
+        if (!$mail) return false;
         return true;
     }
 }
