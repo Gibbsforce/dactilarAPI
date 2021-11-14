@@ -10,6 +10,9 @@ class Auth extends Connection {
         $data = json_decode($json, true);
         // Validating if user and password exist
         if (!isset($data["user_login"]) || !isset($data["password"])) return $Responses->error_400();
+        // Validating if user and password are not empty
+        if (empty($data["user_login"])) return $Responses->error_200("User is empty");
+        if (empty($data["user_login"])) return $Responses->error_200("The password is empty");
         // Storing client data
         $user_login = $data["user_login"];
         $password = $data["password"];
@@ -17,15 +20,15 @@ class Auth extends Connection {
         $data = $this->getUserData($user_login);
         // Validating if user server data exists
         if (!$data) return $Responses->error_200("The user ".$user_login." doesn't exist");
-        // Validating if user has activated its account
-        if ($data["validate"] == 0) return $Responses->error_200("The user".$user_login." has no activated its account");
         // Validating if password is correct
         if ($password !== $data[0]["password"]) return $Responses->error_200("La contrasena es invalida");
+        // Validating if user has activated its account
+        if ($data["validate"] == 0) return $Responses->error_200("The user ".$user_login." has no activated its account");
         // Validatning if user is active
         if ($data[0]["state"] == false) return $Responses->error_200("Inactive user");
         // Validating if token added
         $verify = $this->addToken($data[0]["username"], $data[0]["dni"], $data[0]["email"]);
-        if (!$verify) return $Responses->error_200("Error interno, no se ha podido guardar");
+        if (!$verify) return $Responses->error_200("Intern error, couldn't save");
         // Returning the result with the token
         $result = $Responses->response;
         $result["result"] = array(

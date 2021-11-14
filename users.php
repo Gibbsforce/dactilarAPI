@@ -7,19 +7,22 @@ $Responses = new Responses;
 $Users = new Users;
 // API RESTful
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (isset($_GET["page"])) {
-        $page = $_GET["page"];
-        $users_list = $Users->usersList($page);
-        header("Content-type: application/json");
-        echo json_encode($users_list);
-        http_response_code(200);
-    } else if (isset($_GET["id"])) {
-        $id_users = $_GET["id"];
-        header("Content-type: application/json");
-        $user = $Users->getUser($id_users);
-        echo json_encode($user);
-        http_response_code(200);
-    }
+    header("Content-Type: application/json");
+    $arr_data = $Responses->error_200("We are currently working for this, please visit us again later");
+    echo json_encode($arr_data);
+    // if (isset($_GET["page"])) {
+    //     $page = $_GET["page"];
+    //     $users_list = $Users->usersList($page);
+    //     header("Content-type: application/json");
+    //     echo json_encode($users_list);
+    //     http_response_code(200);
+    // } else if (isset($_GET["id"])) {
+    //     $id_users = $_GET["id"];
+    //     header("Content-type: application/json");
+    //     $user = $Users->getUser($id_users);
+    //     echo json_encode($user);
+    //     http_response_code(200);
+    // }
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibiendo datos enviados de post
     $post_body = file_get_contents("php://input");

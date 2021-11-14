@@ -1,9 +1,10 @@
 <?php
-// Accediendo a las clases Connection y Responses
+
 require_once "Connection/Connection.php";
 require_once "Responses.class.php";
-// Creando la clase NewUser y heredando Connection
+
 class NewUser extends Connection {
+
     private $id_users = "";
     private $name = "";
     private $last_name = "";
@@ -25,6 +26,7 @@ class NewUser extends Connection {
     private $unique_id = "";
 
     public function signUp($json) {
+
         $Responses = new Responses();
         $data = json_decode($json, true);
 
@@ -76,7 +78,7 @@ class NewUser extends Connection {
 
         if (isset($data["image"])) $this->image = $data["image"];
 
-        if (strlen($this->dni) != 8 || !is_numeric($this->dni)) return $Responses->error_200("Please, add a valid DNI number");
+        if (strlen($this->dni) <= 8 || !is_numeric($this->dni)) return $Responses->error_200("Please, add a valid DNI number");
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return $Responses->error_200("Please, add a valid email");
         if (strlen($this->username) < 7) return $Responses->error_200("Username too small");
         if (strlen($this->username) > 32) return $Responses->error_200("Username too large");
@@ -88,6 +90,7 @@ class NewUser extends Connection {
         if ($this->password != $this->check_password) return $Responses->error_200("The passwords don't match");
 
         $result_user_exist = $this->existingUser($this->dni, $this->email, $this->username);
+        
         if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
         if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
         if ($result_user_exist[0]["username"] === $this->username) return $Responses->error_200("The username already exists");
@@ -100,6 +103,7 @@ class NewUser extends Connection {
 
         $result_add_user = $this->addUser();
         if (!$result_add_user) return $Responses->error_500();
+
         $result_add_user_auth = $this->addUserAuth($result_add_user, $uid);
         if (!$result_add_user_auth) return $Responses->error_500();
 
