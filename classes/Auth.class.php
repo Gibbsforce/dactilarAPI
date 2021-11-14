@@ -9,7 +9,7 @@ class Auth extends Connection {
         $Responses = new Responses;
         $data = json_decode($json, true);
         // Validando si existen el usuario y la contrasena //////EL USUARIO MIENTRAS TANTO ES EL UNIQUE ID//////
-        if (!isset($data["username"]) && !isset($data["dni"]) && !isset($data["email"]) || !isset($data["password"])) return $Responses->error_400();
+        if ((!isset($data["username"]) && !isset($data["dni"]) && !isset($data["email"])) || !isset($data["password"])) return $Responses->error_400();
         // Almacenando datos del usuario en variables y obteniendo sus datos
         if (isset($data["username"])) $username = $data["username"];
         if (isset($data["dni"])) $dni = $data["dni"];
