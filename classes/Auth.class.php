@@ -17,10 +17,11 @@ class Auth extends Connection {
         $password = $data["password"];
         $password = parent::encrypt($password);
         $data = $this->getUserData($username, $dni, $email);
+        print_r($data);
         // Validando si datos del usuario existe
         if (!$data) return $Responses->error_200("El usuario $username $dni $email no existe");
         // Validando si la contrasena es correcta
-        if ($password != $data[0]["password"]) return $Responses->error_200("La contrasena es invalida");
+        if ($password !== $data[0]["password"]) return $Responses->error_200("La contrasena es invalida");
         // Validando el estado del usuario
         if ($data[0]["state"] == false) return $Responses->error_200("Usuario inactivo");
         // Validando si se pudo agregar el token
