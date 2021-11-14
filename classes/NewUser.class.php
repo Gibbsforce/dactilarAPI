@@ -78,7 +78,7 @@ class NewUser extends Connection {
 
         if (isset($data["image"])) $this->image = $data["image"];
 
-        if (strlen($this->dni) <= 8 || !is_numeric($this->dni)) return $Responses->error_200("Please, add a valid DNI number");
+        if (strlen($this->dni) < 8 || !is_numeric($this->dni)) return $Responses->error_200("Please, add a valid DNI number");
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return $Responses->error_200("Please, add a valid email");
         if (strlen($this->username) < 7) return $Responses->error_200("Username too small");
         if (strlen($this->username) > 32) return $Responses->error_200("Username too large");
