@@ -16,7 +16,7 @@ class Auth extends Connection {
         $password = parent::encrypt($password);
         $data = $this->getUserData($user_login);
         // Validando si datos del usuario existe
-        if (!$data) return $Responses->error_200("El usuario '$user_login' no existe");
+        if (!$data) return $Responses->error_200("El usuario ".$user_login." no existe");
         // Validando si la contrasena es correcta
         if ($password !== $data[0]["password"]) return $Responses->error_200("La contrasena es invalida");
         // Validando el estado del usuario
