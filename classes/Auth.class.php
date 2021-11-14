@@ -9,16 +9,14 @@ class Auth extends Connection {
         $Responses = new Responses;
         $data = json_decode($json, true);
         // Validando si existen el usuario y la contrasena //////EL USUARIO MIENTRAS TANTO ES EL UNIQUE ID//////
-        if ((!isset($data["username"]) && !isset($data["dni"]) && !isset($data["email"])) || !isset($data["password"])) return $Responses->error_400();
+        if (!isset($data["user_login"]) || !isset($data["password"])) return $Responses->error_400();
         // Almacenando datos del usuario en variables y obteniendo sus datos
-        if (isset($data["username"])) $username = $data["username"];
-        if (isset($data["dni"])) $dni = $data["dni"];
-        if (isset($data["email"])) $email = $data["email"];
+        $user_login = $data["user_login"];
         $password = $data["password"];
         $password = parent::encrypt($password);
-        $data = $this->getUserData($username, $dni, $email);
+        $data = $this->getUserData($user_login);
         // Validando si datos del usuario existe
-        if (!$data) return $Responses->error_200("El usuario ".$username.$dni.$email." no existe");
+        if (!$data) return $Responses->error_200("El usuario '$user_login' no existe");
         // Validando si la contrasena es correcta
         if ($password !== $data[0]["password"]) return $Responses->error_200("La contrasena es invalida");
         // Validando el estado del usuario
@@ -58,9 +56,9 @@ class Auth extends Connection {
         return $result;
     }
     // Metodo que obtiene los datos del usuario de la base de datos
-    private function getUserData($username, $dni, $email) {
+    private function getUserData($user_login) {
         // Obteniendo campos de la tabla users-auth
-        $query = "SELECT `id-auth`, `username`, `password`, `dni`, `state`, `email` FROM `users-auth` WHERE `username` = '$username' OR `dni` = '$dni' OR `email` = '$email'";
+        $query = "SELECT `id-auth`, `username`, `password`, `dni`, `state`, `email` FROM `users-auth` WHERE `username` = '$user_login' OR `dni` = '$user_login' OR `email` = '$user_login'";
         $data = parent::getData($query);
         if (isset($data[0]["id-auth"])) return $data;
         return 0;
