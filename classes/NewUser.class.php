@@ -188,8 +188,7 @@ class NewUser extends Connection {
             '".$this->created."',
             '".$this->email."',
             '".$this->token."',
-            '".$this->status."',
-            .$status.
+            ."$status".
         )";
         print_r($query);
         $result = parent::nonQuery($query);
