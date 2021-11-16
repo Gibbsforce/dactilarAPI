@@ -80,7 +80,7 @@ class Auth extends Connection {
         return false;
     }
     // Adding token to server method
-    private function addToken($uid, $username, $dni, $email, $status) {
+    private function addToken($username, $dni, $email, $status) {
         $val = true;
         $token = bin2hex(openssl_random_pseudo_bytes(16, $val));
         $date = date("Y-m-d H:i");
