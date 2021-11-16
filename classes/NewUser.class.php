@@ -190,7 +190,7 @@ class NewUser extends Connection {
             '".$this->email."',
             '".$this->token."',
             '".$status."',
-            '.$validate.',
+            '$validate',
         )";
         print_r($query);
         $result = parent::nonQuery($query);
