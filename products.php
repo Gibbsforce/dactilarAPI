@@ -4,7 +4,7 @@ require_once "classes/Responses.class.php";
 require_once "classes/Products.class.php";
 // Instantiating classes
 $Products = new Products();
-$Responses = new Responses();
+// $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $products = $Products->getProducts(1);
