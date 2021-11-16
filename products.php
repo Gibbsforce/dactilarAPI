@@ -5,15 +5,15 @@ require_once "classes/CorsAccessControl.class.php";
 require_once "classes/Responses.class.php";
 // Instantiating classes
 $Products = new Products();
-$Cors = new CorsAccessControl();
-$Cors->send();
-print_r($Cors);
+// $Cors = new CorsAccessControl();
+// $Cors->send();
+// print_r($Cors);
 // $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (!isset($_GET["page"]) && !isset($_GET["id"])) {
         $products = $Products->getProducts(1);
-        // header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE');
         // header('Access-Control-Allow-Credentials: true');
         // header('Access-Control-Allow-Headers: Authorization, Content-Type, x-xsrf-token, x_csrftoken, Cache-Control, X-Requested-With');
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     } else if (isset($_GET["page"])) {
         $page = $_GET["page"];
         $products = $Products->getProducts($page);
-        // header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE');
         // header('Access-Control-Allow-Credentials: true');
         // header('Access-Control-Allow-Headers: Authorization, Content-Type, x-xsrf-token, x_csrftoken, Cache-Control, X-Requested-With');
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         http_response_code(200);
     } else if (isset($_GET["id"])) {
         $id = $_GET["id"];
-        // header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE');
         // header('Access-Control-Allow-Credentials: true');
         // header('Access-Control-Allow-Headers: Authorization, Content-Type, x-xsrf-token, x_csrftoken, Cache-Control, X-Requested-With');
