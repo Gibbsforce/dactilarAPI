@@ -16,6 +16,13 @@ header("Access-Control-Allow-Origin: *");
 // header("Access-Control-Allow-Credentials: true");
 // header("Access-Control-Allow-Headers: Authorization, Content-Type, x-xsrf-token, x_csrftoken, Cache-Control, X-Requested-With");
 
+// To the htaccess
+
+// Header always set Access-Control-Allow-Methods "POST, GET, PUT, OPTIONS, PATCH,DELETE"
+// Header always set Access-Control-Allow-Origin "*"
+// Header always set Access-Control-Allow-Credentials "true"
+// Header always set Access-Control-Allow-Headers "content-type,Authorization,Cache-Control,X-Requested-With, X-XSRF-TOKEN"
+
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (!isset($_GET["page"]) && !isset($_GET["id"])) {

@@ -87,7 +87,8 @@ class Auth extends Connection {
         $token = bin2hex(openssl_random_pseudo_bytes(16, $val));
         $date = date("Y-m-d H:i");
         $state = true;
-        $query = "INSERT INTO `users-token` (`username`, `dni`, `email`, `token`, `state`, `date`)VALUES('$username', '$dni', '$email', '$token', '$state', '$date')";
+        $status = "user";
+        $query = "INSERT INTO `users-token` (`username`, `dni`, `email`, `token`, `state`, `status`, `date`)VALUES('$username', '$dni', '$email', '$token', '$state', '$status', '$date')";
         $verified = parent::nonQuery($query);
         if (!$verified) return false;
         return $token;
