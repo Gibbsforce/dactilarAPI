@@ -40,7 +40,7 @@ class Products extends Connection {
                 `product_price_discount`,
                 `product_unique_piece`,
                 `product_stock`,
-                `product_image`,
+                `product_image`
             FROM ".$this->table." ORDER BY `product_id` ASC limit $start, $qty";
         print_r($query);
         try {
@@ -68,7 +68,7 @@ class Products extends Connection {
                 `product_sizes`,
                 `product_images_gallery`,
                 `product_images_thumbnails`,
-                `product_image`,
+                `product_image`
             FROM ".$this->table." WHERE `product_id` = '$product_id'";
         print_r($query);
         try {
