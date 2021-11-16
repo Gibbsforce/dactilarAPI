@@ -9,7 +9,7 @@ $Products = new Products();
 $Cors = new CorsAccessControl();
 $domain = "https://dactilar.com.pe";
 $Cors->add($domain);
-print_r($Cors->send());
+print_r($Cors;
 
 // header('Access-Control-Allow-Origin: *');
 // $Responses = new Responses();
