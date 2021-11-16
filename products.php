@@ -6,12 +6,13 @@ require_once "classes/Responses.class.php";
 // Instantiating classes
 $Products = new Products();
 
-// $Cors = new CorsAccessControl();
-// $domain = "https://dactilar.com.pe";
-// $Cors->add($domain);
-// print_r($Cors);
+$Cors = new CorsAccessControl();
+$domain = "https://dactilar.com.pe";
+$Cors->add($domain);
+$Cors->send();
+print_r($Cors[0][1]);
 
-header('Access-Control-Allow-Origin: *');
+// header('Access-Control-Allow-Origin: *');
 // $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
