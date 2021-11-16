@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (!isset($_GET["page"]) && !isset($_GET["id"])) {
         $products = $Products->getProducts(1);
         $Cors->send();
+        print_r($Cors);
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE');
         // header('Access-Control-Allow-Credentials: true');
