@@ -42,7 +42,6 @@ class Products extends Connection {
                 `product_stock`,
                 `product_image`
             FROM ".$this->table." ORDER BY `product_id` ASC limit $start, $qty";
-        print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
@@ -70,7 +69,6 @@ class Products extends Connection {
                 `product_images_thumbnails`,
                 `product_image`
             FROM ".$this->table." WHERE `product_id` = '$product_id'";
-        print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
