@@ -9,7 +9,7 @@
     <title>Dactilar API</title>
 </head>
 <body>
-    <h2>Wlcome to Dactilar API</h2>
+    <h2>Welcome to Dactilar API</h2>
     <h4>An area for developers</h4>
     <p>We are currently working for the documentation, please visit us later</p>
 </body>

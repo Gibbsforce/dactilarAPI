@@ -1,17 +1,17 @@
 <?php
-// Accediendo a las clases de autenticacion y respuestas
+// Accessing to the authentication and responses classes
 require_once "classes/NewUser.class.php";
 require_once "classes/Responses.class.php";
-// Instanciando las clases
+// Class instantiation
 $NewUser = new NewUser;
 $Responses = new Responses;
-// Validando metodo post
+// Validating post method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Almacenando los datos recibidos mediante post
+    // Storing the received post data
     $post_body = file_get_contents("php://input");
-    // Enviando los datos almacenados al metodo signup
+    //  Sending the stored data to the signUp method
     $arr_data = $NewUser->signUp($post_body);
-    // Devolviendo la respuesta
+    // Returning the response
     header("Content-type: application/json");
     if (isset($arr_data["result"]["error_id"])) {
         $response_code = $arr_data["result"]["error_id"];
@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         http_response_code(200);
     }
     echo json_encode($arr_data);
-    //print_r(json_encode($arr_data));
 } else {
     header("Content-type: application/json");
     $arr_data = $Responses->error_405();

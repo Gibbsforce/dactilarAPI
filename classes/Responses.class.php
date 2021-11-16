@@ -1,7 +1,7 @@
 <?php
-// Creando la clase para los errores de respuesta
+// Building class responses errors
 class Responses {
-    // Estado y resultados de la respuesta definidos
+    // Status and result for defined responses
     public $response = [
         "status" => "OK",
         "result" => array()
@@ -11,12 +11,12 @@ class Responses {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "405",
-            "error_message" => "No permitido"
+            "error_message" => "Not Allowed"
         );
         return $this->response;
     }
     // Error para datos incorrectos (200)
-    public function error_200($str = "Datos incorrectos") {
+    public function error_200($str = "Incorrect data") {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "200",
@@ -29,12 +29,12 @@ class Responses {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "400",
-            "error_message" => "Datos incompletos o formato incorrecto"
+            "error_message" => "Incomplete data or incorrect format"
         );
         return $this->response;
     }
     // Error 500
-    public function error_500($str = "Error de servidor") {
+    public function error_500($str = "Server Error") {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "500",
@@ -43,7 +43,7 @@ class Responses {
         return $this->response;
     }
     // Error 404
-    public function error_404($str = "Error, recurso no encontrado") {
+    public function error_404($str = "Not Found") {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "404",
@@ -52,7 +52,7 @@ class Responses {
         return $this->response;
     }
     // Error 401
-    public function error_401($str = "No autorizado") {
+    public function error_401($str = "Unauthorized") {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "401",
@@ -65,6 +65,15 @@ class Responses {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "201",
+            "error_message" => $str
+        );
+        return $this->response;
+    }
+    // Error 202
+    public function error_202($str = "Accepted") {
+        $this->response["status"] = "error";
+        $this->response["result"] = array(
+            "error_id" => "202",
             "error_message" => $str
         );
         return $this->response;

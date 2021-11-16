@@ -21,7 +21,7 @@ class Auth extends Connection {
         // Validating if user server data exists
         if (!$data) return $Responses->error_200("The user ".$user_login." doesn't exist");
         // Validating if password is correct
-        if ($password !== $data[0]["password"]) return $Responses->error_200("La contrasena es invalida");
+        if ($password !== $data[0]["password"]) return $Responses->error_200("The password is wrong");
         // Validating if user has activated its account
         if ($data["validate"] == 0) return $Responses->error_200("The user ".$user_login." has no activated its account");
         // Validatning if user is active
@@ -50,7 +50,7 @@ class Auth extends Connection {
         // Updating validation
         $update = $this->updateValidation($uid);
         // Validating if the update was successful
-        if (!$update) return $Responses->error_500("Error interno, no se ha podido actualizar");
+        if (!$update) return $Responses->error_500("Intern error, couldn't save");
         // Getting the result
         $result = $Responses->response;
         $result["result"] = array(
@@ -63,7 +63,7 @@ class Auth extends Connection {
         $query = "SELECT `id-auth`, `username`, `password`, `dni`, `state`, `email`, `validate` FROM `users-auth` WHERE `username` = '$user_login' OR `dni` = '$user_login' OR `email` = '$user_login'";
         $data = parent::getData($query);
         if (isset($data[0]["id-auth"])) return $data;
-        return 0;
+        return false;
     }
     // Getting the unique id and token from server method
     private function getSignUpData($uid) {
@@ -74,7 +74,9 @@ class Auth extends Connection {
     }
     // Updating token state and validate
     private function updateValidation($uid) {
-        $query = "UPDATE `users-auth` SET `state` = 1, `validate` = 1 WHERE `unique-id` = '$uid'";
+        $state = true;
+        $validate = true;
+        $query = "UPDATE `users-auth` SET `state` = .$state., `validate` = .$validate. WHERE `unique-id` = '$uid'";
         $updated = parent::nonQuery($query);
         if ($updated > 0) return $updated;
         return false;
