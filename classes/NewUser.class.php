@@ -184,7 +184,7 @@ class NewUser extends Connection {
             '".$password."',
             '".$this->dni."',
             '".$uid."',
-            .$state.,
+            ."$state".,
             '".$this->created."',
             '".$this->email."',
             '".$this->token."',
