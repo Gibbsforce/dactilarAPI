@@ -166,6 +166,7 @@ class NewUser extends Connection {
         $password = parent::encrypt($this->password);
         $state = false;
         $status = "user";
+        $validate = false;
         $query = "INSERT INTO `users-auth` (
             `id-users`,
             `username`,
@@ -184,11 +185,12 @@ class NewUser extends Connection {
             '".$password."',
             '".$this->dni."',
             '".$uid."',
-            ."$state".,
+            '".$state."',
             '".$this->created."',
             '".$this->email."',
             '".$this->token."',
-            ."$status".
+            '".$status."',
+            '".$validate."',
         )";
         print_r($query);
         $result = parent::nonQuery($query);
