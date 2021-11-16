@@ -15,7 +15,7 @@ class CorsAccessControl {
 
     // Optionally add additional domains. Each is only added one time.
     public function add($domain) {
-        if (!in_array( $domain, $this->allowed) {
+        if (!in_array($domain, $this->allowed)) {
             $this->allowed[] = $domain;
         }
     }
