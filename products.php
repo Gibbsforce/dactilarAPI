@@ -7,6 +7,7 @@ require_once "classes/Responses.class.php";
 $Products = new Products();
 $Cors = new CorsAccessControl();
 $Cors->send();
+print_r($Cors);
 // $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
