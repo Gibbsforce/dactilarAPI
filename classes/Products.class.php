@@ -5,7 +5,7 @@ require_once "Responses.class.php";
 // Products inherits from Connection
 class Products extends Connection {
     // Responses
-    private = $Responses new Responses();
+    private $Responses = new Responses();
     // Table
     private $table = "products";
     // Assign the variables
