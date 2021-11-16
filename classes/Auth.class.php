@@ -23,9 +23,9 @@ class Auth extends Connection {
         // Validating if password is correct
         if ($password !== $data[0]["password"]) return $Responses->error_200("The password is wrong");
         // Validating if user has activated its account
-        if ($data[0]["validate"] == 0) return $Responses->error_200("The user ".$user_login." has no activated its account");
+        if ($data[0]["validate"] == false) return $Responses->error_200("The user ".$user_login." has no activated its account");
         // Validatning if user is active
-        if ($data[0]["state"] == 0) return $Responses->error_200("Inactive user");
+        if ($data[0]["state"] == false) return $Responses->error_200("Inactive user");
         // Validating if token added
         $verify = $this->addToken($data[0]["username"], $data[0]["dni"], $data[0]["email"]);
         if (!$verify) return $Responses->error_200("Intern error, couldn't save");
@@ -68,7 +68,6 @@ class Auth extends Connection {
     // Getting the unique id and token from server method
     private function getSignUpData($uid) {
         $query = "SELECT `id-users`, `unique-id`, `token`, `validate` FROM `users-auth` WHERE `unique-id` = '$uid'";
-        print_r($query);
         $data = parent::getData($query);
         if (isset($data[0]["unique-id"]) && isset($data[0]["token"])) return $data;
         return false;
