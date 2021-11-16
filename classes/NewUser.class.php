@@ -185,12 +185,12 @@ class NewUser extends Connection {
             '".$password."',
             '".$this->dni."',
             '".$uid."',
-            '".$state."',
+            $state,
             '".$this->created."',
             '".$this->email."',
             '".$this->token."',
             '".$status."',
-            '$validate',
+            $validate
         )";
         print_r($query);
         $result = parent::nonQuery($query);
