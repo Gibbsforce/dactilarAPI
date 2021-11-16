@@ -11,19 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // $header = "Content-Type: application/json";
     // echo json_encode($products);
     // http_response_code(200);
-    if (isset($_GET["page"])) {
-        $page = $_GET["page"];
+    if (isset($_GET["page"])) $page = $_GET["page"];
         $products = $Products->getProducts($page);
         $header = "Content-Type: application/json";
         echo json_encode($products);
         http_response_code(200);
-    } else if (isset($_GET["id"])) {
-        $id = $_GET["id"];
+    if (isset($_GET["id"])) $id = $_GET["id"];
         $header = "Content-Type: application/json";
         $product = $Products->getProduct($id);
         echo json_encode($product);
         http_response_code(200);
-    }
 } else {
     header("Content-type: application/json");
     $arr_data = $Responses->error_405();
