@@ -18,7 +18,6 @@ class Auth extends Connection {
         $password = $data["password"];
         $password = parent::encrypt($password);
         $data = $this->getUserData($user_login);
-        print_r($data);
         // Validating if user server data exists
         if (!$data) return $Responses->error_200("The user ".$user_login." doesn't exist");
         // Validating if password is correct
@@ -26,7 +25,7 @@ class Auth extends Connection {
         // Validating if user has activated its account
         if ($data[0]["validate"] == 0) return $Responses->error_200("The user ".$user_login." has no activated its account");
         // Validatning if user is active
-        if ($data[0]["state"] == false) return $Responses->error_200("Inactive user");
+        if ($data[0]["state"] == 0) return $Responses->error_200("Inactive user");
         // Validating if token added
         $verify = $this->addToken($data[0]["username"], $data[0]["dni"], $data[0]["email"]);
         if (!$verify) return $Responses->error_200("Intern error, couldn't save");
