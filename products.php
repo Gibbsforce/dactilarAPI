@@ -9,12 +9,13 @@ $Products = new Products();
 foreach($domains as $domain) {
     $Cors->add("https/dactilar.com.pe");
 }
+$Cors->send();
+print_r($Cors);
 // $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (!isset($_GET["page"]) && !isset($_GET["id"])) {
         $products = $Products->getProducts(1);
-        header($Cors->send());
         // header('Access-Control-Allow-Origin: *');
         // header('Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE');
         // header('Access-Control-Allow-Credentials: true');
