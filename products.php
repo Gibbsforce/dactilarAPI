@@ -6,8 +6,9 @@ require_once "classes/Responses.class.php";
 // Instantiating classes
 $Products = new Products();
 $Cors = new CorsAccessControl();
+$domain = "https://dactilar.com.pe";
 foreach($domains as $domain) {
-    $Cors->add("https://dactilar.com.pe");
+    $Cors->add($domain);
 }
 $Cors->send();
 print_r($Cors);
