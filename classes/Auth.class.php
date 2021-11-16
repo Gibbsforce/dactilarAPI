@@ -24,7 +24,7 @@ class Auth extends Connection {
         // Validating if password is correct
         if ($password !== $data[0]["password"]) return $Responses->error_200("The password is wrong");
         // Validating if user has activated its account
-        if ($data["validate"] == 0) return $Responses->error_200("The user ".$user_login." has no activated its account");
+        if ($data[0]["validate"] == 0) return $Responses->error_200("The user ".$user_login." has no activated its account");
         // Validatning if user is active
         if ($data[0]["state"] == false) return $Responses->error_200("Inactive user");
         // Validating if token added
