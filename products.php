@@ -12,20 +12,23 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $header = "Content-Type: application/json";
         echo json_encode($products);
         http_response_code(200);
-    }
-    else if (isset($_GET["page"])) {
+    } else if (isset($_GET["page"])) {
         $page = $_GET["page"];
         $products = $Products->getProducts($page);
         $header = "Content-Type: application/json";
         echo json_encode($products);
         http_response_code(200);
-    }
-    else if (isset($_GET["id"])) {
+    } else if (isset($_GET["id"])) {
         $id = $_GET["id"];
         $header = "Content-Type: application/json";
         $product = $Products->getProduct($id);
         echo json_encode($product);
         http_response_code(200);
+    } else {
+        $header = "Content-Type: application/json";
+        $error = array("error" => "No page or id specified");
+        echo json_encode($error);
+        http_response_code(400);
     }
 } else {
     header("Content-type: application/json");
