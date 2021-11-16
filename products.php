@@ -9,7 +9,7 @@ $Products = new Products();
 foreach($domains as $domain) {
     $Cors->add("https/dactilar.com.pe");
 }
-$Cors->send();
+
 // $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
