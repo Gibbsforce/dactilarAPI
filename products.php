@@ -7,7 +7,7 @@ require_once "classes/Responses.class.php";
 $Products = new Products();
 $Cors = new CorsAccessControl();
 foreach($domains as $domain) {
-    $Cors->add("https/dactilar.com.pe");
+    $Cors->add("https://dactilar.com.pe");
 }
 $Cors->send();
 print_r($Cors);
