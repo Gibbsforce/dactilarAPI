@@ -27,7 +27,7 @@ class Auth extends Connection {
         // Validatning if user is active
         if ($data[0]["state"] == false) return $Responses->error_200("Inactive user");
         // Validating if token added
-        $verify = $this->addToken($data[0]["username"], $data[0]["dni"], $data[0]["email"]);
+        $verify = $this->addToken($data[0]["username"], $data[0]["dni"], $data[0]["email"], $data[0]["status"]);
         if (!$verify) return $Responses->error_200("Intern error, couldn't save");
         // Returning the result with the token
         $result = $Responses->response;
@@ -60,14 +60,14 @@ class Auth extends Connection {
     }
     // Getting user data from server method
     private function getUserData($user_login) {
-        $query = "SELECT `id-auth`, `username`, `password`, `dni`, `state`, `email`, `validate` FROM `users-auth` WHERE `username` = '$user_login' OR `dni` = '$user_login' OR `email` = '$user_login'";
+        $query = "SELECT `id-auth`, `username`, `password`, `dni`, `state`, `email`, `status`, `validate` FROM `users-auth` WHERE `username` = '$user_login' OR `dni` = '$user_login' OR `email` = '$user_login'";
         $data = parent::getData($query);
         if (isset($data[0]["id-auth"])) return $data;
         return false;
     }
     // Getting the unique id and token from server method
     private function getSignUpData($uid) {
-        $query = "SELECT `id-users`, `unique-id`, `token`, `validate` FROM `users-auth` WHERE `unique-id` = '$uid'";
+        $query = "SELECT `id-users`, `unique-id`, `token`, `status`, `validate` FROM `users-auth` WHERE `unique-id` = '$uid'";
         $data = parent::getData($query);
         if (isset($data[0]["unique-id"]) && isset($data[0]["token"])) return $data;
         return false;
@@ -80,12 +80,11 @@ class Auth extends Connection {
         return false;
     }
     // Adding token to server method
-    private function addToken($username, $dni, $email) {
+    private function addToken($uid, $username, $dni, $email, $status) {
         $val = true;
         $token = bin2hex(openssl_random_pseudo_bytes(16, $val));
         $date = date("Y-m-d H:i");
         $state = true;
-        $status = "user";
         $query = "INSERT INTO `users-token` (`username`, `dni`, `email`, `token`, `state`, `status`, `date`)VALUES('$username', '$dni', '$email', '$token', '$state', '$status', '$date')";
         $verified = parent::nonQuery($query);
         if (!$verified) return false;
