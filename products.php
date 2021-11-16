@@ -24,11 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $product = $Products->getProduct($id);
         echo json_encode($product);
         http_response_code(200);
-    } else {
-        $header = "Content-Type: application/json";
-        $error = array("error" => "No page or id specified");
-        echo json_encode($error);
-        http_response_code(400);
     }
 } else {
     header("Content-type: application/json");
