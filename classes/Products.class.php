@@ -62,8 +62,8 @@ class Products extends Connection {
                 `product_class`,
                 `product_price`,
                 `product_price_discount`,
-                `product_description`;
-                `product_description_es`;
+                `product_description`,
+                `product_description_es`,
                 `product_stock`,
                 `product_sizes`,
                 `product_images_gallery`,
