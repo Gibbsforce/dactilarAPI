@@ -41,6 +41,7 @@ class Auth extends Connection {
         $Responses = new Responses;
         // Getting data register from server with the getSignUp method
         $data = $this->getSignUpData($uid);
+        print_r($data);
         // Validating if the user has already been validated
         if ($data[0]["validate"] == true) return $Responses->error_200("The user has already been validated");
         // Validating if the unique id is correct
