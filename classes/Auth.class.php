@@ -69,6 +69,7 @@ class Auth extends Connection {
     // Getting the unique id and token from server method
     private function getSignUpData($uid) {
         $query = "SELECT `id-users`, `unique-id`, `token`, `validate` FROM `users-auth` WHERE `unique-id` = '$uid'";
+        print_r($query);
         $data = parent::getData($query);
         if (isset($data[0]["unique-id"]) && isset($data[0]["token"])) return $data;
         return false;
