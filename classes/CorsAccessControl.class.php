@@ -21,7 +21,8 @@ class CorsAccessControl {
     }
     // Send 'em all as one header so no browsers grumble about it.
     public function send() {
-        $domains = implode( ", ", $this->allowed);
-        header( "Access-Control-Allow-Origin: ".$domains, true); // We want to send them all as one shot, so replace should be true here.
+        $domains = implode(", ", $this->allowed);
+        print_r($domains);
+        header("Access-Control-Allow-Origin: ".$domains, true); // We want to send them all as one shot, so replace should be true here.
     }
 }
