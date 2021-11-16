@@ -18,6 +18,7 @@ class CorsAccessControl {
         if (!in_array( $domain, $this->allowed) {
             $this->allowed[] = $domain;
         }
+    }
     // Send 'em all as one header so no browsers grumble about it.
     public function send() {
         $domains = implode( ", ", $this->allowed);
