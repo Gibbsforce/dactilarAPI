@@ -7,7 +7,7 @@ $Products = new Products();
 // $Responses = new Responses();
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $products = $Products->getProducts(1);
+    if (!isset($_GET["pages"]) && !isset($_GET["id"])) $products = $Products->getProducts(1);
     $header = "Content-Type: application/json";
     echo json_encode($products);
     http_response_code(200);
