@@ -5,7 +5,6 @@ require_once "Responses.class.php";
 // Products inherits from Connection
 class Products extends Connection {
     // Responses
-    private $Responses = new Responses();
     // Table
     private $table = "products";
     // Assign the variables
@@ -27,6 +26,7 @@ class Products extends Connection {
     private $product_date = "";
     // Getting products method
     public function getProducts($page = 1) {
+        $Responses = new Responses();
         $start = 0;
         $qty = 15;
         if ($page > 1) $start = $qty * ($page - 1);
@@ -53,6 +53,7 @@ class Products extends Connection {
     }
     // Getting products by id method
     public function getProduct($product_id) {
+        $Responses = new Responses();
         $query =
             "SELECT 
                 `product_id`,
