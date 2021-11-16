@@ -190,7 +190,6 @@ class NewUser extends Connection {
             '".$status."',
             0
         )";
-        print_r($query);
         $result = parent::nonQuery($query);
         if (!$result) return false;
         return true;
