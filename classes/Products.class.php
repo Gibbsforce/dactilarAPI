@@ -319,7 +319,7 @@ class Products extends Connection {
     // Looking for the token method
     private function searchToken() {
         $query = "SELECT `id-token`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND `status` = `admin`";
-        // print_r($query);
+        print_r($query);
         try {
             $result = parent::getData($query);
             // print_r($result);
