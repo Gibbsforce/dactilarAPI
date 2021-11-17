@@ -177,7 +177,7 @@ class Products extends Connection {
             )";
         print_r($query);
         try {
-            $product = parent::nonQuerId($query);
+            $product = parent::nonQueryId($query);
             if ($product) return $product;
             return false;
         } catch (PDOException $error) {
