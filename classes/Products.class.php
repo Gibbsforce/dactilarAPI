@@ -116,7 +116,6 @@ class Products extends Connection {
         $this->product_stock = $data["product_stock"];
         $this->product_sizes = $data["product_sizes"];
         $product_image = $this->productImage($data["product_image"]);
-        print_r($this->domain);
         print_r($product_image);
         $product_image_thumb = $this->productImageThumbnails($product_image);
         print_r($product_image_thumb);
@@ -199,7 +198,6 @@ class Products extends Connection {
         $file = $dir.uniqid().".".$ext;
         file_put_contents($file, $image_base64);
         $domain = $this->domain;
-        print_r($domain);
         $local_file = str_replace(dirname(__DIR__), $domain, $file);
         $arr_file = array($file, $local_file);
         return $arr_file;
