@@ -115,7 +115,7 @@ class Products extends Connection {
         $this->product_weight = $data["product_weight"];
         $this->product_stock = $data["product_stock"];
         $this->product_sizes = $data["product_sizes"];
-        $product_image = $this->productImage($data["image"]);
+        $product_image = $this->productImage($data["product_image"]);
         $product_image_thumb = $this->productImageThumbnails($product_image);
         $this->product_image = $product_image_thumb[1];
         // No mandatory
