@@ -170,7 +170,7 @@ class Products extends Connection {
                 '".$this->product_sizes."',
                 '".$this->product_image."',
                 '".$this->product_images_gallery."',
-                '".$this->product_images_thumbnails."'
+                '".$this->product_images_thumbnails."',
                 '".$this->product_date."'
             )";
         print_r($query);
