@@ -176,7 +176,7 @@ class Products extends Connection {
                 '".$this->product_images_thumbnails."',
                 '".$this->product_date."'
             )";
-        // print_r($query);
+        print_r($query);
         try {
             $product = parent::nonQuerId($query);
             if ($product) return $product;
