@@ -173,7 +173,7 @@ class Products extends Connection {
                 '".$this->product_images_thumbnails."',
                 '".$this->product_date."'
             )";
-        // print_r($query);
+        print_r($query);
         try {
             $product = parent::nonQuerId($query);
             if ($product) return $product;
@@ -191,6 +191,7 @@ class Products extends Connection {
         $file = $dir.uniqid().".".$ext;
         file_put_contents($file, $image_base64);
         $domain = $this->domain;
+        print_r($domain);
         $local_file = str_replace(dirname(__DIR__), $domain, $file);
         $arr_file = array($file, $local_file);
         return $arr_file;
@@ -314,8 +315,7 @@ class Products extends Connection {
     }
     // Domain
     private function domain() {
-        $domain = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
-        print_r($domain);
+        $domain[] = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
         return $domain;
     }
     // Looking for the token method
