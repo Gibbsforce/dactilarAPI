@@ -181,7 +181,6 @@ class Products extends Connection {
         }
     }
     // Method that proccess the data products
-    }
     private function productImage($product_image) {
         $dir = dirname(__DIR__)."/public/products/image/";
         $array_image = explode(";base64,", $product_image);
