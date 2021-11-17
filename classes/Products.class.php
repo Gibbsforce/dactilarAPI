@@ -258,9 +258,8 @@ class Products extends Connection {
         } else {
             return null;
         }
-        $api_dest = implode(",", $dest);
         $domain = $this->domain;
-        $local_dest = str_replace(dirname(__DIR__), $domain, $api_dest);
+        $local_dest = str_replace(dirname(__DIR__), $domain, $dest);
         $arr_dest = array($api_dest, $local_dest);
         return $arr_dest;
     }
