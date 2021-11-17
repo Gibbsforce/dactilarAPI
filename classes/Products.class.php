@@ -311,7 +311,7 @@ class Products extends Connection {
         return $arr_dest;
     }
     // Domain
-    private domain() {
+    private function domain() {
         $domain = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
         print_r($domain);
         return $domain;
