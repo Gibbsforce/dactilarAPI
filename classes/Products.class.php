@@ -131,7 +131,6 @@ class Products extends Connection {
         }
         // Saving the product
         $product = $this->createProduct();
-        print_r($product);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
@@ -184,11 +183,6 @@ class Products extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // Domain
-    private function domain() {
-        $domain = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
-        return $domain;
-    }
     // Method that proccess the data products
     private function productImage($product_image) {
         $dir = dirname(__DIR__)."/public/products/image/";
@@ -197,7 +191,7 @@ class Products extends Connection {
         $image_base64 = base64_decode($array_image[1]);
         $file = $dir.uniqid().".".$ext;
         file_put_contents($file, $image_base64);
-        $domain = $this->domain;
+        $domain = $this->domain();
         $local_file = str_replace(dirname(__DIR__), $domain, $file);
         $arr_file = array($file, $local_file);
         return $arr_file;
@@ -215,7 +209,7 @@ class Products extends Connection {
             file_put_contents($files[$i], $image_base64[$i]);
         }
         $files_name = implode(",", $files);
-        $domain = $this->domain;
+        $domain = $this->domain();
         $local_files = str_replace(dirname(__DIR__), $domain, $files_name);
         $arr_files = array($files_name, $local_files);
         return $arr_files;
@@ -256,7 +250,7 @@ class Products extends Connection {
         } else {
             return null;
         }
-        $domain = $this->domain;
+        $domain = $this->domain();
         $local_dest = str_replace(dirname(__DIR__), $domain, $dest);
         $arr_dest = array($dest, $local_dest);
         return $arr_dest;
@@ -313,10 +307,15 @@ class Products extends Connection {
             }
         }
         $api_dest = implode(",", $dest);
-        $domain = $this->domain;
+        $domain = $this->domain();
         $local_dest = str_replace(dirname(__DIR__), $domain, $api_dest);
         $arr_dest = array($api_dest, $local_dest);
         return $arr_dest;
+    }
+    // Domain
+    private function domain() {
+        $domain = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
+        return $domain;
     }
     // Looking for the token method
     private function searchToken() {
