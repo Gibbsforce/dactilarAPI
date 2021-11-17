@@ -182,6 +182,11 @@ class Products extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
+    // Domain
+    private function domain() {
+        $domain = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
+        return $domain;
+    }
     // Method that proccess the data products
     private function productImage($product_image) {
         $dir = dirname(__DIR__)."/public/products/image/";
@@ -312,11 +317,6 @@ class Products extends Connection {
         $local_dest = str_replace(dirname(__DIR__), $domain, $api_dest);
         $arr_dest = array($api_dest, $local_dest);
         return $arr_dest;
-    }
-    // Domain
-    private function domain() {
-        $domain[] = "http".((array_key_exists("HTTPS", $_SERVER) && $_SERVER["HTTPS"] && strtolower($_SERVER["HTTPS"]) !== "off") ? "s" : null)."://".$_SERVER["HTTP_HOST"];
-        return $domain;
     }
     // Looking for the token method
     private function searchToken() {
