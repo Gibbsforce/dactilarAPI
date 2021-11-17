@@ -89,7 +89,7 @@ class Products extends Connection {
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
-        if (!$arr_token) return $Responses->error_401();
+        if (!$arr_token) return $Responses->error_401("here a bug");
         // Mandatory fields
         if (
             !isset($data["product_name"]) ||
@@ -321,6 +321,7 @@ class Products extends Connection {
         $query = "SELECT `id-token`, `unique-id`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND `status` = `admin`";
         try {
             $result = parent::getData($query);
+            print_r($result);
             if ($result) return $result;
             return false;
         } catch (PDOException $error) {
