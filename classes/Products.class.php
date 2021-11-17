@@ -116,6 +116,7 @@ class Products extends Connection {
         $this->product_stock = $data["product_stock"];
         $this->product_sizes = $data["product_sizes"];
         $product_image = $this->productImage($data["product_image"]);
+        print_r($product_image);
         $product_image_thumb = $this->productImageThumbnails($product_image);
         $this->product_image = $product_image_thumb[1];
         // No mandatory
@@ -173,7 +174,7 @@ class Products extends Connection {
                 '".$this->product_images_thumbnails."',
                 '".$this->product_date."'
             )";
-        print_r($query);
+        // print_r($query);
         try {
             $product = parent::nonQuerId($query);
             if ($product) return $product;
