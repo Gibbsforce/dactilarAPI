@@ -264,7 +264,7 @@ class Products extends Connection {
         
         for ($i = 0; $i < count($src); $i++) {
             $img[] = explode(".", $src[$i]);
-            $ext[] = $img[$i][1];
+            $ext[] = $img[$i][count($img[$i]) - 1];
             if ($ext[$i] == "jpeg") {
                 $dest[] = dirname(__DIR__)."/public/products/images/thumbnails/".uniqid().".".$ext[$i];
                 $size[] = getimagesize($src[$i]);
