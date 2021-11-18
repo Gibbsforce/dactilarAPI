@@ -230,7 +230,7 @@ class Products extends Connection {
             $new_height = ceil($height * $resize);
             $origin = imagecreatefromjpeg($src);
             $resized = imagecreatetruecolor($new_width, $new_height);
-            imagecopyresized($resized, $origin, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            imagecopyresampled($resized, $origin, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
             imagejpeg($resized, $dest);
             imagedestroy($origin);
             imagedestroy($resized);
@@ -245,7 +245,7 @@ class Products extends Connection {
             $resized = imagecreatetruecolor($new_width, $new_height);
             imagealphablending($resized, false);
             imagesavealpha($resized, true);
-            imagecopyresized($resized, $origin, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+            imagecopyresampled($resized, $origin, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
             imagepng($resized, $dest);
             imagedestroy($origin);
             imagedestroy($resized);
