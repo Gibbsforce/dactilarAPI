@@ -89,7 +89,7 @@ class Products extends Connection {
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
-        if (!$arr_token) return $Responses->error_401("Not an admin or you token has deprecated");
+        if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
         // Mandatory fields
         if (
             !isset($data["product_name"]) ||
@@ -104,6 +104,12 @@ class Products extends Connection {
             !isset($data["product_sizes"]) ||
             !isset($data["product_image"])
         ) return $Responses->error_400();
+        // Validating the fields
+        if(!empty($data["product_name"])) $Responses->error_200("The name of the product is empty");
+        if(!empty($data["product_class"])) $Responses->error_200("The product class is empty");
+        if(!empty($data["product_price"])) $Responses->error_200("The product price is empty");
+        if(!empty($data["product_description"])) $Responses->error_200("Product description is empty");
+        if(!empty($data["product_description_es"])) $Responses->error_200("Product description spanish is empty");
         // Storing the data into the variables
         $this->product_name = $data["product_name"];
         $this->product_class = $data["product_class"];
@@ -115,6 +121,7 @@ class Products extends Connection {
         $this->product_weight = $data["product_weight"];
         $this->product_stock = $data["product_stock"];
         $this->product_sizes = $data["product_sizes"];
+        // Image port
         $product_image = $this->productImage($data["product_image"]);
         $product_image_thumb = $this->productImageThumbnails($product_image);
         $this->product_image = $product_image_thumb[1];
@@ -122,8 +129,6 @@ class Products extends Connection {
         // Images gallery
         if (isset($data["product_images_gallery"])) {
             $product_images_gallery = $this->productImagesGallery($data["product_images_gallery"]);
-            print_r($product_images_gallery);
-            print_r($thumbnails);
             // Storing the images
             $this->product_images_gallery = $product_images_gallery[1];
             // Images thumbnails
@@ -140,6 +145,54 @@ class Products extends Connection {
         );
         return $response;
     }
+    // PUT product
+    public function put($json) {
+        // Responses
+        $Responses = new Responses();
+        // Getting the data from the client
+        $data = json_decode($json, true);
+        // Validating token
+        if (!isset($data["token"])) return $Responses->error_401();
+        $this->token = $data["token"];
+        $arr_token = $this->searchToken();
+        if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
+        // Mandatory fields
+        if (!isset($data["product_id"])) return $Responses->error_400();
+        $this->product_id = $data["product_id"];
+        // Updating fields
+        if (isset($data["product_name"])) $this->product_name = $data["product_name"];
+        if (isset($data["product_class"])) $this->product_class = $data["product_class"];
+        if (isset($data["product_price"])) $this->product_price = $data["product_price"];
+        if (isset($data["product_price_discount"])) $this->product_price_discount = $data["product_price_discount"];
+        if (isset($data["product_unique_piece"])) $this->product_unique_piece = $data["product_unique_piece"];
+        if (isset($data["product_description"])) $this->product_description = $data["product_description"];
+        if (isset($data["product_description_es"])) $this->product_description_es = $data["product_description_es"];
+        if (isset($data["product_weight"])) $this->product_weight = $data["product_weight"];
+        if (isset($data["product_stock"])) $this->product_stock = $data["product_stock"];
+        if (isset($data["product_sizes"])) $this->product_sizes = $data["product_sizes"];
+        // Image port
+        if (isset($data["product_image"])) {
+            $product_image = $this->productImage($data["product_image"]);
+            $product_image_thumb = $this->productImageThumbnails($product_image);
+            $this->product_image = $product_image_thumb[1];
+        }
+        // Images gallery
+        if (isset($data["product_images_gallery"])) {
+            $product_images_gallery = $this->productImagesGallery($data["product_images_gallery"]);
+            $this->product_images_gallery = $product_images_gallery[1];
+            $thumbnails = $this->productImagesThumbnails($product_images_gallery);
+            $this->product_images_thumbnails = $thumbnails[1];
+        }
+        // Updating the product
+        $product = $this->updateProduct();
+        if (!$product) return $Responses->error_500();
+        $response = $Responses->response;
+        $response["result"] = array(
+            "product_id" => $product
+        );
+        return $response;
+    }
+
     // Creating products method
     private function createProduct() {
         $this->product_date = date("Y-m-d H:i");
@@ -176,10 +229,34 @@ class Products extends Connection {
                 '".$this->product_images_thumbnails."',
                 '".$this->product_date."'
             )";
-        print_r($query);
         try {
             $product = parent::nonQueryId($query);
             if ($product) return $product;
+            return false;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+    }
+    // Updating products method
+    private function updateProduct($product_uid) {
+        $query = "UPDATE ".$this->table." SET
+            `product_name` = '".$this->product_name."',
+            `product_class` = '".$this->product_class."',
+            `product_price` = '".$this->product_price."',
+            `product_price_discount` = '".$this->product_price_discount."',
+            `product_unique_piece` = '".$this->product_unique_piece."',
+            `product_description` = '".$this->product_description."',
+            `product_description_es` = '".$this->product_description_es."',
+            `product_weight` = '".$this->product_weight."',
+            `product_stock` = '".$this->product_stock."',
+            `product_sizes` = '".$this->product_sizes."',
+            `product_image` = '".$this->product_image."',
+            `product_images_gallery` = '".$this->product_images_gallery."',
+            `product_images_thumbnails` = '".$this->product_images_thumbnails."'
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        try {
+            $product = parent::nonQueryId($query);
+            if ($product > 0) return $product;
             return false;
         } catch (PDOException $error) {
             return Responses::prepare(500, $error->getMessage());
@@ -218,7 +295,7 @@ class Products extends Connection {
     }
     private function productImageThumbnails($file) {
         $src = $file[0];
-        $resize = 0.5;
+        $resize = 0.25;
         $img = explode(".", $src);
         $ext = $img[count($img) - 1];
         if ($ext == "jpeg") {
@@ -261,7 +338,7 @@ class Products extends Connection {
         $str = $arr_files[0];
         $src = explode(",", $str);
         
-        $resize = 0.5;
+        $resize = 0.1;
         
         for ($i = 0; $i < count($src); $i++) {
             $img[] = explode(".", $src[$i]);
