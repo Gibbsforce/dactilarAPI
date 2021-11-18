@@ -48,11 +48,23 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 // POST
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recibiendo datos enviados de post
+    // Receiving post sent data as a JSON string
     $post_body = file_get_contents("php://input");
-    // Enviando datos al manejador metodo post
+    // Sending the data to post handler
     $arr_data = $Products->post($post_body);
-    // Devolviendo la respuesta
+    // Returning the response
+    header("Content-type: application/json");
+    if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
+    $response_code = $arr_data["result"]["error_id"];
+    http_response_code($response_code);
+    echo json_encode($arr_data);
+// PUT
+} else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+    // Receiving post sent data as a JSON string
+    $post_body = file_get_contents("php://input");
+    // Sending the data to put handler
+    $arr_data = $Products->put($post_body);
+    // Returning the response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
     $response_code = $arr_data["result"]["error_id"];
