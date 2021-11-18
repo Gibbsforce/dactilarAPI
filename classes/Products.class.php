@@ -122,12 +122,13 @@ class Products extends Connection {
         // Images gallery
         if (isset($data["product_images_gallery"])) {
             $product_images_gallery = $this->productImagesGallery($data["product_images_gallery"]);
-            // Images thumbnails
-            $thumbnails = $this->productImagesThumbnails($product_images_gallery);
             print_r($product_images_gallery);
             print_r($thumbnails);
             // Storing the images
             $this->product_images_gallery = $product_images_gallery[1];
+            // Images thumbnails
+            $thumbnails = $this->productImagesThumbnails($product_images_gallery);
+            // Storing the images
             $this->product_images_thumbnails = $thumbnails[1];
         }
         // Saving the product
