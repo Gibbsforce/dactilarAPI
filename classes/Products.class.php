@@ -184,7 +184,7 @@ class Products extends Connection {
             $this->product_images_thumbnails = $thumbnails[1];
         }
         // Updating the product
-        $product = $this->updateProduct();
+        $product = $this->updateProduct(0);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
