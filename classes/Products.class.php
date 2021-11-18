@@ -50,7 +50,7 @@ class Products extends Connection {
             // test for consuming api in react
             $res = array(
                 "page" => $page,
-                "results" => $data
+                "results" => $data,
                 "total_pages" => ceil(count($data) / $qty),
                 "total_results" => count($data),
             );
