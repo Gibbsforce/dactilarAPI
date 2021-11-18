@@ -47,7 +47,14 @@ class Products extends Connection {
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
-            return $data;
+            // test for consuming api in react
+            $res = array(
+                "page" => $page,
+                "results" => $data
+                "total_pages" => ceil(count($data) / $qty),
+                "total_results" => count($data),
+            );
+            return $res;
         } catch (PDOException $error) {
             return Responses::prepare(500, $error->getMessage());
         }
