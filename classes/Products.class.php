@@ -287,6 +287,7 @@ class Products extends Connection {
     // Removing products method
     private function deleteProduct($product_uid) {
         $query = "DELETE FROM ".$this->table." WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        print_r($query);
         try {
             $product = parent::nonQuery($query);
             if ($product > 0) return $product;
