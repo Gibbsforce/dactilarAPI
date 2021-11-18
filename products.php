@@ -60,10 +60,32 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     echo json_encode($arr_data);
 // PUT
 } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-    // Receiving post sent data as a JSON string
-    $post_body = file_get_contents("php://input");
+    // Receiving put sent data as a JSON string
+    $put_body = file_get_contents("php://input");
     // Sending the data to put handler
-    $arr_data = $Products->put($post_body);
+    $arr_data = $Products->put($put_body);
+    // Returning the response
+    header("Content-type: application/json");
+    if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
+    $response_code = $arr_data["result"]["error_id"];
+    http_response_code($response_code);
+    echo json_encode($arr_data);
+// DELETE
+} else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    $headers = getallheaders();
+    if (isset($headers["token"]) && isset($headers["product_id"])) {
+        // Receiving data from headers
+        $send = [
+            "token" => $headers["token"],
+            "product_id" => $headers["product_id"]
+        ];
+        $delete_body = json_encode($send);
+    } else {
+        // Receiving post sent data as a JSON string
+        $delete_body = file_get_contents("php://input");
+    }
+    // Sending the data to delete handler
+    $arr_data = $Users->delete($delete_body);
     // Returning the response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);

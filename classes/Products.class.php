@@ -185,7 +185,6 @@ class Products extends Connection {
         }
         // Updating the product
         $product = $this->updateProduct(0);
-        // print_r($product);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
@@ -193,7 +192,29 @@ class Products extends Connection {
         );
         return $response;
     }
-
+    // DELETE product
+    public function delete($json) {
+        // Responses
+        $Responses = new Responses();
+        // Getting the data from the client
+        $data = json_decode($json, true);
+        // Validating token
+        if (!isset($data["token"])) return $Responses->error_401();
+        $this->token = $data["token"];
+        $arr_token = $this->searchToken();
+        if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
+        // Mandatory fields
+        if (!isset($data["product_id"])) return $Responses->error_400();
+        $this->product_id = $data["product_id"];
+        // Deleting the product
+        $product = $this->deleteProduct(0);
+        if (!$product) return $Responses->error_500();
+        $response = $Responses->response;
+        $response["result"] = array(
+            "product_id" => $product
+        );
+        return $response;
+    }
     // Creating products method
     private function createProduct() {
         $this->product_date = date("Y-m-d H:i");
@@ -255,6 +276,17 @@ class Products extends Connection {
             `product_images_gallery` = '".$this->product_images_gallery."',
             `product_images_thumbnails` = '".$this->product_images_thumbnails."'
             WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        try {
+            $product = parent::nonQuery($query);
+            if ($product > 0) return $product;
+            return false;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+    }
+    // Removing products method
+    private function deleteProduct($product_uid) {
+        $query = "DELETE FROM ".$this->table." WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
         try {
             $product = parent::nonQuery($query);
             if ($product > 0) return $product;
