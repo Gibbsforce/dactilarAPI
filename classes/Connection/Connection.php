@@ -57,11 +57,13 @@ class Connection {
     }
     // Agregar datos a una tabla y devolviendo la cantidad de filas afectadas
     public function nonQuery($query) {
+        $this->connection->set_charset("utf8");
         $result =  $this->connection->query($query);
         return $this->connection->affected_rows;
     }
     // Agrega datos y devuelve el id la fila que se agrego
     public function nonQueryId($query) {
+        $this->connection->set_charset("utf8");
         $result =  $this->connection->query($query);
         $rows = $this->connection->affected_rows;
         if ($rows > 0) return $this->connection->insert_id;
