@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $delete_body = file_get_contents("php://input");
     }
     // Sending the data to delete handler
-    $arr_data = $Users->delete($delete_body);
+    $arr_data = $Products->delete($delete_body);
     // Returning the response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
