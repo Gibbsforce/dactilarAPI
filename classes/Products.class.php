@@ -232,7 +232,7 @@ class Products extends Connection {
             imagejpeg($resized, $dest);
             imagedestroy($origin);
             imagedestroy($resized);
-        } elseif ($ext == "png") {
+        } else if ($ext == "png") {
             $dest = dirname(__DIR__)."/public/products/image/thumbnails/".uniqid().".".$ext;
             $size = getimagesize($src);
             $width = $size[0];
