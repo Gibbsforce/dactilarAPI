@@ -185,7 +185,7 @@ class Products extends Connection {
         }
         // Updating the product
         $product = $this->updateProduct(0);
-        print_r($product);
+        // print_r($product);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
@@ -256,7 +256,7 @@ class Products extends Connection {
             `product_images_thumbnails` = '".$this->product_images_thumbnails."'
             WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
         try {
-            $product = parent::nonQueryId($query);
+            $product = parent::nonQuery($query);
             if ($product > 0) return $product;
             return false;
         } catch (PDOException $error) {
