@@ -45,6 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $product = $Products->getProduct($id);
         echo json_encode($product);
         http_response_code(200);
+    } else {
+        header("X-Content-Type-Options: nosniff");
+        header("Content-type: application/json");
+        $arr_data = $Responses->error_405();
+        echo json_encode($arr_data);
     }
 // POST
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -37,11 +37,11 @@ class NewUser extends Connection {
             !isset($data["phone"]) ||
             !isset($data["email"]) ||
             !isset($data["password"]) ||
-            !isset($data["check-password"]) ||
+            !isset($data["check_password"]) ||
             !isset($data["address"]) ||
             !isset($data["country"]) ||
-            !isset($data["state-city"]) ||
-            !isset($data["city-district"]) ||
+            !isset($data["state_city"]) ||
+            !isset($data["city_district"]) ||
             !isset($data["zipcode"]) ||
             !isset($data["username"])
         ) return $Responses->error_400();
@@ -52,11 +52,11 @@ class NewUser extends Connection {
         if (empty($data["phone"])) return $Responses->error_200("The phone number is empty");
         if (empty($data["email"])) return $Responses->error_200("The email is empty");
         if (empty($data["password"])) return $Responses->error_200("The password is empty");
-        if (empty($data["check-password"])) return $Responses->error_200("The password is empty");
+        if (empty($data["check_password"])) return $Responses->error_200("The password is empty");
         if (empty($data["address"])) return $Responses->error_200("The address is empty");
         if (empty($data["country"])) return $Responses->error_200("The country is empty");
-        if (empty($data["state-city"])) return $Responses->error_200("The state/city is empty");
-        if (empty($data["city-district"])) return $Responses->error_200("The city/district is empty");
+        if (empty($data["state_city"])) return $Responses->error_200("The state/city is empty");
+        if (empty($data["city_district"])) return $Responses->error_200("The city/district is empty");
         if (empty($data["zipcode"])) return $Responses->error_200("The zipcode is empty");
         if (empty($data["username"])) return $Responses->error_200("The username is empty");
         // Assigning data to the variables
@@ -66,11 +66,11 @@ class NewUser extends Connection {
         $this->phone = $data["phone"];
         $this->email = $data["email"];
         $this->password = $data["password"];
-        $this->check_password = $data["check-password"];
+        $this->check_password = $data["check_password"];
         $this->address = $data["address"];
         $this->country = $data["country"];
-        $this->state_city = $data["state-city"];
-        $this->city_district = $data["city-district"];
+        $this->state_city = $data["state_city"];
+        $this->city_district = $data["city_district"];
         $this->zipcode = $data["zipcode"];
         $this->username = $data["username"];
         $this->created = date("Y-m-d H:i");
