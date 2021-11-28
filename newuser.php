@@ -5,12 +5,11 @@ require_once "classes/Responses.class.php";
 // Class instantiation
 $NewUser = new NewUser;
 $Responses = new Responses;
-// Headers
-// CORS
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
 // Validating post method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // CORS
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
     // Storing the received post data
     $post_body = file_get_contents("php://input");
     //  Sending the stored data to the signUp method
