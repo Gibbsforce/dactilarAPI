@@ -8,6 +8,7 @@ $Responses = new Responses;
 // Headers
 // CORS
 header("Access-Control-Allow-Origin: *");
+header("Content-type: application/json");
 // Validating post method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Storing the received post data
