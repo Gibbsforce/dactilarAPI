@@ -7,6 +7,8 @@ $NewUser = new NewUser;
 $Responses = new Responses;
 // Validating post method
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // CORS
+    header("Access-Control-Allow-Origin: *");
     // Storing the received post data
     $post_body = file_get_contents("php://input");
     //  Sending the stored data to the signUp method
