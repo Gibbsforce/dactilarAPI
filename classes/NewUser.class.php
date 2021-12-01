@@ -84,8 +84,8 @@ class NewUser extends Connection {
         if (strlen($this->username) > 32) return $Responses->error_200("Username too large");
         if (strlen($this->phone) < 9 || !is_numeric($this->phone)) return $Responses->error_200("Please, add a valid phone number");
         if (strlen($this->zipcode) < 4 || !is_numeric($this->zipcode)) return $Responses->error_200("Please, add a valid zipcode");
-        if (strlen($this->password) < 8 || strlen($this->check_password) < 8) return $Responses->error_200("Password should be min 8 characteres");
-        if (strlen($this->password) > 32 || strlen($this->check_password) > 32) return $Responses->error_200("Password too large");
+        if (strlen($this->password) < 8 || strlen($this->check_password) < 8) return $Responses->error_200("Passwords should be min 8 characteres");
+        if (strlen($this->password) > 32 || strlen($this->check_password) > 32) return $Responses->error_200("Passwords too large");
         // Password match
         if ($this->password != $this->check_password) return $Responses->error_200("The passwords don't match");
         // Checking if the user is already registered
