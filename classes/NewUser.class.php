@@ -112,6 +112,7 @@ class NewUser extends Connection {
         $response = $Responses->response;
         $response["result"] = array(
             "id-users" => $result_add_user,
+            "uid" => $uid,
             "token" => $this->token,
             "state" => "User created succesfully",
             "validation" => false,
