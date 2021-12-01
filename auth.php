@@ -15,10 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if (isset($arr_data["result"]["error_id"])) {
             $response_code = $arr_data["result"]["error_id"];
             http_response_code($response_code);
+            $validation = "false";
         } else {
             http_response_code(200);
         }
-        header("Location: http://localhost:3000/login");
+        // header("Location: http://localhost:3000/login");
+        $validation = "true";
+        header("Location: ".$_SERVER["HTTP_REFERER"]."?validation=$validation");
         echo json_encode($arr_data);
     } else {
         header("Content-type: application/json");
