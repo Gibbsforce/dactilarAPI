@@ -6,8 +6,7 @@ require_once "classes/Responses.class.php";
 $Auth = new Auth;
 $Responses = new Responses;
 print_r("testing... dotenv");
-// print_r(getenv());
-echo "current env is   : ".get_cfg_var('APP_ENV');
+print_r(getenv());
 // Validando metodo post
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["uid"]) && isset($_GET["token"])) {
