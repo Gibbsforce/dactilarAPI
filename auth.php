@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         } else {
             http_response_code(200);
         }
-        header("Location: localhot:3000/login");
+        header("Location: http://localhost:3000/login");
         echo json_encode($arr_data);
     } else {
         header("Content-type: application/json");
