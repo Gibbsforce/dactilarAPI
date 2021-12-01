@@ -19,6 +19,27 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             http_response_code(200);
         }
         echo json_encode($arr_data);
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            if ($arr_data["result"]["validation"] == true) {
+                header("Content-type: application/json");
+                $result = $Responses->response;
+                $result["result"] = array(
+                    "message" => "validated"
+                );
+                echo json_encode($result);
+            } else {
+                header("Content-type: application/json");
+                $result = $Responses->response;
+                $result["result"] = array(
+                    "message" => "not_validated"
+                );
+                echo json_encode($result);
+            }
+        } else {
+            header("Content-type: application/json");
+            $arr_data = $Responses->error_405();
+            echo json_encode($arr_data);
+        }
     } else {
         header("Content-type: application/json");
         $arr_data = $Responses->error_405();
