@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             http_response_code(200);
             $validation = "true";
         }
-        // header("Location: http://localhost:3000/login");
-        header("Location: ".$_SERVER["HTTP_REFERER"]."?validation=$validation");
+        // header("Location: ".$_SERVER["HTTP_REFERER"]."?validation=$validation");
+        header("Location: http://localhost:3000/login?validation=$validation");
         echo json_encode($arr_data);
     } else {
         header("Content-type: application/json");
