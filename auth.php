@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $validation = "true";
         }
         // header("Location: http://localhost:3000/login");
-        header("Location: ".$_SERVER["HTTP_REFERER"]."?validation=$validation");
         echo json_encode($arr_data);
+        header("Location: ".$_SERVER["HTTP_REFERER"]."?validation=$validation");
     } else {
         header("Content-type: application/json");
         $arr_data = $Responses->error_405();
