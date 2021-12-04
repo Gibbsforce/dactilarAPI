@@ -7,7 +7,9 @@ $Auth = new Auth;
 $Responses = new Responses;
 
 // Headers
+// CORS
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
 // Validando metodo post
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
