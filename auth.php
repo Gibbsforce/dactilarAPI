@@ -5,6 +5,10 @@ require_once "classes/Responses.class.php";
 // Instanciando las clases
 $Auth = new Auth;
 $Responses = new Responses;
+
+// Headers
+header("Access-Control-Allow-Origin: *");
+
 // Validando metodo post
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["uid"]) && isset($_GET["token"])) {
