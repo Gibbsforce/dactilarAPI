@@ -203,6 +203,83 @@ class NewUser extends Connection {
             <html>
                 <head>
                     <title>Email validation</title>
+                    <style>
+                        * {
+                            box-sizing: border-box;
+                            user-select: none;
+                            font-family: 'AvenirLTW01-95BlackObli', sans-serif;
+                            text-align: center;
+                        }
+                        h1 {
+                            color: #032d28;
+                        }
+                        p {
+                            color: #667c7e;
+                        }
+                        a {
+                            text-decoration: none;
+                            color: #667c7e;
+                            transition: .5s ease-in-out;
+                        }
+                        a:hover {
+                            color: black;
+                            transition: .5s ease-in-out;
+                        }
+                        .container {
+                            max-width: 100%;
+                            width: 100%;
+                            height: 100vh;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-direction: column;
+                            background-color: rgba(0, 0, 0, 0.05);
+                        }
+                        .logo-cover img {
+                            max-width: 100%;
+                            width: 220px;
+                            height: 150px;
+                        }
+                        .logo-font img {
+                            max-width: 100%;
+                            width: 504px;
+                            height: 150px;
+                        }
+                        button {
+                            display: block;
+                            background: white;
+                            color: #667c7e;
+                            text-transform: uppercase;
+                            border: 1px solid #667c7e;
+                            font-size: 1.2rem;
+                            outline: none;
+                            margin: 20px auto;
+                            padding: 10px 20px;
+                            cursor: pointer;
+                            transition: .5s ease-in-out;
+                        }
+                        button:hover {
+                            opacity: .9;
+                            background: #667c7e;
+                            transition: .5s ease-in-out;
+                            border: 1px solid white;
+                            color: white;
+                        }
+                
+                        @media screen and (max-width: 520px) {
+                            .logo-cover img {
+                                max-width: 100%;
+                                width: 147px;
+                                height: 100px;
+                            }
+                
+                            .logo-font img {
+                                max-width: 100%;
+                                width: 336px;
+                                height: 100px;
+                            }
+                        }
+                    </style>
                 </head>
                 <body>
                 <div class='container'>
