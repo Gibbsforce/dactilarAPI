@@ -205,11 +205,13 @@ class NewUser extends Connection {
                     <title>Email validation</title>
                 </head>
                 <body>
+                <div class='container'>
                 <h1 class='help'>Hi ".$name."! Welcome to Dactilar</h1>
                     <p>
                         To validate your account, please click on the link below:
                     </p>
                 <a href='".$url."'>".$url."</a>
+                </div>
                 </body>
             </html>
         ";
