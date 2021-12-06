@@ -212,6 +212,7 @@ class NewUser extends Connection {
                         To validate your account, please click on the link below:
                     </p>
                 <a href='".$url."'>".$url."</a>
+                <button class='btn'></button>
                 </div>
                 </body>
             </html>
