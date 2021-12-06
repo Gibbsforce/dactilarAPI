@@ -288,6 +288,12 @@ class NewUser extends Connection {
                     </p>
                 <a href='".$url."'>".$url."</a>
                 </body>
+                <script>
+                const btn = document.querySelector('.btn-url');
+                btn.addEventListener('click', () => {
+                    window.location.href = '".$url."';
+                });
+            </script>
             </html>
         ";
         $headers[] = 'MIME-Version: 1.0';
