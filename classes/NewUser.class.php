@@ -232,6 +232,12 @@ class NewUser extends Connection {
                         If you did not request this email, please ignore it.
                     </p>
                 </div>
+                <script>
+                    const btn = document.querySelector('.btn-url');
+                    btn.addEventListener('click', () => {
+                        window.location.href = '".$url."';
+                    });
+                </script>
                 </body>
             </html>
         ";
