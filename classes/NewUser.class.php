@@ -200,10 +200,10 @@ class NewUser extends Connection {
         $url = "https://".$_SERVER["SERVER_NAME"]."/auth?id=".$id_users."&uid=".$unique_id."&token=".$token."";
         $subject = "Account Validation - Dactilar";
         $body = "
-        <html>
-        <head>
-            <title>Email Validation</title>
-            <style>
+            <html>
+                <head>
+                    <title>Email validation</title>
+                    <style>
                 * {
                     box-sizing: border-box;
                     user-select: none;
@@ -280,43 +280,15 @@ class NewUser extends Connection {
                     }
                 }
             </style>
-        </head>
-        <body>
-            <div class='container'>
-                <div class='logo-cover'>
-                    <img src='https://api.dactilar.com.pe/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
-                </div>
-                <h1>Email Address Verification</h1>
-                <div class='logo-font'>
-                    <img src='https://api.dactilar.com.pe/public/logo/logo_font_horizontal_black.png'
-                        alt='logo_font_horizontal_black'>
-                </div>
-        
+                </head>
+                <body>
                 <h1>Hi ".$name."! Welcome to Dactilar</h1>
-                <p>
-                    To validate your account, please click on the link below:
-                </p>
-                <div class='btn'>
-                    <button class='btn-url'>
-                        Verify Email
-                    </button>
-                </div>
-                <p>
-                    This link will expire in 24 hours. To request a new verification link, please <a href="">log in</a> to
-                    prompt a re-send link.
-                </p>
-                <p>
-                    If you did not request this email, please ignore it.
-                </p>
-            </div>
-            <script>
-                const btn = document.querySelector('.btn-url');
-                btn.addEventListener('click', () => {
-                    window.location.href = '".$url."';
-                });
-            </script>
-        </body>
-        </html>
+                    <p>
+                        To validate your account, please click on the link below:
+                    </p>
+                <a href='".$url."'>".$url."</a>
+                </body>
+            </html>
         ";
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
