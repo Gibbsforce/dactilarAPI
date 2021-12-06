@@ -319,7 +319,7 @@ class NewUser extends Connection {
             </html>
         ";
         $headers[] = 'MIME-Version: 1.0';
-        $headers[] = 'Content-type: text/plain; charset=iso-8859-1';
+        $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
         $headers[] = 'From: Dactilar <servicioalcliente@dactilar.com.pe>';
         $mail = mail($email, $subject, $body, implode("\r\n", $headers));
