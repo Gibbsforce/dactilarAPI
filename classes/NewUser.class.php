@@ -200,7 +200,6 @@ class NewUser extends Connection {
         $url = "https://".$_SERVER["SERVER_NAME"]."/auth?id=".$id_users."&uid=".$unique_id."&token=".$token."";
         $subject = "Account Validation - Dactilar";
         $body = "
-        <!DOCTYPE html>
         <html lang='en'>
         <head>
             <meta charset='UTF-8'>
