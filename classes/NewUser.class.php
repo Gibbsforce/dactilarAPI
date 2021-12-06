@@ -205,7 +205,7 @@ class NewUser extends Connection {
                     <title>Email validation</title>
                 </head>
                 <body>
-                <h1>Hi ".$name."! Welcome to Dactilar</h1>
+                <h1 class='help'>Hi ".$name."! Welcome to Dactilar</h1>
                     <p>
                         To validate your account, please click on the link below:
                     </p>
