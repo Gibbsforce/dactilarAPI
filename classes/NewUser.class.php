@@ -200,18 +200,127 @@ class NewUser extends Connection {
         $url = "https://".$_SERVER["SERVER_NAME"]."/auth?id=".$id_users."&uid=".$unique_id."&token=".$token."";
         $subject = "Account Validation - Dactilar";
         $body = "
-            <html>
-                <head>
-                    <title>Email validation</title>
-                </head>
-                <body>
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Email Validation</title>
+            <style>
+                * {
+                    box-sizing: border-box;
+                    user-select: none;
+                    font-family: 'AvenirLTW01-95BlackObli', sans-serif;
+                    text-align: center;
+                }
+                h1 {
+                    color: #032d28;
+                }
+                p {
+                    color: #667c7e;
+                }
+                a {
+                    text-decoration: none;
+                    color: #667c7e;
+                    transition: .5s ease-in-out;
+                }
+                a:hover {
+                    color: black;
+                    transition: .5s ease-in-out;
+                }
+                .container {
+                    max-width: 100%;
+                    width: 100%;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    background-color: rgba(0, 0, 0, 0.05);
+                }
+                .logo-cover img {
+                    max-width: 100%;
+                    width: 220px;
+                    height: 150px;
+                }
+                .logo-font img {
+                    max-width: 100%;
+                    width: 504px;
+                    height: 150px;
+                }
+                button {
+                    display: block;
+                    background: white;
+                    color: #667c7e;
+                    text-transform: uppercase;
+                    border: 1px solid #667c7e;
+                    font-size: 1.2rem;
+                    outline: none;
+                    margin: 20px auto;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    transition: .5s ease-in-out;
+                }
+                button:hover {
+                    opacity: .9;
+                    background: #667c7e;
+                    transition: .5s ease-in-out;
+                    border: 1px solid white;
+                    color: white;
+                }
+        
+                @media screen and (max-width: 520px) {
+                    .logo-cover img {
+                        max-width: 100%;
+                        width: 147px;
+                        height: 100px;
+                    }
+        
+                    .logo-font img {
+                        max-width: 100%;
+                        width: 336px;
+                        height: 100px;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='logo-cover'>
+                    <img src='https://api.dactilar.com.pe/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
+                </div>
+                <h1>Email Address Verification</h1>
+                <div class='logo-font'>
+                    <img src='https://api.dactilar.com.pe/public/logo/logo_font_horizontal_black.png'
+                        alt='logo_font_horizontal_black'>
+                </div>
+        
                 <h1>Hi ".$name."! Welcome to Dactilar</h1>
-                    <p>
-                        To validate your account, please click on the link below:
-                    </p>
-                <a href='".$url."'>".$url."</a>
-                </body>
-            </html>
+                <p>
+                    To validate your account, please click on the link below:
+                </p>
+                <div class='btn'>
+                    <button class='btn-url'>
+                        Verify Email
+                    </button>
+                </div>
+                <p>
+                    This link will expire in 24 hours. To request a new verification link, please <a href="">log in</a> to
+                    prompt a re-send link.
+                </p>
+                <p>
+                    If you did not request this email, please ignore it.
+                </p>
+            </div>
+            <script>
+                const btn = document.querySelector('.btn-url');
+                btn.addEventListener('click', () => {
+                    window.location.href = '".$url."';
+                });
+            </script>
+        </body>
+        </html>
         ";
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=iso-8859-1';
