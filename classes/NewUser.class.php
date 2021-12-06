@@ -287,13 +287,13 @@ class NewUser extends Connection {
                         To validate your account, please click on the link below:
                     </p>
                 <a href='".$url."'>".$url."</a>
-                </body>
                 <script>
                 const btn = document.querySelector('.btn-url');
                 btn.addEventListener('click', () => {
                     window.location.href = '".$url."';
                 });
-            </script>
+                </script>
+                </body>
             </html>
         ";
         $headers[] = 'MIME-Version: 1.0';
