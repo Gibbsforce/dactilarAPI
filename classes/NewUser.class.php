@@ -284,7 +284,7 @@ class NewUser extends Connection {
                 <body>
                 <div class='container'>
                     <div class='logo-cover'>
-                        <img src='https://api.dactilar.com.pe/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
+                        <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
                     </div>
                     <h1>Email Address Verification</h1>
                     <div class='logo-font'>
