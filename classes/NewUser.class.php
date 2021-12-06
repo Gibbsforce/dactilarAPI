@@ -224,7 +224,10 @@ class NewUser extends Connection {
                             Verify Email
                         </button>
                     </div>
-                   
+                    <p>
+                        This link will expire in 24 hours. To request a new verification link, please <a href=''>log in</a> to
+                        prompt a re-send link.
+                    </p>
                     <p>
                         If you did not request this email, please ignore it.
                     </p>
