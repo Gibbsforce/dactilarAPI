@@ -205,33 +205,12 @@ class NewUser extends Connection {
                     <title>Email validation</title>
                 </head>
                 <body>
-                <div class='container'>
-                    <div class='logo-cover'>
-                        <img src='https://api.dactilar.com.pe/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
-                    </div>
-                    <h1>Email Address Verification</h1>
-                    <div class='logo-font'>
-                        <img src='https://api.dactilar.com.pe/public/logo/logo_font_horizontal_black.png'
-                            alt='logo_font_horizontal_black'>
-                    </div>
-            
-                    <h1>Hi ".$name."! Welcome to Dactilar</h1>
+                <h1>Hi ".$name."! Welcome to Dactilar</h1>
                     <p>
                         To validate your account, please click on the link below:
                     </p>
-                    <div class='btn'>
-                        <button class='btn-url'>
-                            '".$url."'
-                        </button>
-                    </div>
-                    <p>
-                        This link will expire in 24 hours. To request a new verification link, please <a href="">log in</a> to
-                        prompt a re-send link.
-                    </p>
-                    <p>
-                        If you did not request this email, please ignore it.
-                    </p>
-                </div>
+                    <img src='' alt=''>
+                <a href='".$url."'>".$url."</a>
                 </body>
             </html>
         ";
