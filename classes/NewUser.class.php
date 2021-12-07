@@ -221,6 +221,7 @@ class NewUser extends Connection {
             
                     p {
                         color: #667c7e;
+                        font-size: 24px;
                     }
             
                     a {
