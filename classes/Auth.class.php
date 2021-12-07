@@ -16,7 +16,7 @@ class Auth extends Connection {
         // Storing client data
         $user_login = $data["user_login"];
         $password = $data["password"];
-        $password = parent::encrypt($password);
+        $password = parent::encryptOpenSSL($password);
         $data = $this->getUserData($user_login);
         // Validating if user server data exists
         if (!$data) return $Responses->error_200("The user ".$user_login." doesn't exist");

@@ -164,7 +164,7 @@ class NewUser extends Connection {
     }
     // Method for adding user authentication
     private function addUserAuth($id_users, $uid) {
-        $password = parent::encrypt($this->password);
+        $password = parent::encryptOpenSSL($this->password);
         $status = "user";
         $query = "INSERT INTO `users-auth` (
             `id-users`,
