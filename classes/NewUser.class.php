@@ -221,7 +221,7 @@ class NewUser extends Connection {
             
                     p {
                         color: #667c7e;
-                        font-size: 24px;
+                        font-size: 22px;
                     }
             
                     a {
@@ -238,12 +238,11 @@ class NewUser extends Connection {
                     }
             
                     .container {
-                        max-width: 100%;
-                        /* width: 100%; */
-                        max-height: 100vh;
                         display: block;
+                        max-width: 100%;
+                        max-height: 100vh;
                         background-color: rgba(0, 0, 0, 0.05);
-                        padding: 10%;
+                        padding: 0 10% 10% 10%;
                     }
             
                     .logo-cover img {
@@ -259,19 +258,16 @@ class NewUser extends Connection {
                     }
             
                     .btn {
-                        margin: 5%;
+                        padding: 40px;
                     }
             
                     .btn a {
-                        margin: 10%;
                         text-decoration: none;
                         background: white;
                         color: #667c7e;
                         text-transform: uppercase;
                         border: 1px solid #667c7e;
-                        font-size: 1.2rem;
-                        outline: none;
-                        margin: 20px auto;
+                        font-size: 0.9rem;
                         padding: 10px 20px;
                     }
             
