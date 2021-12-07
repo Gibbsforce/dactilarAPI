@@ -233,12 +233,17 @@ class NewUser extends Connection {
                         opacity: .9;
                     }
             
+                    .parent-container {
+                        margin: 5%;
+                    }
+            
                     .container {
                         max-width: 100%;
-                        width: 100%;
-                        height: 100vh;
+                        /* width: 100%; */
+                        max-height: 100vh;
                         display: block;
                         background-color: rgba(0, 0, 0, 0.05);
+                        padding: 10%;
                     }
             
                     .logo-cover img {
@@ -280,32 +285,35 @@ class NewUser extends Connection {
             </head>
             
             <body>
-                <div class='container'>
-                    <div class='logo-cover'>
-                        <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
-                    </div>
-                    <h1>Email Address Verification</h1>
-                    <div class='logo-font'>
-                        <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_font_horizontal_black.png'
-                            alt='logo_font_horizontal_black'>
-                    </div>
+                <div class='parent-container'>
+                    <div class='container'>
+                        <div class='logo-cover'>
+                            <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
+                        </div>
+                        <h1>Email Address Verification</h1>
+                        <div class='logo-font'>
+                            <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_font_horizontal_black.png'
+                                alt='logo_font_horizontal_black'>
+                        </div>
             
-                    <h1>Hi ".$name."! Welcome to Dactilar</h1>
-                    <p>
-                        To validate your account, please click on the link below:
-                    </p>
-                    <div class='btn'>
-                        <a href='".$url."'>
-                            Verify Email
-                        </a>
+                        <h1>Hi ".$name."! Welcome to Dactilar</h1>
+                        <p>
+                            To validate your account, please click on the link below:
+                        </p>
+                        <div class='btn'>
+                            <a href='".$url."'>
+                                Verify Email
+                            </a>
+                        </div>
+                        <p>
+                            This link will expire in 24 hours. To request a new verification link, please <a href=''>log in</a>
+                            to
+                            prompt a re-send link.
+                        </p>
+                        <p>
+                            If you did not request this email, please ignore it.
+                        </p>
                     </div>
-                    <p>
-                        This link will expire in 24 hours. To request a new verification link, please <a href=''>log in</a> to
-                        prompt a re-send link.
-                    </p>
-                    <p>
-                        If you did not request this email, please ignore it.
-                    </p>
                 </div>
             </body>
             
