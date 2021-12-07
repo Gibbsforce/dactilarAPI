@@ -10,9 +10,9 @@ class Connection {
     // Initializing the constructor
     function __construct() {
         // Storing the data config extensionless
-        $data_list = $this->dataConnection();
+        $data_connection = $this->dataConfig();
         // Looping trough the data config
-        foreach($data_list as $key => $value) {
+        foreach(array($data_connection["connection"]) as $key => $value) {
             $this->server = $value["server"];
             $this->user = $value["user"];
             $this->password = $value["password"];
@@ -34,9 +34,10 @@ class Connection {
         }
     }
     // Method that gets a json encode for config connection data
-    private function dataConnection() {
-        $dir = dirname(__FILE__);
-        $json_data = file_get_contents($dir."/"."config");
+    private function dataConfig() {
+        // $dir = dirname(__FILE__);
+        $dir = $_SERVER["HOME"];
+        $json_data = file_get_contents($dir."/"."config"."/"."config"."."."json");
         return json_decode($json_data, true);
     }
     // Method that converts the charset into UTF8
@@ -72,5 +73,26 @@ class Connection {
     // Method that encrypts data by md5 (password ie)
     protected function encrypt ($str) {
         return md5($str);
+    }
+    // Methods that encrypts and decrypts data by openssl
+    protected function encryptOpenSSL ($str) {
+        $data_credentials = $this->dataConfig();
+        foreach(array($data_credentials["credentials"]) as $key => $value) {
+            $passkey = $value["key"];
+            $method = $value["method"];
+            $iv = $value["iv"];
+        }
+        $encrypt = openssl_encrypt($str, $method, $passkey, 0, $iv);
+        return $encrypt;
+    }
+    protected function decryptOpenSSL ($str) {
+        $data_credentials = $this->dataConfig();
+        foreach(array($data_credentials["credentials"]) as $key => $value) {
+            $passkey = $value["key"];
+            $method = $value["method"];
+            $iv = $value["iv"];
+        }
+        $decrypt = openssl_decrypt($str, $method, $key, 0, $iv);
+        return $decrypt;
     }
 }
