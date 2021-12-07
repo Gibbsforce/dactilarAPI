@@ -234,7 +234,7 @@ class NewUser extends Connection {
                     }
             
                     .parent-container {
-                        margin: 5%;
+                        margin: 2.5%;
                     }
             
                     .container {
