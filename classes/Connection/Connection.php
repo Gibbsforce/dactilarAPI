@@ -78,7 +78,7 @@ class Connection {
     protected function encryptOpenSSL ($str) {
         $data_credentials = $this->dataConfig();
         foreach(array($data_credentials["credentials"]) as $key => $value) {
-            $passkey = $value["key"];
+            $passkey = $value["passkey"];
             $method = $value["method"];
             $iv = $value["iv"];
         }
@@ -88,11 +88,11 @@ class Connection {
     protected function decryptOpenSSL ($str) {
         $data_credentials = $this->dataConfig();
         foreach(array($data_credentials["credentials"]) as $key => $value) {
-            $passkey = $value["key"];
+            $passkey = $value["passkey"];
             $method = $value["method"];
             $iv = $value["iv"];
         }
-        $decrypt = openssl_decrypt($str, $method, $key, 0, $iv);
+        $decrypt = openssl_decrypt($str, $method, $passkey, 0, $iv);
         return $decrypt;
     }
 }
