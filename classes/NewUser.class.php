@@ -242,7 +242,7 @@ class NewUser extends Connection {
                         max-width: 100%;
                         max-height: 100vh;
                         background-color: rgba(0, 0, 0, 0.05);
-                        padding: 0 10% 10% 10%;
+                        padding: 2.5% 10% 10% 10%;
                     }
             
                     .logo-cover img {
