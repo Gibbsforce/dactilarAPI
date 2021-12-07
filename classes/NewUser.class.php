@@ -202,7 +202,7 @@ class NewUser extends Connection {
         $body = "
             <!DOCTYPE html>
             <html lang='en'>
-
+            
             <head>
                 <meta charset='UTF-8'>
                 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -214,51 +214,51 @@ class NewUser extends Connection {
                         font-family: 'AvenirLTW01-95BlackObli', sans-serif;
                         text-align: center;
                     }
-
+            
                     h1 {
                         color: #032d28;
                     }
-
+            
                     p {
                         color: #667c7e;
                     }
-
+            
                     a {
                         text-decoration: none;
                         color: #667c7e;
-                        transition: .5s ease-in-out;
                     }
-
+            
                     a:hover {
-                        color: black;
-                        transition: .5s ease-in-out;
+                        opacity: .9;
                     }
-
+            
                     .container {
                         max-width: 100%;
                         width: 100%;
-                        height: auto;
+                        height: 100vh;
                         display: block;
-                        justify-content: center;
-                        align-items: center;
-                        flex-direction: column;
                         background-color: rgba(0, 0, 0, 0.05);
                     }
-
+            
                     .logo-cover img {
                         max-width: 100%;
                         width: 220px;
                         height: 150px;
                     }
-
+            
                     .logo-font img {
                         max-width: 100%;
                         width: 504px;
                         height: 150px;
                     }
-
-                    button {
-                        display: block;
+            
+                    .btn {
+                        margin: 5%;
+                    }
+            
+                    .btn a {
+                        margin: 10%;
+                        text-decoration: none;
                         background: white;
                         color: #667c7e;
                         text-transform: uppercase;
@@ -267,53 +267,35 @@ class NewUser extends Connection {
                         outline: none;
                         margin: 20px auto;
                         padding: 10px 20px;
-                        transition: .5s ease-in-out;
                     }
-
-                    button:hover {
+            
+                    .btn a:hover {
                         opacity: .9;
                         background: #667c7e;
-                        transition: .5s ease-in-out;
                         border: 1px solid white;
                         color: white;
                     }
-
-                    @media screen and (max-width: 520px) {
-                        .logo-cover img {
-                            max-width: 100%;
-                            width: 147px;
-                            height: 100px;
-                        }
-
-                        .logo-font img {
-                            max-width: 100%;
-                            width: 336px;
-                            height: 100px;
-                        }
-                    }
                 </style>
             </head>
-
+            
             <body>
                 <div class='container'>
                     <div class='logo-cover'>
-                        <img src='https://api.dactilar.com.pe/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
+                        <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
                     </div>
                     <h1>Email Address Verification</h1>
                     <div class='logo-font'>
-                        <img src='https://api.dactilar.com.pe/public/logo/logo_font_horizontal_black.png'
+                        <img src='https://".$_SERVER["SERVER_NAME"]."/public/logo/logo_font_horizontal_black.png'
                             alt='logo_font_horizontal_black'>
                     </div>
-
+            
                     <h1>Hi ".$name."! Welcome to Dactilar</h1>
                     <p>
                         To validate your account, please click on the link below:
                     </p>
                     <div class='btn'>
                         <a href='".$url."'>
-                            <button class='btn-url'>
-                                Verify Email
-                            </button>
+                            Verify Email
                         </a>
                     </div>
                     <p>
@@ -325,7 +307,7 @@ class NewUser extends Connection {
                     </p>
                 </div>
             </body>
-
+            
             </html>
         ";
         $headers[] = 'MIME-Version: 1.0';
