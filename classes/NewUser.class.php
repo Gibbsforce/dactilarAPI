@@ -287,7 +287,7 @@ class NewUser extends Connection {
         
         <body>
             <div class='container'
-                style='max-width: 100%;width: 100%;height: 100vh;display: flex;justify-content: center;align-items: center;flex-direction: column;background-color: rgba(0, 0, 0, 0.05);'>
+                style='max-width: 100%;width: 100%;height: 100vh;display: block;justify-content: center;align-items: center;flex-direction: column;background-color: rgba(0, 0, 0, 0.05);'>
                 <div class='logo-cover'>
                     <img src='https://api.dactilar.com.pe/public/logo/logo_cover_gris.png' alt='logo_cover_gris'>
                 </div>
