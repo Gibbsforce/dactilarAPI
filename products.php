@@ -30,13 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         header("Content-Type: application/json");
         echo json_encode($products);
         http_response_code(200);
-    } else if (isset($_GET["all"]) && isset($_GET["pages"])) {
+    } else if (isset($_GET["pages"])) {
         $page = $_GET["page"];
         $products = $Products->getAllProducts($page);
         header("Content-Type: application/json");
         echo json_encode($products);
         http_response_code(200);
-    } else if (isset($_GET["all"]) && isset($_GET["uid"])) {
+    } else if (isset($_GET["uid"])) {
         $uid = $_GET["uid"];
         $product = $Products->getAllProduct($uid);
         header("Content-Type: application/json");
