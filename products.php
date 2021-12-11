@@ -42,11 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         header("Content-Type: application/json");
         echo json_encode($product);
         http_response_code(200);
-    } else {
-        header("Content-Type: application/json");
-        $arr_data = $Responses->error_405();
-        echo json_encode($arr_data);
     }
+    // } else {
+    //     header("Content-Type: application/json");
+    //     $arr_data = $Responses->error_405();
+    //     echo json_encode($arr_data);
+    // }
     if (!isset($_GET["page"]) && !isset($_GET["id"])) {
         $products = $Products->getProducts(1);
         header("X-Content-Type-Options: nosniff");
