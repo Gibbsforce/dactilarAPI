@@ -120,7 +120,7 @@ class Products extends Connection {
                 "page" => $page,
                 "results" => $data,
                 "total_pages" => ceil(count($total) / $qty),
-                "total_results" => count($data),
+                "total_results" => count($total),
             );
             return $products;
         } catch (PDOException $error) {
