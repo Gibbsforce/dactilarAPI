@@ -26,21 +26,21 @@ header("Access-Control-Allow-Origin: *");
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["all"])) {
-        $products = $Products->getAllProducts(1);
+        $all_products = $Products->getAllProducts(1);
         header("Content-Type: application/json");
-        echo json_encode($products);
+        echo json_encode($all_products);
         http_response_code(200);
     } else if (isset($_GET["pages"])) {
-        $page = $_GET["pages"];
-        $products = $Products->getAllProducts($page);
+        $pages = $_GET["pages"];
+        $all_products = $Products->getAllProducts($pages);
         header("Content-Type: application/json");
-        echo json_encode($products);
+        echo json_encode($all_products);
         http_response_code(200);
     } else if (isset($_GET["uid"])) {
         $uid = $_GET["uid"];
-        $product = $Products->getAllProduct($uid);
+        $all_product = $Products->getAllProduct($uid);
         header("Content-Type: application/json");
-        echo json_encode($product);
+        echo json_encode($all_product);
         http_response_code(200);
     }
     // } else {
