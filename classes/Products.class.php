@@ -93,7 +93,7 @@ class Products extends Connection {
         $qty = 10;
         if ($page > 1) $start = $qty * ($page - 1);
         $query_total = "SELECT `product_id` FROM ".$this->table."";
-        $total = parent::getData($query_total);
+        $total = parent::getData($query_total); // maybe check this in the future
         $query =
             "SELECT 
                 `product_id`,
@@ -117,7 +117,7 @@ class Products extends Connection {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
             $products = array(
-                "page" => $page,
+                "page" => intval($page),
                 "results" => $data,
                 "total_pages" => ceil(count($total) / $qty),
                 "total_results" => count($total),
