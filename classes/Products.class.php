@@ -92,7 +92,7 @@ class Products extends Connection {
         $start = 0;
         $qty = 10;
         if ($page > 1) $start = $qty * ($page - 1);
-        $query_total = "SELECT COUNT(*) FROM ".$this->table."";
+        $query_total = "SELECT `product_id` FROM ".$this->table."";
         $total = parent::getData($query_total);
         $query =
             "SELECT 
