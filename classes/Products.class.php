@@ -86,6 +86,75 @@ class Products extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
+    // Getting all data products method
+    public function getAllProducts($page = 1) {
+        $Responses = new Responses();
+        $start = 0;
+        $qty = 10;
+        if ($page > 1) $start = $qty * ($page - 1);
+        $query =
+            "SELECT 
+                `product_id`,
+                `product_uid`,
+                `product_name`,
+                `product_class`,
+                `product_price`,
+                `product_price_discount`,
+                `product_unique_piece`,
+                `product_description`,
+                `product_description_es`,
+                `product_weight`,
+                `product_stock`,
+                `product_sizes`,
+                `product_image`,
+                `product_images_gallery`,
+                `product_images_thumbnails`,
+                `product_date`
+            FROM ".$this->table." ORDER BY `product_id` ASC limit $start, $qty";
+        try {
+            $data = parent::getData($query);
+            if (!isset($data)) return $this->Responses->error_500();
+            $products = array(
+                "page" => $page,
+                "results" => $data,
+                "total_pages" => ceil(count($data) / $qty),
+                "total_results" => count($data),
+            );
+            return $products;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+    }
+    // Getting all data products by uid method
+    public function getAllProduct($product_uid) {
+        $Responses = new Responses();
+        $query =
+            "SELECT 
+                `product_id`,
+                `product_uid`,
+                `product_name`,
+                `product_class`,
+                `product_price`,
+                `product_price_discount`,
+                `product_unique_piece`,
+                `product_description`,
+                `product_description_es`,
+                `product_weight`,
+                `product_stock`,
+                `product_sizes`,
+                `product_image`,
+                `product_images_gallery`,
+                `product_images_thumbnails`,
+                `product_date`
+            FROM ".$this->table." WHERE `product_uid` = '$product_uid'";
+        try {
+            $data = parent::getData($query);
+            if (!isset($data)) return $this->Responses->error_500();
+            return $data;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+    }
     // POST product
     public function post($json) {
         // Responses
