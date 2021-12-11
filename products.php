@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         echo json_encode($products);
         http_response_code(200);
     } else if (isset($_GET["pages"])) {
-        $page = $_GET["page"];
+        $page = $_GET["pages"];
         $products = $Products->getAllProducts($page);
         header("Content-Type: application/json");
         echo json_encode($products);
