@@ -26,7 +26,7 @@ header("Access-Control-Allow-Origin: *");
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["all"])) {
-        $products = $Products->getAllProducts();
+        $products = $Products->getAllProducts(1);
         header("Content-Type: application/json");
         echo json_encode($products);
         http_response_code(200);
