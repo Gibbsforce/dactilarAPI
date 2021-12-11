@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     //     $arr_data = $Responses->error_405();
     //     echo json_encode($arr_data);
     // }
-    if (!isset($_GET["page"]) && !isset($_GET["id"])) {
+    else if (!isset($_GET["page"]) && !isset($_GET["id"])) {
         $products = $Products->getProducts(1);
         header("X-Content-Type-Options: nosniff");
         header("Content-Type: application/json");
