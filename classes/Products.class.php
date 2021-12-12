@@ -297,7 +297,7 @@ class Products extends Connection {
     }
     // Creating products method
     private function createProduct() {
-        $this->product_date = date("Y-m-d H:i");
+        $this->product_date = date("Y-m-d H:i:s");
         $this->product_uid = uniqid();
         $query = "INSERT INTO ".$this->table." (
             `product_uid`,
@@ -341,7 +341,7 @@ class Products extends Connection {
     }
     // Updating products method
     private function updateProduct($product_uid) {
-        $this->product_date = date("Y-m-d H:i");
+        $this->product_date = date("Y-m-d H:i:s");
         $query = "UPDATE ".$this->table." SET
             `product_name` = '".$this->product_name."',
             `product_class` = '".$this->product_class."',
@@ -524,7 +524,7 @@ class Products extends Connection {
     }
     // Updating token method
     private function updateToken($id_token) {
-        $date = date("Y-m-d H:i");
+        $date = date("Y-m-d H:i:s");
         $query = "UPDATE `users-token` SET `date` = '".$date."' WHERE `id-token` = '".$id_token."'";
         try {
             $updated = parent::nonQuery($query);
