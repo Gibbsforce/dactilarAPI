@@ -73,7 +73,7 @@ class NewUser extends Connection {
         $this->city_district = $data["city_district"];
         $this->zipcode = $data["zipcode"];
         $this->username = $data["username"];
-        $this->created = date("Y-m-d H:i");
+        $this->created = date("Y-m-d H:i:s");
         $this->status = "user";
         // Image **missing the setting**
         if (isset($data["image"])) $this->image = $data["image"];

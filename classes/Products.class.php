@@ -185,11 +185,11 @@ class Products extends Connection {
             !isset($data["product_image"])
         ) return $Responses->error_400();
         // Validating the fields
-        if(!empty($data["product_name"])) $Responses->error_200("The name of the product is empty");
-        if(!empty($data["product_class"])) $Responses->error_200("The product class is empty");
-        if(!empty($data["product_price"])) $Responses->error_200("The product price is empty");
-        if(!empty($data["product_description"])) $Responses->error_200("Product description is empty");
-        if(!empty($data["product_description_es"])) $Responses->error_200("Product description spanish is empty");
+        if(!empty($data["product_name"])) return $Responses->error_200("The name of the product is empty");
+        if(!empty($data["product_class"])) return $Responses->error_200("The product class is empty");
+        if(!empty($data["product_price"])) return $Responses->error_200("The product price is empty");
+        if(!empty($data["product_description"])) return $Responses->error_200("Product description is empty");
+        if(!empty($data["product_description_es"])) return $Responses->error_200("Product description spanish is empty");
         // Storing the data into the variables
         $this->product_name = $data["product_name"];
         $this->product_class = $data["product_class"];
