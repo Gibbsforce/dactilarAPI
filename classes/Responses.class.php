@@ -26,7 +26,7 @@ class Responses {
     }
     // Error 400
     public function error_400() {
-        $this->response["status"] = "error";
+        $this->response["status"] = "errorrrrrr";
         $this->response["result"] = array(
             "error_id" => "400",
             "error_message" => "Incomplete data or incorrect format"
