@@ -17,7 +17,7 @@ class Responses {
     }
     // Error para datos incorrectos (200)
     public function error_200($str = "Incorrect data") {
-        $this->response["status"] = "error";
+        $this->response["status"] = "errorN";
         $this->response["result"] = array(
             "error_id" => "200",
             "error_message" => $str
