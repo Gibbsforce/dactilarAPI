@@ -231,7 +231,7 @@ class Products extends Connection {
         // Responses
         $Responses = new Responses();
         // Getting the data from the client
-        $data = json_decode($json, true);
+        $data = json_decode($json);
         // Validating token
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
