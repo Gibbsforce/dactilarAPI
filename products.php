@@ -94,7 +94,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     print_r($put_body);
     // Sending the data to put handler
     $arr_data = $Products->put($put_body);
-    // print_r($arr_data);
     // Returning the response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
