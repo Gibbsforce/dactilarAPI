@@ -95,6 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     // Receiving put sent data as a JSON string
     $put_body = file_get_contents("php://input");
+    print_r($put_body);
     // Sending the data to put handler
     $arr_data = $Products->put($put_body);
     // print_r($arr_data);
