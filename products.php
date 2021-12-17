@@ -84,12 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
     // echo json_encode($arr_data);
 
-    // if (isset($arr_data["result"]["error_id"])) {
-    //     $response_code = $arr_data["result"]["error_id"];
-    //     http_response_code($response_code);
-    // } else {
-    //     http_response_code(200);
-    // }
+    if (isset($arr_data["result"]["error_id"])) {
+        $response_code = $arr_data["result"]["error_id"];
+        http_response_code($response_code);
+    } else {
+        http_response_code(200);
+    }
     echo json_encode($arr_data);
 // PUT
 } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {

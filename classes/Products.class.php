@@ -167,7 +167,7 @@ class Products extends Connection {
         $data = json_decode($json, true);
         print_r($data);
         // Validating token
-        if (!isset($data["token"])) return $Responses->error_401();
+        // if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
