@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $put_body = file_get_contents("php://input");
     // Sending the data to put handler
     $arr_data = $Products->put($put_body);
-    print_r($arr_data);
+    // print_r($arr_data);
     // Returning the response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);

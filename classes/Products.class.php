@@ -268,6 +268,7 @@ class Products extends Connection {
         }
         // Updating the product
         $product = $this->updateProduct($this->product_uid);
+        print_r($product);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
