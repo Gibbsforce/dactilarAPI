@@ -170,7 +170,7 @@ class Products extends Connection {
         // if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
-        if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
+        // if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
         // Mandatory fields
         if (
             !isset($data["product_name"]) ||
