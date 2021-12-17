@@ -46,26 +46,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         http_response_code(200);
     } else if (!isset($_GET["page"]) && !isset($_GET["id"])) {
         $products = $Products->getProducts(1);
-        header("X-Content-Type-Options: nosniff");
         header("Content-Type: application/json");
         echo json_encode($products);
         http_response_code(200);
     } else if (isset($_GET["page"])) {
         $page = $_GET["page"];
         $products = $Products->getProducts($page);
-        header("X-Content-Type-Options: nosniff");
         header("Content-Type: application/json");
         echo json_encode($products);
         http_response_code(200);
     } else if (isset($_GET["id"])) {
         $id = $_GET["id"];
-        header("X-Content-Type-Options: nosniff");
         header("Content-Type: application/json");
         $product = $Products->getProduct($id);
         echo json_encode($product);
         http_response_code(200);
     } else {
-        header("X-Content-Type-Options: nosniff");
         header("Content-type: application/json");
         $arr_data = $Responses->error_405();
         echo json_encode($arr_data);
