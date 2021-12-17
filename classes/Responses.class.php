@@ -52,7 +52,7 @@ class Responses {
         return $this->response;
     }
     // Error 401
-    public function error_401($str = "Unauthorized") {
+    public function error_401($str = "Unauthorized debug") {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "401",
