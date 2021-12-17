@@ -238,8 +238,10 @@ class Products extends Connection {
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
         // Mandatory fields
-        if (!isset($data["product_id"])) return $Responses->error_400();
-        $this->product_id = $data["product_id"];
+        // if (!isset($data["product_id"])) return $Responses->error_400();
+        // $this->product_id = $data["product_id"];
+        if (!isset($data["product_uid"])) return $Responses->error_400();
+        $this->product_uid = $data["product_uid"];
         // Updating fields
         if (isset($data["product_name"])) $this->product_name = $data["product_name"];
         if (isset($data["product_class"])) $this->product_class = $data["product_class"];
@@ -265,7 +267,7 @@ class Products extends Connection {
             $this->product_images_thumbnails = $thumbnails[1];
         }
         // Updating the product
-        $product = $this->updateProduct(0);
+        $product = $this->updateProduct($this->product_uid);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
