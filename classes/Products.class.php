@@ -167,30 +167,30 @@ class Products extends Connection {
         $data = json_decode($json, true);
         print_r($data);
         // Validating token
-        // if (!isset($data["token"])) return $Responses->error_401();
+        if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
-        // if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
+        if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
         // Mandatory fields
-        // if (
-        //     !isset($data["product_name"]) ||
-        //     !isset($data["product_class"]) ||
-        //     !isset($data["product_price"]) ||
-        //     !isset($data["product_price_discount"]) ||
-        //     !isset($data["product_unique_piece"]) ||
-        //     !isset($data["product_description"]) ||
-        //     !isset($data["product_description_es"]) ||
-        //     !isset($data["product_weight"]) ||
-        //     !isset($data["product_stock"]) ||
-        //     !isset($data["product_sizes"]) ||
-        //     !isset($data["product_image"])
-        // ) return $Responses->error_400();
+        if (
+            !isset($data["product_name"]) ||
+            !isset($data["product_class"]) ||
+            !isset($data["product_price"]) ||
+            !isset($data["product_price_discount"]) ||
+            !isset($data["product_unique_piece"]) ||
+            !isset($data["product_description"]) ||
+            !isset($data["product_description_es"]) ||
+            !isset($data["product_weight"]) ||
+            !isset($data["product_stock"]) ||
+            !isset($data["product_sizes"]) ||
+            !isset($data["product_image"])
+        ) return $Responses->error_400();
         // Validating the fields
-        // if(empty($data["product_name"])) return $Responses->error_200("The name of the product is empty");
-        // if(empty($data["product_class"])) return $Responses->error_200("The product class is empty");
-        // if(empty($data["product_price"])) return $Responses->error_200("The product price is empty");
-        // if(empty($data["product_description"])) return $Responses->error_200("Product description is empty");
-        // if(empty($data["product_description_es"])) return $Responses->error_200("Product description spanish is empty");
+        if(empty($data["product_name"])) return $Responses->error_200("The name of the product is empty");
+        if(empty($data["product_class"])) return $Responses->error_200("The product class is empty");
+        if(empty($data["product_price"])) return $Responses->error_200("The product price is empty");
+        if(empty($data["product_description"])) return $Responses->error_200("Product description is empty");
+        if(empty($data["product_description_es"])) return $Responses->error_200("Product description spanish is empty");
         // Storing the data into the variables
         $this->product_name = $data["product_name"];
         $this->product_class = $data["product_class"];
