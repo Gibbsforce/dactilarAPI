@@ -62,8 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         echo json_encode($product);
         http_response_code(200);
     } else if (isset($_GET["thumbnails_uid"])) {
-        $uid = $_GET["thumbnails_uid"];
-        $thumbnails = $Products->getThumbnails($uid);
+        $thumbnails_uid = $_GET["thumbnails_uid"];
+        $thumbnails = $Products->getThumbnails($thumbnails_uid);
         header("Content-Type: application/json");
         echo json_encode($thumbnails);
         http_response_code(200);
