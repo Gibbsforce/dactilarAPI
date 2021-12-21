@@ -173,6 +173,7 @@ class Products extends Connection {
             // convert data url thumbs to base 64
             $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
             $arr_thumbs = explode(",", $data[0]["product_images_gallery"]);
+            print_r($arr_thumbs);
             $data[0]["product_images_gallery"] = $this->toBase64Images($arr_thumbs);
             return $data;
         } catch (PDOException $error) {
