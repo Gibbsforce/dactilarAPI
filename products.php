@@ -61,6 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $product = $Products->getProduct($id);
         echo json_encode($product);
         http_response_code(200);
+    } else if (isset($_GET["thumbnails"]) && isset($_GET["uid"])) {
+        $uid = $_GET["uid"];
+        $thumbnails = $Products->getThumbnails($uid);
+        header("Content-Type: application/json");
+        echo json_encode($thumbnails);
+        http_response_code(200);
     } else {
         header("Content-type: application/json");
         $arr_data = $Responses->error_405();
