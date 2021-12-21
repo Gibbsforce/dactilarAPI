@@ -168,6 +168,7 @@ class Products extends Connection {
                 `product_images_gallery`,
                 `product_images_thumbnails`
             FROM ".$this->table." WHERE `product_uid` = '$product_uid'";
+        print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
