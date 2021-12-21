@@ -412,6 +412,7 @@ class Products extends Connection {
   
     }
     private function toBase64Images($images_url) {
+        prtin_r($images_url);
         if (count($images_url) === 0) return false;
         $images_base64 = array();
         foreach ($images_url as $image_url) {
