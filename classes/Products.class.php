@@ -168,12 +168,11 @@ class Products extends Connection {
                 `product_images_gallery`,
                 `product_images_thumbnails`
             FROM ".$this->table." WHERE `product_uid` = '$product_uid'";
-        print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
             // convert data url thumbs to base 64
-            $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
+            // $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
             $data[0]["product_images_gallery"] = $this->toBase64Images($data[0]["product_images_gallery"]);
             return $data;
         } catch (PDOException $error) {
