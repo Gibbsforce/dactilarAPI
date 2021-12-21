@@ -174,7 +174,7 @@ class Products extends Connection {
             $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
             $arr_thumbs = explode(",", $data[0]["product_images_gallery"]);
             print_r($arr_thumbs);
-            if (empty($arr_thumbs)) {
+            if (empty($arr_thumbs[0])) {
                 $data[0]["product_images_gallery"] = [];
             } else {
                 $data[0]["product_images_gallery"] = $this->toBase64Images($arr_thumbs);
