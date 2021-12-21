@@ -172,10 +172,10 @@ class Products extends Connection {
             if (!isset($data)) return $this->Responses->error_500();
             // convert data url thumbs to base 64
             $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
-            $arr = $this->toBase64Images(explode(",", $data[0]["product_images_gallery"]));
+            // $arr = $this->toBase64Images(explode(",", $data[0]["product_images_gallery"]));
             print_r($arr);
             // $data[0]["product_images_gallery"] = $this->toBase64Images(explode(",", $data[0]["product_images_gallery"]));
-            return $data;
+            // return $data;
         } catch (PDOException $error) {
             return Responses::prepare(500, $error->getMessage());
         }
