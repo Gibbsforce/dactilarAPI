@@ -402,7 +402,7 @@ class Products extends Connection {
     // Methods that proccess the data products
     // Base 64 encoding
     private function toBase64Image($image_url) {
-
+        if (!$image_url) return "";
         $image_data = file_get_contents($image_url);
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mime_content_type = $finfo->buffer($image_data);
@@ -412,6 +412,7 @@ class Products extends Connection {
   
     }
     private function toBase64Images($images_url) {
+        if (!$images_url) return [];
         $images_base64 = array();
         foreach ($images_url as $image_url) {
             $image_data = file_get_contents($image_url);
