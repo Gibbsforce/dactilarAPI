@@ -170,10 +170,8 @@ class Products extends Connection {
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
-            // convert data url thumbs to base 64
             $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
             $arr_thumbs = explode(",", $data[0]["product_images_gallery"]);
-            print_r($arr_thumbs);
             if (empty($arr_thumbs[0])) {
                 $data[0]["product_images_gallery"] = [];
             } else {
