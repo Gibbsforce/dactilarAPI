@@ -173,7 +173,7 @@ class Products extends Connection {
             // convert data url thumbs to base 64
             $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
             $arr_thumbs = explode(",", $data[0]["product_images_gallery"]);
-            print_r($arr_thumbs);
+            if (empty($arr_thumbs)) return $data;
             $data[0]["product_images_gallery"] = $this->toBase64Images($arr_thumbs);
             return $data;
         } catch (PDOException $error) {
@@ -413,7 +413,6 @@ class Products extends Connection {
         return $image_base64_str;
     }
     private function toBase64Images($images_url) {
-        if (empty($images_url)) return false;
         $images_base64 = array();
         foreach ($images_url as $image_url) {
             $image_data = file_get_contents($image_url);
