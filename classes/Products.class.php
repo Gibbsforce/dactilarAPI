@@ -159,6 +159,26 @@ class Products extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
+    // Getting data thumbnails by uid method
+    public function getThumbnails($product_uid) {
+        $Responses = new Responses();
+        $query =
+            "SELECT
+                `product_image`,
+                `product_images_gallery`,
+                `product_images_thumbnails`
+            FROM ".$this->table." WHERE `product_uid` = '$product_uid'";
+        try {
+            $data = parent::getData($query);
+            if (!isset($data)) return $this->Responses->error_500();
+            // convert data url thumbs to base 64
+            $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
+            $data[0]["product_images_gallery"] = $this->toBase64Images($data[0]["product_images_gallery"]);
+            return $data;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+    }
     // POST product
     public function post($json) {
         // Responses
@@ -380,7 +400,30 @@ class Products extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // Method that proccess the data products
+    // Methods that proccess the data products
+    // Base 64 encoding
+    private function toBase64Image($image_url) {
+
+        $image_data = file_get_contents($image_url);
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mime_content_type = $finfo->buffer($image_data);
+        $image_base64 = base64_encode($image_data);
+        $image_base64_str = "data:".$mime_content_type.";base64,".$image_base64;
+        return $image_base64_str;
+  
+    }
+    private function toBase64Images($images_url) {
+        $images_base64 = array();
+        foreach ($images_url as $image_url) {
+            $image_data = file_get_contents($image_url);
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime_content_type = $finfo->buffer($image_data);
+            $image_base64 = base64_encode($image_data);
+            $images_base64[] = "data:".$mime_content_type.";base64,".$image_base64;
+        }
+        return $images_base64;
+    }
+    // Base 64 decoding
     private function productImage($product_image) {
         $dir = dirname(__DIR__)."/public/products/image/";
         $array_image = explode(";base64,", $product_image);
