@@ -172,7 +172,9 @@ class Products extends Connection {
             if (!isset($data)) return $this->Responses->error_500();
             // convert data url thumbs to base 64
             $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
-            $data[0]["product_images_gallery"] = $this->toBase64Images(explode(",", $data[0]["product_images_gallery"]));
+            $arr = $this->toBase64Images(explode(",", $data[0]["product_images_gallery"]));
+            print_r($arr);
+            // $data[0]["product_images_gallery"] = $this->toBase64Images(explode(",", $data[0]["product_images_gallery"]));
             return $data;
         } catch (PDOException $error) {
             return Responses::prepare(500, $error->getMessage());
@@ -409,10 +411,8 @@ class Products extends Connection {
         $image_base64 = base64_encode($image_data);
         $image_base64_str = "data:".$mime_content_type.";base64,".$image_base64;
         return $image_base64_str;
-  
     }
     private function toBase64Images($images_url) {
-        print_r($images_url);
         if (!$images_url) return false;
         $images_base64 = array();
         foreach ($images_url as $image_url) {
