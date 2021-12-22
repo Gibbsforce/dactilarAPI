@@ -20,9 +20,9 @@ class Products extends Connection {
     private $product_weight = "";
     private $product_stock = "";
     private $product_sizes = "";
-    private $product_image = "";
-    private $product_images_gallery = "";
-    private $product_images_thumbnails = "";
+    private $product_image;
+    private $product_images_gallery;
+    private $product_images_thumbnails;
     private $product_date = "";
     // External variables
     private $token = "";
