@@ -313,7 +313,7 @@ class Products extends Connection {
         // if (!isset($data["product_id"])) return $Responses->error_400();
         // $this->product_id = $data["product_id"];
         if (!isset($data["product_uid"])) return $Responses->error_400();
-        $this->product_id = $data["product_uid"];
+        $this->product_uid = $data["product_uid"];
         // Deleting the product
         $product = $this->deleteProduct($this->product_uid);
         if (!$product) return $Responses->error_500();
