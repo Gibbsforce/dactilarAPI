@@ -290,8 +290,7 @@ class Products extends Connection {
             $this->product_images_thumbnails = $thumbnails[1];
         }
         // Updating the product
-        // $product = $this->updateProduct($this->product_uid);
-        $product = $this->updateProduct();
+        $product = $this->updateProduct($this->product_uid);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
@@ -367,10 +366,10 @@ class Products extends Connection {
         }
     }
     // Updating products method
-    // private function updateProduct($product_uid) {
-    private function updateProduct() {
+    private function updateProduct($product_uid) {
         $this->product_date = date("Y-m-d H:i:s");
-        $query = "UPDATE ".$this->table." SET
+        if (!empty($this->product_image) && !empty($this->product_images_gallery)) {
+            $query = "UPDATE ".$this->table." SET
             `product_name` = '".$this->product_name."',
             `product_class` = '".$this->product_class."',
             `product_price` = '".$this->product_price."',
@@ -385,7 +384,22 @@ class Products extends Connection {
             `product_images_gallery` = '".$this->product_images_gallery."',
             `product_images_thumbnails` = '".$this->product_images_thumbnails."',
             `product_date` = '".$this->product_date."'
-            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '".$this->product_uid."'";
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        } else {
+            $query = "UPDATE ".$this->table." SET
+            `product_name` = '".$this->product_name."',
+            `product_class` = '".$this->product_class."',
+            `product_price` = '".$this->product_price."',
+            `product_price_discount` = '".$this->product_price_discount."',
+            `product_unique_piece` = '".$this->product_unique_piece."',
+            `product_description` = '".$this->product_description."',
+            `product_description_es` = '".$this->product_description_es."',
+            `product_weight` = '".$this->product_weight."',
+            `product_stock` = '".$this->product_stock."',
+            `product_sizes` = '".$this->product_sizes."',
+            `product_date` = '".$this->product_date."'
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        }
         try {
             $product = parent::nonQuery($query);
             if ($product > 0) return $product;
