@@ -368,22 +368,7 @@ class Products extends Connection {
     // Updating products method
     private function updateProduct($product_uid) {
         $this->product_date = date("Y-m-d H:i:s");
-        // if ($this->product_image !== "") {
-        //     $query = "UPDATE ".$this->table." SET
-        //     `product_name` = '".$this->product_name."',
-        //     `product_class` = '".$this->product_class."',
-        //     `product_price` = '".$this->product_price."',
-        //     `product_price_discount` = '".$this->product_price_discount."',
-        //     `product_unique_piece` = '".$this->product_unique_piece."',
-        //     `product_description` = '".$this->product_description."',
-        //     `product_description_es` = '".$this->product_description_es."',
-        //     `product_weight` = '".$this->product_weight."',
-        //     `product_stock` = '".$this->product_stock."',
-        //     `product_sizes` = '".$this->product_sizes."',
-        //     `product_image` = '".$this->product_image."',
-        //     `product_date` = '".$this->product_date."'
-        //     WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
-        // } else if ($this->product_images_gallery !== "") {
+        if ($this->product_image !== "") {
             $query = "UPDATE ".$this->table." SET
             `product_name` = '".$this->product_name."',
             `product_class` = '".$this->product_class."',
@@ -396,25 +381,39 @@ class Products extends Connection {
             `product_stock` = '".$this->product_stock."',
             `product_sizes` = '".$this->product_sizes."',
             `product_image` = '".$this->product_image."',
+            `product_date` = '".$this->product_date."'
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        } else if ($this->product_images_gallery !== "") {
+            $query = "UPDATE ".$this->table." SET
+            `product_name` = '".$this->product_name."',
+            `product_class` = '".$this->product_class."',
+            `product_price` = '".$this->product_price."',
+            `product_price_discount` = '".$this->product_price_discount."',
+            `product_unique_piece` = '".$this->product_unique_piece."',
+            `product_description` = '".$this->product_description."',
+            `product_description_es` = '".$this->product_description_es."',
+            `product_weight` = '".$this->product_weight."',
+            `product_stock` = '".$this->product_stock."',
+            `product_sizes` = '".$this->product_sizes."',
             `product_images_gallery` = '".$this->product_images_gallery."',
             `product_images_thumbnails` = '".$this->product_images_thumbnails."',
             `product_date` = '".$this->product_date."'
             WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
-        // } else {
-            // $query = "UPDATE ".$this->table." SET
-            // `product_name` = '".$this->product_name."',
-            // `product_class` = '".$this->product_class."',
-            // `product_price` = '".$this->product_price."',
-            // `product_price_discount` = '".$this->product_price_discount."',
-            // `product_unique_piece` = '".$this->product_unique_piece."',
-            // `product_description` = '".$this->product_description."',
-            // `product_description_es` = '".$this->product_description_es."',
-            // `product_weight` = '".$this->product_weight."',
-            // `product_stock` = '".$this->product_stock."',
-            // `product_sizes` = '".$this->product_sizes."',
-            // `product_date` = '".$this->product_date."'
-            // WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
-        // }
+        } else {
+            $query = "UPDATE ".$this->table." SET
+            `product_name` = '".$this->product_name."',
+            `product_class` = '".$this->product_class."',
+            `product_price` = '".$this->product_price."',
+            `product_price_discount` = '".$this->product_price_discount."',
+            `product_unique_piece` = '".$this->product_unique_piece."',
+            `product_description` = '".$this->product_description."',
+            `product_description_es` = '".$this->product_description_es."',
+            `product_weight` = '".$this->product_weight."',
+            `product_stock` = '".$this->product_stock."',
+            `product_sizes` = '".$this->product_sizes."',
+            `product_date` = '".$this->product_date."'
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+        }
         try {
             $product = parent::nonQuery($query);
             if ($product > 0) return $product;
