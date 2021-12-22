@@ -310,10 +310,12 @@ class Products extends Connection {
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Not an admin or your token has been deprecated");
         // Mandatory fields
-        if (!isset($data["product_id"])) return $Responses->error_400();
-        $this->product_id = $data["product_id"];
+        // if (!isset($data["product_id"])) return $Responses->error_400();
+        // $this->product_id = $data["product_id"];
+        if (!isset($data["product_uid"])) return $Responses->error_400();
+        $this->product_id = $data["product_uid"];
         // Deleting the product
-        $product = $this->deleteProduct(0);
+        $product = $this->deleteProduct($this->product_uid);
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
