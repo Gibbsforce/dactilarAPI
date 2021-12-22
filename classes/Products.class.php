@@ -20,9 +20,9 @@ class Products extends Connection {
     private $product_weight = "";
     private $product_stock = "";
     private $product_sizes = "";
-    private $product_image;
-    private $product_images_gallery;
-    private $product_images_thumbnails;
+    private $product_image = "";
+    private $product_images_gallery = "";
+    private $product_images_thumbnails = "";
     private $product_date = "";
     // External variables
     private $token = "";
@@ -290,7 +290,8 @@ class Products extends Connection {
             $this->product_images_thumbnails = $thumbnails[1];
         }
         // Updating the product
-        $product = $this->updateProduct($this->product_uid);
+        // $product = $this->updateProduct($this->product_uid);
+        $product = $this->updateProduct();
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
@@ -366,7 +367,8 @@ class Products extends Connection {
         }
     }
     // Updating products method
-    private function updateProduct($product_uid) {
+    // private function updateProduct($product_uid) {
+    private function updateProduct() {
         $this->product_date = date("Y-m-d H:i:s");
         $query = "UPDATE ".$this->table." SET
             `product_name` = '".$this->product_name."',
@@ -383,7 +385,7 @@ class Products extends Connection {
             `product_images_gallery` = '".$this->product_images_gallery."',
             `product_images_thumbnails` = '".$this->product_images_thumbnails."',
             `product_date` = '".$this->product_date."'
-            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '".$this->product_id."'";
         try {
             $product = parent::nonQuery($query);
             if ($product > 0) return $product;
