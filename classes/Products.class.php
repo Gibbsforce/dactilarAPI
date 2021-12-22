@@ -294,7 +294,7 @@ class Products extends Connection {
         if (!$product) return $Responses->error_500();
         $response = $Responses->response;
         $response["result"] = array(
-            "product_id" => $product
+            "product_uid" => $this->product_uid
         );
         return $response;
     }
