@@ -385,7 +385,7 @@ class Products extends Connection {
             `product_images_gallery` = '".$this->product_images_gallery."',
             `product_images_thumbnails` = '".$this->product_images_thumbnails."',
             `product_date` = '".$this->product_date."'
-            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '".$this->product_id."'";
+            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '".$this->product_uid."'";
         try {
             $product = parent::nonQuery($query);
             if ($product > 0) return $product;
