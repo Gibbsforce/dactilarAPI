@@ -401,19 +401,19 @@ class Products extends Connection {
             `product_date` = '".$this->product_date."'
             WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
         // } else {
-            $query = "UPDATE ".$this->table." SET
-            `product_name` = '".$this->product_name."',
-            `product_class` = '".$this->product_class."',
-            `product_price` = '".$this->product_price."',
-            `product_price_discount` = '".$this->product_price_discount."',
-            `product_unique_piece` = '".$this->product_unique_piece."',
-            `product_description` = '".$this->product_description."',
-            `product_description_es` = '".$this->product_description_es."',
-            `product_weight` = '".$this->product_weight."',
-            `product_stock` = '".$this->product_stock."',
-            `product_sizes` = '".$this->product_sizes."',
-            `product_date` = '".$this->product_date."'
-            WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
+            // $query = "UPDATE ".$this->table." SET
+            // `product_name` = '".$this->product_name."',
+            // `product_class` = '".$this->product_class."',
+            // `product_price` = '".$this->product_price."',
+            // `product_price_discount` = '".$this->product_price_discount."',
+            // `product_unique_piece` = '".$this->product_unique_piece."',
+            // `product_description` = '".$this->product_description."',
+            // `product_description_es` = '".$this->product_description_es."',
+            // `product_weight` = '".$this->product_weight."',
+            // `product_stock` = '".$this->product_stock."',
+            // `product_sizes` = '".$this->product_sizes."',
+            // `product_date` = '".$this->product_date."'
+            // WHERE `product_id` = '".$this->product_id."' OR `product_uid` = '$product_uid'";
         // }
         try {
             $product = parent::nonQuery($query);
