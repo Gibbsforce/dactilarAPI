@@ -119,6 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         // Receiving post sent data as a JSON string
         $delete_body = file_get_contents("php://input");
     }
+    print_r($delete_body);
     // Sending the data to delete handler
     $arr_data = $Products->delete($delete_body);
     // Returning the response
