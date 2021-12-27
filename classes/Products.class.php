@@ -379,7 +379,7 @@ class Products extends Connection {
     // Updating products method
     private function updateProduct($product_uid) {
         $this->product_date = date("Y-m-d H:i:s");
-        if ($this->product_image !== "" || $this->product_images_gallery !== "") {
+        if ($this->product_image_original !== "" || $this->product_images_gallery !== "") {
             $query = "UPDATE ".$this->table." SET
             `product_name` = '".$this->product_name."',
             `product_class` = '".$this->product_class."',
