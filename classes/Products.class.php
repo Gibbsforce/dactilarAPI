@@ -283,8 +283,8 @@ class Products extends Connection {
         if (isset($data["product_stock"])) $this->product_stock = $data["product_stock"];
         if (isset($data["product_sizes"])) $this->product_sizes = $data["product_sizes"];
         // Image port
-        if (isset($data["product_image"])) {
-            $product_image = $this->productImage($data["product_image"]);
+        if (isset($data["product_image_original"])) {
+            $product_image = $this->productImage($data["product_image_original"]);
             $this->product_image_original = $product_image[1];
             $product_image_thumb = $this->productImageThumbnails($product_image);
             $this->product_image = $product_image_thumb[1];
