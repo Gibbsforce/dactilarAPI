@@ -363,6 +363,7 @@ class Products extends Connection {
                 '".$this->product_stock."',
                 '".$this->product_sizes."',
                 '".$this->product_image."',
+                '".$this->product_image_original."',
                 '".$this->product_images_gallery."',
                 '".$this->product_images_thumbnails."',
                 '".$this->product_date."'
