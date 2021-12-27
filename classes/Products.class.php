@@ -21,6 +21,7 @@ class Products extends Connection {
     private $product_stock = "";
     private $product_sizes = "";
     private $product_image = "";
+    private $product_image_original = "";
     private $product_images_gallery = "";
     private $product_images_thumbnails = "";
     private $product_date = "";
@@ -111,6 +112,7 @@ class Products extends Connection {
                 `product_stock`,
                 `product_sizes`,
                 `product_image`,
+                `product_image_original`,
                 `product_images_gallery`,
                 `product_images_thumbnails`,
                 `product_date`
@@ -147,6 +149,7 @@ class Products extends Connection {
                 `product_stock`,
                 `product_sizes`,
                 `product_image`,
+                `product_image_original`,
                 `product_images_gallery`,
                 `product_images_thumbnails`,
                 `product_date`
@@ -227,6 +230,9 @@ class Products extends Connection {
         $this->product_sizes = $data["product_sizes"];
         // Image port
         $product_image = $this->productImage($data["product_image"]);
+        // Image Original
+        $this->product_image_original = $product_image[1];
+        // Thumbs of the image port
         $product_image_thumb = $this->productImageThumbnails($product_image);
         $this->product_image = $product_image_thumb[1];
         // No mandatory
@@ -340,6 +346,7 @@ class Products extends Connection {
             `product_stock`,
             `product_sizes`,
             `product_image`,
+            `product_image_original`,
             `product_images_gallery`,
             `product_images_thumbnails`,
             `product_date`)VALUES(
@@ -383,6 +390,7 @@ class Products extends Connection {
             `product_stock` = '".$this->product_stock."',
             `product_sizes` = '".$this->product_sizes."',
             `product_image` = '".$this->product_image."',
+            `product_image_original` = '".$this->product_image_original."',
             `product_images_gallery` = '".$this->product_images_gallery."',
             `product_images_thumbnails` = '".$this->product_images_thumbnails."',
             `product_date` = '".$this->product_date."'
