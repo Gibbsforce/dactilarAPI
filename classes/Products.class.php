@@ -167,13 +167,13 @@ class Products extends Connection {
         $Responses = new Responses();
         $query =
             "SELECT 
-                `product_image`,
+                `product_image_original`,
                 `product_images_gallery`
             FROM ".$this->table." WHERE `product_uid` = '$product_uid'";
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
-            $data[0]["product_image"] = $this->toBase64Image($data[0]["product_image"]);
+            $data[0]["product_image_original"] = $this->toBase64Image($data[0]["product_image_original"]);
             $arr_thumbs = explode(",", $data[0]["product_images_gallery"]);
             if (empty($arr_thumbs[0])) {
                 $data[0]["product_images_gallery"] = [];
