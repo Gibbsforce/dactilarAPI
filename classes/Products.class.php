@@ -285,6 +285,7 @@ class Products extends Connection {
         // Image port
         if (isset($data["product_image"])) {
             $product_image = $this->productImage($data["product_image"]);
+            $this->product_image_original = $product_image[1];
             $product_image_thumb = $this->productImageThumbnails($product_image);
             $this->product_image = $product_image_thumb[1];
         }
