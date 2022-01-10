@@ -12,6 +12,8 @@ class Cart extends Connection {
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
+        print_r($username);
+        print_r($uname);
         if ($username !== $uname) return $Responses->error_401();
         $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
         try {
