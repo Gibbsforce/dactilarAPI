@@ -19,7 +19,7 @@ class Cart extends Connection {
             if (!isset($data)) return $this->Responses->error_500();
             $result = array(
                 "message" => "OK",
-                "cart_result" => $data
+                $data
             );
             return $result;
         } catch (PDOException $error) {
