@@ -12,7 +12,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header("Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE");
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (isset($_GET["token"]) && isse($_GET["uname"])) {
+    if (isset($_GET["token"]) && isset($_GET["uname"])) {
         $token = $_GET["token"];
         $uname = $_GET["uname"];
         $cart = $Cart->getCartFromUser($token, $uname);
