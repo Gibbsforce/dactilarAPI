@@ -22,6 +22,7 @@ class Cart extends Connection {
                 "message" => "OK",
                 "cart_result" => $data
             );
+            return $result;
         } catch (PDOException $error) {
             return Responses::prepare(500, $error->getMessage());
         }
