@@ -10,7 +10,6 @@ class Cart extends Connection {
         $Responses = new Responses();
         $this->token = $token;
         $arr_token = $this->searchToken();
-        print_r($arr_token);
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
@@ -29,7 +28,6 @@ class Cart extends Connection {
     // Looking for the token method
     private function searchToken() {
         $query = "SELECT `id-token`, `username`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND `status` = 'user'";
-        print_r($query);
         try {
             $result = parent::getData($query);
             if ($result) return $result;
