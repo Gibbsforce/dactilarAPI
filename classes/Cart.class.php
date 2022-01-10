@@ -14,6 +14,7 @@ class Cart extends Connection {
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
         $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
+        print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
