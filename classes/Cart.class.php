@@ -29,6 +29,7 @@ class Cart extends Connection {
     // Looking for the token method
     private function searchToken() {
         $query = "SELECT `id-token`, `username`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND `status` = 'user'";
+        print_r($query);
         try {
             $result = parent::getData($query);
             if ($result) return $result;
