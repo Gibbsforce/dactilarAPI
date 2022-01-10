@@ -92,7 +92,7 @@ class NewUser extends Connection {
         $result_user_exist = $this->existingUser($this->dni, $this->email, $this->username);
         if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
         if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
-        if ($result_user_exist[0]["username"] === $this->username) return $Responses->error_200("The username already exists");
+        if (strtolower($result_user_exist[0]["username"]) === strtolower($this->username)) return $Responses->error_200("The username already exists");
         // Generating the token
         $val = true;
         $this->token = bin2hex(openssl_random_pseudo_bytes(16, $val));
