@@ -9,7 +9,7 @@ class Cart extends Connection {
     public function getCartFromUser($token, $uname) {
         $Responses = new Responses();
         $this->token = $token;
-        $arr_token = $this->searchToken($token);
+        $arr_token = $this->searchToken();
         print_r($arr_token);
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
