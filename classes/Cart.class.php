@@ -16,7 +16,6 @@ class Cart extends Connection {
         $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
         try {
             $data = parent::getData($query);
-            print_r($data);
             if (!isset($data)) return $this->Responses->error_500();
             $result = array(
                 "message" => "OK",
