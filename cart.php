@@ -20,4 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         echo json_encode($cart);
         http_response_code(200);
     }
+} else {
+    header("Content-type: application/json");
+    $arr_data = $Responses->error_405();
+    echo json_encode($arr_data);
 }
