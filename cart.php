@@ -19,6 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         header("Content-Type: application/json");
         echo json_encode($cart);
         http_response_code(200);
+    } else {
+        $arr_data = $Responses->error_401();
+        header("Content-Type: application/json");
+        echo json_encode($arr_data);
+        http_response_code(401);
     }
 } else {
     header("Content-type: application/json");
