@@ -33,6 +33,7 @@ class Auth extends Connection {
         $result = $Responses->response;
         $result["result"] = array(
             "username" => $data[0]["username"],
+            "status" => $data[0]["status"],
             "token" => $verify
         );
         return $result;
