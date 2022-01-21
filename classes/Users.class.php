@@ -114,13 +114,17 @@ class Users extends Connection {
             $img = $this->processImage($data["image"]);
             $this->image = $img;
         }
-        $added = $this->addUser();
-        if (!$added) return $Responses->error_500();
-        $response = $Responses->response;
-        $response["result"] = array(
-            "id-users" => $added
-        );
-        return $response;
+        try {
+            $added = $this->addUser();
+            if (!$added) return $Responses->error_500();
+            $response = $Responses->response;
+            $response["result"] = array(
+                "id-users" => $added
+            );
+            return $response;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
     }
     // Query that creates user
     private function addUser() {
