@@ -21,6 +21,7 @@ class Users extends Connection {
     private $username = "";
     private $image = "";
     private $token = "";
+    private $uname = "";
     // Getting data from users table and obtaining total data
     public function usersList($token, $page = 1) {
         $Responses = new Responses();
@@ -172,7 +173,7 @@ class Users extends Connection {
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         // Getting username and make it mandatory
         if (!isset($data["uname"])) return $Responses->error_400();
-        $this->username = $data["uname"];
+        $this->uname = $data["uname"];
         $uname = $arr_token[0]["username"];
         if ($this->username !== $uname) return $Responses->error_401();
         // Fields to update
