@@ -6,7 +6,6 @@ require_once "Responses.class.php";
 class Users extends Connection {
     // Asignando tabla users a una variable privada
     private $table = "users";
-    private $id_users = "";
     private $name = "";
     private $last_name = "";
     private $dni = "";
@@ -17,15 +16,23 @@ class Users extends Connection {
     private $state_city = "";
     private $city_district = "";
     private $zipcode = "";
-    private $created = "0000-00-00";
+    private $created = "";
     private $username = "";
-    private $token = "";
     private $image = "";
+    private $token = "";
     // Obteniendo datos de la tabla users y filtrando cantidad de datos obtenidos
-    public function usersList($page = 1) {
+    public function usersList($token, $page = 1) {
+        $Responses = new Responses();
+        $this->token = $token;
+        $arr_token = $this->searchToken();
+        if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
+        $status = $arr_token[0]["status"];
+        if ($status !== "admin") return $Responses->error_401();
         $start = 0;
-        $quanty = 5;
-        if ($page > 1) $start = ($quanty * ($page - 1));
+        $qty = 5;
+        if ($page > 1) $start = $qty * ($page - 1);
+        $query_total = "SELECT `id-users` FROM ".$this->table."";
+        $total = parent::getData($query_total); // maybe check this in the future
         $query = 
             "SELECT
                 `id-users`,
@@ -40,10 +47,24 @@ class Users extends Connection {
                 `city-district`,
                 `zipcode`,
                 `created`,
-                `username`
-            FROM ".$this->table." limit $start, $quanty";
-        $data = parent::getData($query);
-        return $data;
+                `username`,
+                `image`,
+                `cart`
+            FROM ".$this->table." ORDER BY `product_id` ASC limit $start, $qty";
+        
+        try {
+            $data = parent::getData($query);
+            if (!isset($data)) return $this->Responses->error_500();
+            $result = array(
+                "page" => intval($page),
+                "results" => $data,
+                "total_pages" => ceil(count($total) / $qty),
+                "total_results" => count($total)
+            );
+            return $result;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
     }
     // Obteniendo datos de la tabla users y obteniendo usuario por id
     public function getUser ($id) {
@@ -202,14 +223,18 @@ class Users extends Connection {
         $query = "DELETE FROM ".$this->table." WHERE `id-users` = '".$this->id_users."'";
         $removed = parent::nonQuery($query);
         if ($removed > 0) return $removed;
-        return 0;
+        return false;
     }
     // Metodo para buscar token
     private function searchToken() {
-        $query = "SELECT `id-token`, `unique-id`, `state` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1";
-        $result = parent::getData($query);
-        if ($result) return $result;
-        return 0;
+        $query = "SELECT `id-token`, `username`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND (`status` = 'user' OR `status` = 'admin')";
+        try {
+            $result = parent::getData($query);
+            if ($result) return $result;
+            return false;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
     }
     // Metodo que actualiza token
     private function updateToken($id_token) {
@@ -217,7 +242,7 @@ class Users extends Connection {
         $query = "UPDATE `users-token` SET `date` = '".$date."' WHERE `id-token` = '".$id_token."'";
         $updated = parent::nonQuery($query);
         if ($updated > 0) return $updated;
-        return 0;
+        return false;
     }
     // Metodo para imagen
     public function processImage($image) {

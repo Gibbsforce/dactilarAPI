@@ -5,11 +5,25 @@ require_once "classes/Users.class.php";
 // Inicializando las clases
 $Responses = new Responses;
 $Users = new Users;
+// Headers
+// CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+header("Access-Control-Allow-Methods: POST, GET, PUT, OPTIONS, PATCH, DELETE");
 // API RESTful
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    header("Content-Type: application/json");
-    $arr_data = $Responses->error_200("We are currently working for this, please visit us again later");
-    echo json_encode($arr_data);
+    if (isset($_GET["token"]) && isset($_GET["page"])) {
+        $token = $_GET["token"];
+        $page = $_GET["page"];
+        $users = $Users->usersList($token, $page);
+        header("Content-Type: application/json");
+        echo json_encode($users);
+        http_response_code(200);
+    } else {
+        header("Content-Type: application/json");
+        $arr_data = $Responses->error_401();
+        echo json_encode($arr_data);
+    }
     // if (isset($_GET["page"])) {
     //     $page = $_GET["page"];
     //     $users_list = $Users->usersList($page);
