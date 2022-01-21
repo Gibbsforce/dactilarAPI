@@ -76,7 +76,6 @@ class Users extends Connection {
         $query = "SELECT * FROM ".$this->table." WHERE `username` = '$uname'";
         try {
             $result = parent::getData($query);
-            print_r($result);
             if (!isset($result)) return $this->Responses->error_500();
             return $result;
         } catch (PDOException $error) {
