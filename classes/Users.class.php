@@ -94,7 +94,7 @@ class Users extends Connection {
         print_r($array_token);
         if (!$array_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         // Only admin can create user this way
-        if ($arr_token[0]["status"] !== "admin") return $Responses->error_401();
+        if ($array_token[0]["status"] !== "admin") return $Responses->error_401();
         // Name, dni and email mandatory
         if (!isset($data["name"]) || !isset($data["dni"]) || !isset($data["email"])) return $Responses->error_400();
         $this->name = $data["name"];
