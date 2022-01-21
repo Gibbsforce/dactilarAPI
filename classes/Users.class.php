@@ -73,6 +73,7 @@ class Users extends Connection {
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
         $query = "SELECT * FROM ".$this->table." WHERE `username` = '$uname'";
+        print_r($query);
         try {
             $result = parent::getData($query);
             if (!isset($result)) return $this->Responses->error_500();
