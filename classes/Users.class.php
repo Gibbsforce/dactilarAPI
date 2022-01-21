@@ -87,11 +87,11 @@ class Users extends Connection {
     public function post($json) {
         $Responses = new Responses;
         $data = json_decode($json, true);
-        print_r($data);
         // Verifying if token is being sent
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $array_token = $this->searchToken();
+        print_r($array_token);
         if (!$array_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         // Only admin can create user this way
         if ($arr_token[0]["status"] !== "admin") return $Responses->error_401();
