@@ -50,8 +50,8 @@ class Users extends Connection {
                 `username`,
                 `image`,
                 `cart`
-            FROM ".$this->table." ORDER BY `product_id` ASC limit $start, $qty";
-        print_r($query);
+            FROM ".$this->table." ORDER BY `id-users` ASC limit $start, $qty";
+        // print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
