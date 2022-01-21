@@ -124,6 +124,7 @@ class Users extends Connection {
     }
     // Query that creates user
     private function addUser() {
+        $this->created = date("Y-m-d H:i:s");
         $query = "INSERT INTO ".$this->table." (
             `name`,
             `last_name`,
@@ -154,7 +155,7 @@ class Users extends Connection {
             )";
         $added = parent::nonQueryId($query);
         if ($added) return $added;
-        return 0;
+        return false;
     }
     // Meotodo PUT para actualizar usuario
     public function put($json) {
