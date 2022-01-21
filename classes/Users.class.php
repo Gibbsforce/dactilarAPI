@@ -171,7 +171,6 @@ class Users extends Connection {
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
-        print_r($arr_token);
         // Getting username and make it mandatory
         if (!isset($data["uname"])) return $Responses->error_400();
         $this->uname = $data["uname"];
@@ -224,7 +223,7 @@ class Users extends Connection {
 
         if ($data["dni"] !== $dni && $data["email"] !== $email && $data["username"] !== $uname) {
             $result_user_exist = $this->existingUser($data["dni"], $data["email"], $data["username"]);
-            print_r($result_user_exist);
+            // print_r($result_user_exist);
             if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
             if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
             if (strtolower($result_user_exist[0]["username"]) === strtolower($this->username)) return $Responses->error_200("The username already exists");
