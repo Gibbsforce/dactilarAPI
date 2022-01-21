@@ -1,8 +1,8 @@
 <?php
-// Accediendo a las clases de usuarios y respuestas
+// Accesing users and responses classes
 require_once "classes/Responses.class.php";
 require_once "classes/Users.class.php";
-// Inicializando las clases
+// Initializing classes
 $Responses = new Responses;
 $Users = new Users;
 // Headers
@@ -31,25 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $arr_data = $Responses->error_401();
         echo json_encode($arr_data);
     }
-    // if (isset($_GET["page"])) {
-    //     $page = $_GET["page"];
-    //     $users_list = $Users->usersList($page);
-    //     header("Content-type: application/json");
-    //     echo json_encode($users_list);
-    //     http_response_code(200);
-    // } else if (isset($_GET["id"])) {
-    //     $id_users = $_GET["id"];
-    //     header("Content-type: application/json");
-    //     $user = $Users->getUser($id_users);
-    //     echo json_encode($user);
-    //     http_response_code(200);
-    // }
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recibiendo datos enviados de post
+    // Getting post sent data and sending it to the post handler
     $post_body = file_get_contents("php://input");
-    // Enviando datos al manejador metodo post
     $arr_data = $Users->post($post_body);
-    // Devolviendo la respuesta
+    // Response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
     $response_code = $arr_data["result"]["error_id"];

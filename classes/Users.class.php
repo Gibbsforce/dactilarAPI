@@ -1,11 +1,12 @@
 <?php
-// Accediendo a las clases Connection y Responses
+// Accessing Connection and Responses classes
 require_once "Connection/Connection.php";
 require_once "Responses.class.php";
-// Creando la clase Users y heredando de Connection
+// Building Users class and inheritate from Connection
 class Users extends Connection {
-    // Asignando tabla users a una variable privada
+    // Assinging users table in local private variable
     private $table = "users";
+    // Data to local variables
     private $name = "";
     private $last_name = "";
     private $dni = "";
@@ -20,7 +21,7 @@ class Users extends Connection {
     private $username = "";
     private $image = "";
     private $token = "";
-    // Obteniendo datos de la tabla users y filtrando cantidad de datos obtenidos
+    // Getting data from users table and obtaining total data
     public function usersList($token, $page = 1) {
         $Responses = new Responses();
         $this->token = $token;
@@ -65,7 +66,7 @@ class Users extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // Obteniendo datos de la tabla users y obteniendo usuario por id
+    // Getting user data by username
     public function getUser($token, $uname) {
         $Responses = new Responses();
         $this->token = $token;
@@ -82,21 +83,23 @@ class Users extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // Meotodo POST para crear usuario
+    // POST method to create user
     public function post($json) {
         $Responses = new Responses;
         $data = json_decode($json, true);
-        // Validando si existe token
+        // Verifying if token is being sent
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $array_token = $this->searchToken();
-        if (!$array_token) return $Responses->error_401("Token enviado invalido o ha caducado");
-        // Campos name, dni e email obligatorios
+        if (!$array_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
+        // Only admin can create user this way
+        if ($arr_token[0]["status"] !== ) return $Responses->error_401();
+        // Name, dni and email mandatory
         if (!isset($data["name"]) || !isset($data["dni"]) || !isset($data["email"])) return $Responses->error_400();
         $this->name = $data["name"];
         $this->dni = $data["dni"];
         $this->email = $data["email"];
-        // if (isset($data["id-users"])) $this->id_users = $data["id-users"];
+        // Sent user data to local variables
         if (isset($data["last_name"])) $this->last_name = $data["last_name"];
         if (isset($data["phone"])) $this->phone = $data["phone"];
         if (isset($data["address"])) $this->address = $data["address"];
@@ -106,13 +109,11 @@ class Users extends Connection {
         if (isset($data["zipcode"])) $this->zipcode = $data["zipcode"];
         if (isset($data["created"])) $this->created = $data["created"];
         if (isset($data["username"])) $this->username = $data["username"];
-
-        // imagen
+        // image *fix this later*
         if (isset($data["image"])) {
             $img = $this->processImage($data["image"]);
             $this->image = $img;
         }
-
         $added = $this->addUser();
         if (!$added) return $Responses->error_500();
         $response = $Responses->response;
@@ -121,7 +122,7 @@ class Users extends Connection {
         );
         return $response;
     }
-    // Metodo del query que crea usuario
+    // Query that creates user
     private function addUser() {
         $query = "INSERT INTO ".$this->table." (
             `name`,
