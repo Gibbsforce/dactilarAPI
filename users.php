@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $uname = $_GET["uname"];
         $user = $Users->getUser($token, $uname);
         header("Content-Type: application/json");
-        echo json_encode($users);
+        echo json_encode($user);
         http_response_code(200);
     } else {
         header("Content-Type: application/json");
