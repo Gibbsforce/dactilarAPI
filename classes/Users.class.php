@@ -66,7 +66,7 @@ class Users extends Connection {
         }
     }
     // Obteniendo datos de la tabla users y obteniendo usuario por id
-    public function getUser ($token, $uname) {
+    public function getUser($token, $uname) {
         $Responses = new Responses();
         $this->token = $token;
         $arr_token = $this->searchToken();
