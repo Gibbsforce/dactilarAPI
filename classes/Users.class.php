@@ -173,7 +173,7 @@ class Users extends Connection {
         // Getting username and make it mandatory
         if (!isset($data["username"])) return $Responses->error_400();
         $this->username = $data["username"];
-        $uname = $arr_token[0]["username"]
+        $uname = $arr_token[0]["username"];
         if ($this->username !== $uname) return $Responses->error_401();
         // Fields to update
         if (isset($data["name"])) {
