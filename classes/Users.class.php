@@ -171,6 +171,7 @@ class Users extends Connection {
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
+        print_r($arr_token);
         // Getting username and make it mandatory
         if (!isset($data["uname"])) return $Responses->error_400();
         $this->uname = $data["uname"];
