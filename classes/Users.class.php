@@ -257,8 +257,7 @@ class Users extends Connection {
                 `city-district` = '".$this->city_district."',
                 `zipcode` = '".$this->zipcode."',
                 `created` = '".$this->created."',
-                `username` = '".$this->username."
-            ' WHERE `username` = '".$this->uname."'";
+                `username` = '".$this->username."' WHERE `username` = '".$this->uname."'";
         $added = parent::nonQuery($query);
         if ($added > 0) return $added;
         return false;
