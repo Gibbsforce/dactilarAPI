@@ -7,21 +7,21 @@ class Users extends Connection {
     // Assinging users table in local private variable
     private $table = "users";
     // Data to local variables
-    private $name = "";
-    private $last_name = "";
-    private $dni = "";
-    private $phone = "";
-    private $email = "";
-    private $address = "";
-    private $country = "";
-    private $state_city = "";
-    private $city_district = "";
-    private $zipcode = "";
-    private $created = "";
-    private $username = "";
-    private $image = "";
-    private $token = "";
-    private $uname = "";
+    private $name;
+    private $last_name;
+    private $dni;
+    private $phone;
+    private $email;
+    private $address;
+    private $country;
+    private $state_city;
+    private $city_district;
+    private $zipcode;
+    private $created;
+    private $username;
+    private $image;
+    private $token;
+    private $uname;
     // Getting data from users table and obtaining total data
     public function usersList($token, $page = 1) {
         $Responses = new Responses();
