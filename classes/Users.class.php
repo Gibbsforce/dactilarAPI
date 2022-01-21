@@ -78,6 +78,7 @@ class Users extends Connection {
         print_r($query);
         try {
             $result = parent::getData($query);
+            print_r($result);
             if (!isset($result)) return $this->Responses->error_500();
             return $result;
         } catch (PDOException $error) {
