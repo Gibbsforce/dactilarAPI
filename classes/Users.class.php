@@ -174,7 +174,7 @@ class Users extends Connection {
         if (!isset($data["username"])) return $Responses->error_400();
         $this->username = $data["username"];
         $uname = $arr_token[0]["username"]
-        if ($uname !== $this->username) return $Responses->error_401();
+        if ($this->username !== $uname) return $Responses->error_401();
         // Fields to update
         if (isset($data["name"])) {
             if (!preg_match("/^([a-zA-Z']+)$/", $data["name"]) return $Responses->error_200("Please, add a valid name");
