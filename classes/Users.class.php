@@ -71,6 +71,7 @@ class Users extends Connection {
         $this->token = $token;
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
+        print_r($arr_token);
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
         $query = "SELECT * FROM ".$this->table." WHERE `username` = '$uname'";
