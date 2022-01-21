@@ -220,7 +220,7 @@ class Users extends Connection {
             if (strlen($data["username"]) > 32) return $Responses->error_200("Username too large");
             $this->username = $data["username"];
         }
-
+        print_r($data);
         if ($data["dni"] !== $dni || $data["email"] !== $email || $data["username"] !== $uname) {
             $result_user_exist = $this->existingUser($data["dni"], $data["email"], $data["username"]);
             // print_r($result_user_exist);
