@@ -19,6 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         header("Content-Type: application/json");
         echo json_encode($users);
         http_response_code(200);
+    } else if (isset($_GET["token"] && isset($_GET["uname"]))) {
+        $token = $_GET["token"];
+        $uname = $_GET["uname"];
+        $user = $Users->getUser($token, $uname);
+        header("Content-Type: application/json");
+        echo json_encode($users);
+        http_response_code(200);
     } else {
         header("Content-Type: application/json");
         $arr_data = $Responses->error_401();

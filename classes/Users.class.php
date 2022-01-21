@@ -51,7 +51,6 @@ class Users extends Connection {
                 `image`,
                 `cart`
             FROM ".$this->table." ORDER BY `id-users` ASC limit $start, $qty";
-        // print_r($query);
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
@@ -67,9 +66,20 @@ class Users extends Connection {
         }
     }
     // Obteniendo datos de la tabla users y obteniendo usuario por id
-    public function getUser ($id) {
-        $query = "SELECT * FROM ".$this->table." WHERE `id-users` = '$id'";
-        return parent::getData($query);
+    public function getUser ($token, $uname) {
+        $Responses = new Responses();
+        $this->token = $token;
+        if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
+        $username = $arr_token[0]["username"];
+        if ($username !== $uname) return $Responses->error_401();
+        $query = "SELECT * FROM ".$this->table." WHERE `username` = '$uname'";
+        try {
+            $result = parent::getData($query);
+            if (!isset($result)) return $this->Responses->error_500();
+            return $result;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
     }
     // Meotodo POST para crear usuario
     public function post($json) {
