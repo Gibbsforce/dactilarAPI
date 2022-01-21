@@ -95,11 +95,11 @@ class Users extends Connection {
         // Only admin can create user this way
         if ($arr_token[0]["status"] !== "admin") return $Responses->error_401();
         // Name, dni and email mandatory
-        if (!isset($data["name"]) || !isset($data["dni"]) || !isset($data["email"])) return $Responses->error_400();
-        $this->name = $data["name"];
+        if (!isset($data["dni"]) || !isset($data["email"])) return $Responses->error_400();
         $this->dni = $data["dni"];
         $this->email = $data["email"];
         // Sent user data to local variables
+        if (isset($data["name"])) $this->name = $data["name"];
         if (isset($data["last_name"])) $this->last_name = $data["last_name"];
         if (isset($data["phone"])) $this->phone = $data["phone"];
         if (isset($data["address"])) $this->address = $data["address"];
@@ -161,38 +161,80 @@ class Users extends Connection {
         if ($added) return $added;
         return false;
     }
-    // Meotodo PUT para actualizar usuario
+    // PUT method that updates user
     public function put($json) {
         $Responses = new Responses;
         $data = json_decode($json, true);
-        // Validando si existe token
+        // Verifying if token is being sent
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
-        $array_token = $this->searchToken();
-        if (!$array_token) return $Responses->error_401("Token enviado invalido o ha caducado");
-        // Campo id-users obligatorio
-        if (!isset($data["id-users"])) return $Responses->error_400();
-        $this->id_users = $data["id-users"];
-        // Campos a actualizar
-        if (isset($data["name"])) $this->name = $data["name"];
-        if (isset($data["dni"])) $this->dni = $data["dni"];
-        if (isset($data["email"])) $this->email = $data["email"];
-        if (isset($data["last_name"])) $this->last_name = $data["last_name"];
-        if (isset($data["phone"])) $this->phone = $data["phone"];
-        if (isset($data["address"])) $this->address = $data["address"];
-        if (isset($data["country"])) $this->country = $data["country"];
-        if (isset($data["state-city"])) $this->state_city = $data["state-city"];
-        if (isset($data["city-district"])) $this->city_district = $data["city-district"];
-        if (isset($data["zipcode"])) $this->zipcode = $data["zipcode"];
-        if (isset($data["created"])) $this->created = $data["created"];
-        if (isset($data["username"])) $this->username = $data["username"];
-        $added = $this->updateUser();
-        if (!$added) return $Responses->error_500();
-        $response = $Responses->response;
-        $response["result"] = array(
-            "id-users" => $this->id_users
-        );
-        return $response;
+        $arr_token = $this->searchToken();
+        if (!$arr_token) return $Responses->error_401("Token enviado invalido o ha caducado");
+        // Getting username and make it mandatory
+        if (!isset($data["username"])) return $Responses->error_400();
+        $this->username = $data["username"];
+        $uname = $arr_token[0]["username"]
+        if ($uname !== $this->username) return $Responses->error_401();
+        // Fields to update
+        if (isset($data["name"])) {
+            if (!preg_match("/^([a-zA-Z']+)$/", $data["name"]) return $Responses->error_200("Please, add a valid name");
+            $this->name = $data["name"];
+        }
+        if (isset($data["last_name"])) {
+            if (!preg_match("/^([a-zA-Z']+)$/", $data["last_name"]) return $Responses->error_200("Please, add a valida username");
+            $this->last_name = $data["last_name"];
+        }
+        if (isset($data["dni"])) {
+            if (strlen($data["dni"]) < 8 || !is_numeric($data["dni"])) return $Responses->error_200("Please, add a valid DNI number");
+            $this->dni = $data["dni"];
+        }
+        if (isset($data["phone"])) {
+            if (strlen($data["phone"]) < 9 || !is_numeric($data["phone"])) return $Responses->error_200("Please, add a valid phone number");
+            $this->phone = $data["phone"];
+        }
+        if (isset($data["email"])) {
+            if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)) return $Responses->error_200("Please, add a valid email");
+            $this->email = $data["email"];
+        }
+        if (isset($data["address"])) {
+            $this->address = $data["address"];
+        }
+        if (isset($data["country"])) {
+            $this->country = $data["country"];
+        }
+        if (isset($data["state-city"])) {
+            $this->state_city = $data["state-city"];
+        }
+        if (isset($data["city-district"])) {
+            $this->city_district = $data["city-district"];
+        }
+        if (isset($data["zipcode"])) {
+            if (strlen($data["zipcode"]) < 4 || !is_numeric($data["zipcode"])) return $Responses->error_200("Please, add a valid zipcode");
+            $this->zipcode = $data["zipcode"];
+        }
+        if (isset($data["created"])) {
+            $this->created = date("Y-m-d H:i:s");
+        }
+        if (isset($data["username"])) {
+            if (strlen($data["username"]) < 7) return $Responses->error_200("Username too small");
+            if (strlen($data["username"]) > 32) return $Responses->error_200("Username too large");
+            $this->username = $data["username"];
+        }
+        $result_user_exist = $this->existingUser($this->dni, $this->email, $this->username);
+        if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
+        if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
+        if (strtolower($result_user_exist[0]["username"]) === strtolower($this->username)) return $Responses->error_200("The username already exists");
+        try {
+            $added = $this->updateUser();
+            if (!$added) return $Responses->error_500();
+            $response = $Responses->response;
+            $response["result"] = array(
+                "username" => $this->username
+            );
+            return $response;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
     }
     // Metodo del query que actualiza usuario
     private function updateUser() {
@@ -209,10 +251,10 @@ class Users extends Connection {
                 `zipcode` = '".$this->zipcode."',
                 `created` = '".$this->created."',
                 `username` = '".$this->username."
-            ' WHERE `id-users` = '".$this->id_users."'";
+            ' WHERE `username` = '".$this->username."'";
         $added = parent::nonQuery($query);
         if ($added > 0) return $added;
-        return 0;
+        return false;
     }
     // Metodo DELETE para eliminar usuario
     public function delete($json) {
@@ -271,5 +313,12 @@ class Users extends Connection {
         file_put_contents($file, $image_base64);
         // $new_dir = str_replace("\\", "/", $file);
         return $file;
+    }
+    // Method for existing user
+    private function existingUser($dni, $email, $username) {
+        $query = "SELECT `dni`, `email`, `username` FROM `users` WHERE `dni` = '".$dni."' OR `email` = '".$email."' OR `username` = '".$username."'";
+        $result = parent::getData($query);
+        if ($result) return $result;
+        return false;
     }
 }
