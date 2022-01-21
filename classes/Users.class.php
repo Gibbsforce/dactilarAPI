@@ -7,21 +7,21 @@ class Users extends Connection {
     // Assinging users table in local private variable
     private $table = "users";
     // Data to local variables
-    private $name;
-    private $last_name;
-    private $dni;
-    private $phone;
-    private $email;
-    private $address;
-    private $country;
-    private $state_city;
-    private $city_district;
-    private $zipcode;
-    private $created;
-    private $username;
-    private $image;
-    private $token;
-    private $uname;
+    private $name = "";
+    private $last_name = "";
+    private $dni = "";
+    private $phone = "";
+    private $email = "";
+    private $address = "";
+    private $country = "";
+    private $state_city = "";
+    private $city_district = "";
+    private $zipcode = "";
+    private $created = "";
+    private $username = "";
+    private $image = "";
+    private $token = "";
+    private $uname = "";
     // Getting data from users table and obtaining total data
     public function usersList($token, $page = 1) {
         $Responses = new Responses();
@@ -221,7 +221,7 @@ class Users extends Connection {
             if (strlen($data["username"]) > 32) return $Responses->error_200("Username too large");
             $this->username = $data["username"];
         }
-        $result_user_exist = $this->existingUser($this->dni || "null", $this->email || "null", $this->username || "null");
+        $result_user_exist = $this->existingUser($this->dni, $this->email, $this->username);
         // print_r($result_user_exist);
         // print_r($this->username);
         if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
