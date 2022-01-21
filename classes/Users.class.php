@@ -69,6 +69,7 @@ class Users extends Connection {
     public function getUser ($token, $uname) {
         $Responses = new Responses();
         $this->token = $token;
+        $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
