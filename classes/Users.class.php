@@ -175,14 +175,14 @@ class Users extends Connection {
         if (!isset($data["uname"])) return $Responses->error_400();
         $this->uname = $data["uname"];
         $uname = $arr_token[0]["username"];
-        if ($this->username !== $uname) return $Responses->error_401();
+        if ($this->uname !== $uname) return $Responses->error_401();
         // Fields to update
         if (isset($data["name"])) {
             if (!preg_match("/^([a-zA-Z']+)$/", $data["name"])) return $Responses->error_200("Please, add a valid name");
             $this->name = $data["name"];
         }
         if (isset($data["last_name"])) {
-            if (!preg_match("/^([a-zA-Z']+)$/", $data["last_name"])) return $Responses->error_200("Please, add a valida username");
+            if (!preg_match("/^([a-zA-Z']+)$/", $data["last_name"])) return $Responses->error_200("Please, add a valida last name");
             $this->last_name = $data["last_name"];
         }
         if (isset($data["dni"])) {
