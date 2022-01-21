@@ -221,7 +221,7 @@ class Users extends Connection {
             $this->username = $data["username"];
         }
 
-        if ($data["dni"] !== $dni && $data["email"] !== $email && $data["username"] !== $uname) {
+        if ($data["dni"] !== $dni || $data["email"] !== $email || $data["username"] !== $uname) {
             $result_user_exist = $this->existingUser($data["dni"], $data["email"], $data["username"]);
             // print_r($result_user_exist);
             if ($result_user_exist[0]["dni"] === $this->dni) return $Responses->error_200("DNI number already exists");
