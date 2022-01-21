@@ -213,9 +213,6 @@ class Users extends Connection {
             if (strlen($data["zipcode"]) < 4 || !is_numeric($data["zipcode"])) return $Responses->error_200("Please, add a valid zipcode");
             $this->zipcode = $data["zipcode"];
         }
-        if (isset($data["created"])) {
-            $this->created = date("Y-m-d H:i:s");
-        }
         if (isset($data["username"])) {
             if (strlen($data["username"]) < 7) return $Responses->error_200("Username too small");
             if (strlen($data["username"]) > 32) return $Responses->error_200("Username too large");
@@ -241,6 +238,7 @@ class Users extends Connection {
     }
     // Metodo del query que actualiza usuario
     private function updateUser() {
+        // $this->created = date("Y-m-d H:i:s");
         $query = "UPDATE ".$this->table."
             SET `name` = '".$this->name."',
                 `last_name` = '".$this->last_name."',
