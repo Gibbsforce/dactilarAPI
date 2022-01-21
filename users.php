@@ -42,11 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     http_response_code($response_code);
     echo json_encode($arr_data);
 } else if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-    // Recibiendo datos enviados de post
+    // Getting put sent data and sending it to the put handler
     $put_body = file_get_contents("php://input");
-    // Enviando datos al manejador metodo put
     $arr_data = $Users->put($put_body);
-    // Devolviendo la respuesta
+    // Response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
     $response_code = $arr_data["result"]["error_id"];
