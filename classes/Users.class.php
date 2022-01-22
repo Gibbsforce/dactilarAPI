@@ -238,7 +238,7 @@ class Users extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // Metodo del query que actualiza usuario
+    // Query that updates the user (missing some relevant stuff but working good for now)
     private function updateUser() {
         $this->created = date("Y-m-d H:i:s");
         // for now, missing dni, email and username update
@@ -256,30 +256,36 @@ class Users extends Connection {
         if ($added > 0) return $added;
         return false;
     }
-    // Metodo DELETE para eliminar usuario
+    // DELETE method that deletes the user
     public function delete($json) {
         $Responses = new Responses;
         $data = json_decode($json, true);
-        // Validando si existe token
+        // Verifying if token is being sent
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
-        $array_token = $this->searchToken();
-        if (!$array_token) return $Responses->error_401("Token enviado invalido o ha caducado");
-        // Campo id-users obligatorio
-        if (!isset($data["id-users"])) return $Responses->error_400();
-        $this->id_users = $data["id-users"];
-        // Eliminando usuario
-        $added = $this->removeUser();
-        if (!$added) return $Responses->error_500();
-        $response = $Responses->response;
-        $response["result"] = array(
-            "id-users" => $this->id_users
-        );
-        return $response;
+        $arr_token = $this->searchToken();
+        if (!$arr_token) return $Responses->error_401("Token enviado invalido o ha caducado");
+        // Only admin can create delete (for now)
+        if ($arr_token[0]["status"] !== "admin") return $Responses->error_401();
+        // Username field
+        if (!isset($data["username"])) return $Responses->error_400();
+        $this->username = $data["username"];
+        // Removing the user
+        try {
+            $added = $this->removeUser();
+            if (!$added) return $Responses->error_500();
+            $response = $Responses->response;
+            $response["result"] = array(
+                "username" => $this->username
+            );
+            return $response;
+        }  catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
     }
-    // Metodo del query que elimina usuario
+    // Query that deletes the user
     private function removeUser() {
-        $query = "DELETE FROM ".$this->table." WHERE `id-users` = '".$this->id_users."'";
+        $query = "DELETE FROM ".$this->table." WHERE `username` = '".$this->username."'";
         $removed = parent::nonQuery($query);
         if ($removed > 0) return $removed;
         return false;

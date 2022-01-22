@@ -53,21 +53,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     echo json_encode($arr_data);
 } else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $headers = getallheaders();
-    print_r($headers);
+    // print_r($headers);
     if (isset($headers["token"]) && isset($headers["id-users"])) {
-        // Recibiendo datos por el header
+        // Getting data by the headers
         $send = [
             "token" => $headers["token"],
             "id-users" => $headers["id-users"]
         ];
         $delete_body = json_encode($send);
     } else {
-        // Recibiendo datos enviados de post
+        // Getting data sent by post
         $delete_body = file_get_contents("php://input");
     }
-    // Enviando datos al manejador metodo delete
+    // Delete handler
     $arr_data = $Users->delete($delete_body);
-    // Devolviendo la respuesta
+    // Response
     header("Content-type: application/json");
     if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
     $response_code = $arr_data["result"]["error_id"];
