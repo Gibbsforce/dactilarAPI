@@ -226,7 +226,6 @@ class Users extends Connection {
             if ($result_user_exist[0]["email"] === $this->email) return $Responses->error_200("The email already exists");
             if (strtolower($result_user_exist[0]["username"]) === strtolower($this->username)) return $Responses->error_200("The username already exists");
         }
-
         try {
             $added = $this->updateUser();
             if (!$added) return $Responses->error_500();
@@ -241,20 +240,18 @@ class Users extends Connection {
     }
     // Metodo del query que actualiza usuario
     private function updateUser() {
-        // $this->created = date("Y-m-d H:i:s");
+        $this->created = date("Y-m-d H:i:s");
+        // for now, missing dni, email and username update
         $query = "UPDATE ".$this->table."
             SET `name` = '".$this->name."',
                 `last_name` = '".$this->last_name."',
-                `dni` = '".$this->dni."',
                 `phone` = '".$this->phone."',
-                `email` = '".$this->email."',
                 `address` = '".$this->address."',   
                 `country` = '".$this->country."',
                 `state-city` = '".$this->state_city."',
                 `city-district` = '".$this->city_district."',
                 `zipcode` = '".$this->zipcode."',
-                `created` = '".$this->created."',
-                `username` = '".$this->username."' WHERE `username` = '".$this->uname."'";
+                `created` = '".$this->created."' WHERE `username` = '".$this->uname."'";
         $added = parent::nonQuery($query);
         if ($added > 0) return $added;
         return false;
