@@ -166,6 +166,7 @@ class Users extends Connection {
     public function put($json) {
         $Responses = new Responses;
         $data = json_decode($json, true);
+        print_r($data);
         // Verifying if token is being sent
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
