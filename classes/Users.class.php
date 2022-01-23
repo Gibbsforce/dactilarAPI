@@ -174,6 +174,8 @@ class Users extends Connection {
         // Getting username and make it mandatory
         if (!isset($data["uname"])) return $Responses->error_400();
         $this->uname = $data["uname"];
+        print_r($this->uname);
+        print_r($arr_token);
         $uname = $arr_token[0]["username"];
         $dni = $arr_token[0]["dni"];
         $email = $arr_token[0]["email"];
