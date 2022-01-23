@@ -184,7 +184,7 @@ class Users extends Connection {
             $this->name = $data["name"];
         }
         if (isset($data["last_name"])) {
-            if (!preg_match("/^([a-zA-Z']+)$/", $data["last_name"])) return $Responses->error_200("Please, add a valida last name");
+            if (!preg_match("/^([a-zA-Z']+)$/", $data["last_name"])) return $Responses->error_200("Please, add a valid last name");
             $this->last_name = $data["last_name"];
         }
         if (isset($data["dni"])) {
