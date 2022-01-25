@@ -36,19 +36,19 @@ class Cart extends Connection {
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
-        if (!$data["cart"]) return $Responses->error_400("Cart is empty");
+        if (!$data["cart"]) return $Responses->error_400();
         $cart = $data["cart"];
 
         for ($i = 0; $i < count($cart); $i++) {
-            if (!isset($cart[$i]["product_uid"])) return $Responses->error_400("product_uid is empty");
-            if (!isset($cart[$i]["product_name"])) return $Responses->error_400("product_name is empty");
-            if (!isset($cart[$i]["product_image"])) return $Responses->error_400("product_image is empty");
+            if (!isset($cart[$i]["product_uid"])) return $Responses->error_401("product_uid is empty");
+            if (!isset($cart[$i]["product_name"])) return $Responses->error_401("product_name is empty");
+            if (!isset($cart[$i]["product_image"])) return $Responses->error_401("product_image is empty");
             if (!isset($cart[$i]["product_stock"])) return $Responses->error_400("product_stock is empty");
-            if (!isset($cart[$i]["product_quantity"])) return $Responses->error_400("product_quantity is empty");
-            if (!isset($cart[$i]["product_size"])) return $Responses->error_400("product_size is empty");
-            if (!isset($cart[$i]["product_price"])) return $Responses->error_400("product_price is empty");
-            if (!isset($cart[$i]["product_price_discount"])) return $Responses->error_400("product_price_discount is empty");
-            if (!isset($cart[$i]["product_final_price"])) return $Responses->error_400("product_final_price is empty");
+            if (!isset($cart[$i]["product_quantity"])) return $Responses->error_401("product_quantity is empty");
+            if (!isset($cart[$i]["product_size"])) return $Responses->error_401("product_size is empty");
+            if (!isset($cart[$i]["product_price"])) return $Responses->error_401("product_price is empty");
+            if (!isset($cart[$i]["product_price_discount"])) return $Responses->error_401("product_price_discount is empty");
+            if (!isset($cart[$i]["product_final_price"])) return $Responses->error_401("product_final_price is empty");
             
         }
         
@@ -69,7 +69,7 @@ class Cart extends Connection {
             for ($j = 0; $j < count($total_quantity); $j++) {
                 if ($total_quantity[$j]["product_uid"] === $products[$i]["product_uid"]) {
                     if ($total_quantity[$j]["product_quantity"] > $products[$i]["product_stock"]) {
-                        return $Responses->error_400("Product quantity is greater than the stock");
+                        return $Responses->error_401("What are you doing, dude?");
                     }
                 }
             }
@@ -79,10 +79,10 @@ class Cart extends Connection {
         }
 
         for ($i = 0; $i < count($cart); $i++) {
-            if (!in_array($cart[$i]["product_uid"], $arr_product_uid)) return $Responses->error_400("Product uid is not found");
+            if (!in_array($cart[$i]["product_uid"], $arr_product_uid)) return $Responses->error_401("What are you doing, dude?");
             for ($j = 0; $j < count($products); $j++) {
                 if ($cart[$i]["product_uid"] === $products[$j]["product_uid"]) {
-                    if (!in_array($cart[$i]["product_size"], $arr_product_sizes[$j])) return $Responses->error_400("Product size is not found");
+                    if (!in_array($cart[$i]["product_size"], $arr_product_sizes[$j])) return $Responses->error_401("What are you doing, dude?");
                     $arr_cart[$i] = array(
                             "product_uid" => $products[$j]["product_uid"],
                             "product_name" => $products[$j]["product_name"],
@@ -103,7 +103,6 @@ class Cart extends Connection {
         $query = "UPDATE `users` SET `cart` = '$cart' WHERE username = '$username'";
         $query_cart_added = "SELECT `cart` FROM `users` WHERE username = '$username'";
         try {
-
             $data = parent::nonQuery($query);
             $cart_added = parent::getData($query_cart_added);
             $result = array(
@@ -115,8 +114,6 @@ class Cart extends Connection {
         } catch (PDOException $error) {
             return Responses::prepare(500, $error->getMessage());
         }
-        // $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
-
     }
     // Getting the products
     private function allProducts() {
