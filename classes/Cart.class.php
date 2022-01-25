@@ -104,7 +104,7 @@ class Cart extends Connection {
         try {
 
             $data = parent::nonQuery($query);
-            if ($data > 0) return $this->Responses->error_500();
+            // if ($data > 0) return $this->Responses->error_500();
             $result = array(
                 "message" => "OK",
                 "cart_result" => $data
