@@ -59,7 +59,6 @@ class Cart extends Connection {
             ];
         }
         $total_quantity = array_values($result);
-        // print_r($total_quantity);
 
         $arr_product_uid = array();
         $arr_product_sizes = array();
@@ -107,7 +106,7 @@ class Cart extends Connection {
             if (!isset($data)) return $this->Responses->error_500();
             $result = array(
                 "message" => "OK",
-                "cart_result" => $data
+                "cart_result" => json_decode($data, true)
             );
             return $result;
         } catch (PDOException $error) {
