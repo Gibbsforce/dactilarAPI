@@ -32,10 +32,10 @@ class Cart extends Connection {
         $cart_result = $this->getCartByUser($username);
         if (!$cart_result) return $Responses->error_404();
         $cart_static = $cart_result["cart_result"];
-        print_r($cart_static);
-        print_r($cart);
+        // print_r($cart_static);
+        // print_r($cart);
 
-        // $cart = array_push($cart_static, $cart);
+        $cart = array_push($cart_static, $cart);
 
 
         for ($i = 0; $i < count($cart); $i++) {
