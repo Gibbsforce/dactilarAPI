@@ -13,18 +13,9 @@ class Cart extends Connection {
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
-        $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
-        try {
-            $data = parent::getData($query);
-            if (!isset($data)) return $this->Responses->error_500();
-            $result = array(
-                "message" => "OK",
-                "cart_result" => json_decode($data[0]["cart"])
-            );
-            return $result;
-        } catch (PDOException $error) {
-            return Responses::prepare(500, $error->getMessage());
-        }
+        $result = $this->getCart($username);
+        if (!$result) return $Responses->error_404();
+        return $result;
     }
     // POST items to the cart
     public function addToCart($json) {
@@ -152,6 +143,21 @@ class Cart extends Connection {
     //         return Responses::prepare(500, $error->getMessage());
     //     }
     // }
+    // Getting the cart by user
+    private function getCartByUser($uname) {
+        $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
+        try {
+            $data = parent::getData($query);
+            if (!isset($data)) return $this->Responses->error_500();
+            $result = array(
+                "message" => "OK",
+                "cart_result" => json_decode($data[0]["cart"])
+            );
+            return $result;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+    }
     // Getting the products
     private function allProducts() {
         $query = "SELECT * FROM `products`";
