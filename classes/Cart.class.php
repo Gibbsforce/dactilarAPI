@@ -40,15 +40,15 @@ class Cart extends Connection {
         $cart = $data["cart"];
 
         for ($i = 0; $i < count($cart); $i++) {
-            if (!$cart[$i]["product_uid"]) return $Responses->error_400("product_uid is empty");
-            if (!$cart[$i]["product_name"]) return $Responses->error_400("product_name is empty");
-            if (!$cart[$i]["product_image"]) return $Responses->error_400("product_image is empty");
-            if (!$cart[$i]["product_stock"]) return $Responses->error_400("product_stock is empty");
-            if (!$cart[$i]["product_quantity"]) return $Responses->error_400("product_quantity is empty");
-            if (!$cart[$i]["product_size"]) return $Responses->error_400("product_size is empty");
-            if (!$cart[$i]["product_price"]) return $Responses->error_400("product_price is empty");
-            if (!$cart[$i]["product_price_discount"]) return $Responses->error_400("product_price_discount is empty");
-            if (!$cart[$i]["product_final_price"]) return $Responses->error_400("product_final_price is empty");
+            if (!isset($cart[$i]["product_uid"])) return $Responses->error_400("product_uid is empty");
+            if (!isset($cart[$i]["product_name"])) return $Responses->error_400("product_name is empty");
+            if (!isset($cart[$i]["product_image"])) return $Responses->error_400("product_image is empty");
+            if (!isset($cart[$i]["product_stock"])) return $Responses->error_400("product_stock is empty");
+            if (!isset($cart[$i]["product_quantity"])) return $Responses->error_400("product_quantity is empty");
+            if (!isset($cart[$i]["product_size"])) return $Responses->error_400("product_size is empty");
+            if (!isset($cart[$i]["product_price"])) return $Responses->error_400("product_price is empty");
+            if (!isset($cart[$i]["product_price_discount"])) return $Responses->error_400("product_price_discount is empty");
+            if (!isset($cart[$i]["product_final_price"])) return $Responses->error_400("product_final_price is empty");
             
         }
         
@@ -59,7 +59,7 @@ class Cart extends Connection {
             ];
         }
         $total_quantity = array_values($result);
-        print_r($total_quantity);
+        // print_r($total_quantity);
 
         $arr_product_uid = array();
         $arr_product_sizes = array();
