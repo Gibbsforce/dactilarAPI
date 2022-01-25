@@ -145,7 +145,7 @@ class Cart extends Connection {
     // }
     // Getting the cart by user
     private function getCartByUser($uname) {
-        $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
+        $query = "SELECT `cart` FROM `users` WHERE username = '$uname'";
         try {
             $data = parent::getData($query);
             if (!isset($data)) return $this->Responses->error_500();
