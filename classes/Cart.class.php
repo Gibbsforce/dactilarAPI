@@ -109,7 +109,7 @@ class Cart extends Connection {
             $result = array(
                 "message" => "OK",
                 "result" => $data,
-                "cart_result" => json_decode($cart_added[0], true)
+                "cart_result" => json_decode($cart_added[0]["cart"], true)
             );
             return $result;
         } catch (PDOException $error) {
