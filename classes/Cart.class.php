@@ -38,7 +38,7 @@ class Cart extends Connection {
         $username = $arr_token[0]["username"];
         if (!$data["cart"]) return $Responses->error_400("Cart is empty");
         $cart = $data["cart"];
-        print_r($cart);
+
         for ($i = 0; $i < count($cart); $i++) {
             if (!$cart[$i]["product_uid"]) return $Responses->error_400("product_uid is empty");
             if (!$cart[$i]["product_name"]) return $Responses->error_400("product_name is empty");
@@ -49,9 +49,9 @@ class Cart extends Connection {
             if (!$cart[$i]["product_price"]) return $Responses->error_400("product_price is empty");
             if (!$cart[$i]["product_price_discount"]) return $Responses->error_400("product_price_discount is empty");
             if (!$cart[$i]["product_final_price"]) return $Responses->error_400("product_final_price is empty");
-
+            
         }
-
+        
         foreach ($cart as $row) {
             $result[$row["product_uid"]] = [
                 "product_uid" => $row["product_uid"],
@@ -59,6 +59,7 @@ class Cart extends Connection {
             ];
         }
         $total_quantity = array_values($result);
+        print_r($total_quantity);
 
         $arr_product_uid = array();
         $arr_product_sizes = array();
