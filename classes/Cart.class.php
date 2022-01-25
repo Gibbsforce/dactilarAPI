@@ -106,7 +106,7 @@ class Cart extends Connection {
         }
     }
     // DELETE items from cart
-    public function deleteItemFromCart() {
+    public function deleteItemFromCart($json) {
         $Responses = new Responses();
         $data = json_decode($json, true);
         if (!isset($data["token"])) return $Responses->error_400();
@@ -165,8 +165,6 @@ class Cart extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // Deleting a item from the cart
-
     // Looking for the token method
     private function searchToken() {
         $query = "SELECT `id-token`, `username`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND (`status` = 'user' OR `status` = 'admin')";
