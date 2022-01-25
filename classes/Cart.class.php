@@ -28,6 +28,13 @@ class Cart extends Connection {
         $username = $arr_token[0]["username"];
         if (!$data["cart"]) return $Responses->error_400();
         $cart = $data["cart"];
+
+        $cart_result = $this->getCartByUser($username);
+        if (!$cart_result) return $Responses->error_404();
+        $cart_test = json_decode($cart_result[0]["cart_result"], true);
+        print_r($cart_test);
+
+
         for ($i = 0; $i < count($cart); $i++) {
             if (!isset($cart[$i]["product_uid"])) return $Responses->error_401("product_uid is empty");
             if (!isset($cart[$i]["product_name"])) return $Responses->error_401("product_name is empty");
@@ -96,53 +103,7 @@ class Cart extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
-    // DELETE items from the cart
-    // public function deleteFromCart($json) {
-    //     $Responses = new Responses();
-    //     $data = json_decode($json, true);
-    //     if (!isset($data["token"])) return $Responses->error_401();
-    //     $this->token = $data["token"];
-    //     $arr_token = $this->searchToken();
-    //     if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
-    //     $username = $arr_token[0]["username"];
-    //     if (!$data["cart"]) return $Responses->error_400();
-    //     $cart = $data["cart"];
-    //     for ($i = 0; $i < count($cart); $i++) {
-    //         if (!isset($cart[$i]["product_uid"])) return $Responses->error_401("product_uid is empty");
-    //         if (!isset($cart[$i]["product_name"])) return $Responses->error_401("product_name is empty");
-    //         if (!isset($cart[$i]["product_image"])) return $Responses->error_401("product_image is empty");
-    //         if (!isset($cart[$i]["product_stock"])) return $Responses->error_400("product_stock is empty");
-    //         if (!isset($cart[$i]["product_quantity"])) return $Responses->error_401("product_quantity is empty");
-    //         if (!isset($cart[$i]["product_size"])) return $Responses->error_401("product_size is empty");
-    //         if (!isset($cart[$i]["product_price"])) return $Responses->error_401("product_price is empty");
-    //         if (!isset($cart[$i]["product_price_discount"])) return $Responses->error_401("product_price_discount is empty");
-    //         if (!isset($cart[$i]["product_final_price"])) return $Responses->error_401("product_final_price is empty");
-    //     }
-    //     $query = "SELECT `cart` FROM `users` WHERE username = '$username'";
-    //     $query_cart_added = "SELECT `cart` FROM `users` WHERE username = '$username'";
-    //     try {
-    //         $cart_added = parent::getData($query_cart_added);
-    //         $cart_added = json_decode($cart_added[0]["cart"], true);
-    //         $cart_added_new = array();
-    //         for ($i = 0; $i < count($cart_added); $i++) {
-    //             if ($cart_added[$i]["product_uid"] !== $cart[$i]["product_uid"]) {
-    //                 array_push($cart_added_new, $cart_added[$i]);
-    //             }
-    //         }
-    //         $cart_added = json_encode($cart_added_new);
-    //         $data = parent::nonQuery($query);
-    //         $query_cart_added = "SELECT `cart` FROM `users` WHERE username = '$username'";
-    //         $cart_added = parent::getData($query_cart_added);
-    //         $result = array(
-    //             "message" => "OK",
-    //             "result" => $data,
-    //             "cart_result" => json_decode($cart_added[0]["cart"], true)
-    //         );
-    //         return $result;
-    //     } catch (PDOException $error) {
-    //         return Responses::prepare(500, $error->getMessage());
-    //     }
-    // }
+
     // Getting the cart by user
     private function getCartByUser($uname) {
         $query = "SELECT `cart` FROM `users` WHERE username = '$uname'";
