@@ -87,11 +87,11 @@ class Cart extends Connection {
                             "product_uid" => $products[$j]["product_uid"],
                             "product_name" => $products[$j]["product_name"],
                             "product_image" => $products[$j]["product_image"],
-                            "product_stock" => $products[$j]["product_stock"],
+                            "product_stock" => intval($products[$j]["product_stock"]),
                             "product_quantity" => $cart[$i]["product_quantity"],
                             "product_size" => $cart[$i]["product_size"],
-                            "product_price" => $products[$j]["product_price"],
-                            "product_price_discount" => $products[$j]["product_price_discount"],
+                            "product_price" => floatval($products[$j]["product_price"]),
+                            "product_price_discount" => floatval($products[$j]["product_price_discount"]),
                             "product_final_price" => $products[$j]["product_price_discount"] > 0 ? $cart[$i]["product_quantity"] * $products[$j]["product_price_discount"] : $cart[$i]["product_quantity"] * $products[$j]["product_price"]
                         );
                 }
