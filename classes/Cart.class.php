@@ -34,7 +34,7 @@ class Cart extends Connection {
         $cart_static = $cart_result["cart_result"];
         print_r($cart_static);
         print_r($cart);
-
+        if (!$cart_static) $cart_static = [];
         $cart = array_merge($cart_static, $cart);
         print_r($cart);
 
