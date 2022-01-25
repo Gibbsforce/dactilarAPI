@@ -30,7 +30,7 @@ class Cart extends Connection {
         $cart = $data["cart"];
 
         $cart_result = $this->getCartByUser($username);
-        print_r(json_decode($cart_result["cart_result"], true));
+        print_r(json_encode(json_decode($cart_result["cart_result"], true)));
         if (!$cart_result) return $Responses->error_404();
         // $cart_test = $cart_result[0]["cart_result"];
         // print_r($cart_test);
