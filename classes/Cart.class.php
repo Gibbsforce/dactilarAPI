@@ -30,7 +30,7 @@ class Cart extends Connection {
         $cart = $data["cart"];
 
         $cart_result = $this->getCartByUser($username);
-        print_r(json_encode(json_decode($cart_result["cart_result"], true)));
+        print_r($cart_result);
         if (!$cart_result) return $Responses->error_404();
         // $cart_test = $cart_result[0]["cart_result"];
         // print_r($cart_test);
@@ -113,7 +113,7 @@ class Cart extends Connection {
             if (!isset($data)) return $this->Responses->error_500();
             $result = array(
                 "message" => "OK",
-                "cart_result" => json_decode($data[0]["cart"])
+                "cart_result" => json_decode($data[0]["cart"], true)
             );
             return $result;
         } catch (PDOException $error) {
