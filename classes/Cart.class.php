@@ -30,6 +30,7 @@ class Cart extends Connection {
     public function addToCart($json) {
         $Responses = new Responses();
         $data = json_decode($json, true);
+        print_r($data);
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
         $arr_token = $this->searchToken();
