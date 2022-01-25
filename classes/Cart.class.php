@@ -13,7 +13,7 @@ class Cart extends Connection {
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
         if ($username !== $uname) return $Responses->error_401();
-        $result = $this->getCart($username);
+        $result = $this->getCartByUser($username);
         if (!$result) return $Responses->error_404();
         return $result;
     }
