@@ -33,8 +33,8 @@ class Cart extends Connection {
         // print_r($data);
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
-        print_r($this->token);
         $arr_token = $this->searchToken();
+        print_r($arr_token);
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
         if (!$data["cart"]) return $Responses->error_400("Cart is empty");
