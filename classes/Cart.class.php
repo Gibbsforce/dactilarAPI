@@ -102,11 +102,12 @@ class Cart extends Connection {
 
         $query = "UPDATE `users` SET `cart` = '$cart' WHERE username = '$username'";
         try {
-            $data = parent::getData($query);
-            if (!isset($data)) return $this->Responses->error_500();
+            $data = parent::nonQuery($query);
+
+            if ($data < 1) return $this->Responses->error_500();
             $result = array(
                 "message" => "OK",
-                "cart_result" => json_decode($data, true)
+                "cart_result" => $data
             );
             return $result;
         } catch (PDOException $error) {
