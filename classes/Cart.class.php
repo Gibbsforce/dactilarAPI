@@ -36,6 +36,7 @@ class Cart extends Connection {
         // print_r($cart);
 
         $cart = array_push($cart_static, $cart);
+        print_r($cart);
 
 
         for ($i = 0; $i < count($cart); $i++) {
