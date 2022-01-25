@@ -32,6 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $response_code = $arr_data["result"]["error_id"];
     http_response_code($response_code);
     echo json_encode($arr_data);
+} else if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    $delete_body = file_get_contents("php://input");
+    $arr_data = $Cart->deleteItemFromCart($delete_body);
+    header("Content-type: application/json");
+    if (!isset($arr_data["result"]["error_id"])) http_response_code(200);
+    $response_code = $arr_data["result"]["error_id"];
+    http_response_code($response_code);
+    echo json_encode($arr_data);
 } else {
     header("Content-type: application/json");
     $arr_data = $Responses->error_405();

@@ -5,6 +5,7 @@ require_once "Responses.class.php";
 // Cart inherits from Connection
 class Cart extends Connection {
     private $token = "";
+    private $key = "";
     // Getting the cart from user
     public function getCartFromUser($token, $uname) {
         $Responses = new Responses();
@@ -104,7 +105,40 @@ class Cart extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
+    // DELETE items from cart
+    public function deleteItemFromCart() {
+        $Responses = new Responses();
+        $data = json_decode($json, true);
+        if (!isset($data["token"])) return $Responses->error_400();
+        $this->token = $data["token"];
+        if (!isset($data["key"])) return $Responses->error_400();
+        $this->key = intval($data["key"]);
+        $arr_token = $this->searchToken();
+        if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
+        $username = $arr_token[0]["username"];
 
+        $cart_result = $this->getCartByUser($username);
+        if (!$cart_result) return $Responses->error_404();
+        $cart_static = $cart_result["cart_result"];
+        array_splice($cart_static, $this->key, 1);
+
+        $cart = json_encode($cart_static);
+        $query = "UPDATE `users` SET `cart` = '$cart' WHERE username = '$username'";
+        $query_cart_added = "SELECT `cart` FROM `users` WHERE username = '$username'";
+        try {
+            $data = parent::nonQuery($query);
+            $cart_added = parent::getData($query_cart_added);
+            $result = array(
+                "message" => "OK",
+                "result" => $data,
+                "cart_result" => json_decode($cart_added[0]["cart"], true)
+            );
+            return $result;
+        } catch (PDOException $error) {
+            return Responses::prepare(500, $error->getMessage());
+        }
+
+    }
     // Getting the cart by user
     private function getCartByUser($uname) {
         $query = "SELECT `cart` FROM `users` WHERE username = '$uname'";
@@ -131,6 +165,8 @@ class Cart extends Connection {
             return Responses::prepare(500, $error->getMessage());
         }
     }
+    // Deleting a item from the cart
+
     // Looking for the token method
     private function searchToken() {
         $query = "SELECT `id-token`, `username`, `state`, `status` FROM `users-token` WHERE `token` = '".$this->token."' AND `state` = 1 AND (`status` = 'user' OR `status` = 'admin')";
