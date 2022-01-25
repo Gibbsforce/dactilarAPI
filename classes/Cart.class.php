@@ -31,7 +31,7 @@ class Cart extends Connection {
 
         $cart_result = $this->getCartByUser($username);
         if (!$cart_result) return $Responses->error_404();
-        $cart_static = $cart_result["cart"];
+        $cart_static = $cart_result["cart_result"];
         print_r($cart_static);
 
 
