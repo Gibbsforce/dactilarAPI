@@ -101,13 +101,15 @@ class Cart extends Connection {
         $cart = json_encode($arr_cart);
 
         $query = "UPDATE `users` SET `cart` = '$cart' WHERE username = '$username'";
+        $query_cart_added = "SELECT `cart` FROM `users` WHERE username = '$username'";
         try {
 
             $data = parent::nonQuery($query);
-            // if ($data > 0) return $this->Responses->error_500();
+            $cart_added = parent::getData($query_cart_added);
             $result = array(
                 "message" => "OK",
-                "cart_result" => $data
+                "result" => $data,
+                "cart_result" => $cart_added
             );
             return $result;
         } catch (PDOException $error) {
