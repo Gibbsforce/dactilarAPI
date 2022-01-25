@@ -30,9 +30,10 @@ class Cart extends Connection {
     public function addToCart($json) {
         $Responses = new Responses();
         $data = json_decode($json, true);
-        print_r($data);
+        // print_r($data);
         if (!isset($data["token"])) return $Responses->error_401();
         $this->token = $data["token"];
+        print_r($this->token);
         $arr_token = $this->searchToken();
         if (!$arr_token) return $Responses->error_401("Unauthorized or your token has been deprecated");
         $username = $arr_token[0]["username"];
