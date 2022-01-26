@@ -62,7 +62,7 @@ class Cart extends Connection {
             for ($j = 0; $j < count($total_quantity); $j++) {
                 if ($total_quantity[$j]["product_uid"] === $products[$i]["product_uid"]) {
                     if ($total_quantity[$j]["product_quantity"] > $products[$i]["product_stock"]) {
-                        return $Responses->error_401("What are you doing, dude?");
+                        return $Responses->error_401("What are you doing, dude? 1");
                     }
                 }
             }
@@ -71,10 +71,10 @@ class Cart extends Connection {
             array_push($arr_product_sizes, explode(",", $products[$i]["product_sizes"]));
         }
         for ($i = 0; $i < count($cart); $i++) {
-            if (!in_array($cart[$i]["product_uid"], $arr_product_uid)) return $Responses->error_401("What are you doing, dude?");
+            if (!in_array($cart[$i]["product_uid"], $arr_product_uid)) return $Responses->error_401("What are you doing, dude? 2");
             for ($j = 0; $j < count($products); $j++) {
                 if ($cart[$i]["product_uid"] === $products[$j]["product_uid"]) {
-                    if (!in_array($cart[$i]["product_size"], $arr_product_sizes[$j])) return $Responses->error_401("What are you doing, dude?");
+                    if (!in_array($cart[$i]["product_size"], $arr_product_sizes[$j])) return $Responses->error_401("What are you doing, dude? 3");
                     $arr_cart[$i] = array(
                             "product_uid" => $products[$j]["product_uid"],
                             "product_name" => $products[$j]["product_name"],
